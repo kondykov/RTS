@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bpnetnm5bovhf"
+path="res://.godot/imported/hex_rock_roadG_detail.obj-4ead9f6a3c4050b14f09af6cb1ab5c5a.mesh"
+
+[deps]
+
+files=["res://.godot/imported/hex_rock_roadG_detail.obj-4ead9f6a3c4050b14f09af6cb1ab5c5a.mesh"]
+
+source_file="res://raw models/Models/tiles/hex/obj/hex_rock_roadG_detail.obj"
+dest_files=["res://.godot/imported/hex_rock_roadG_detail.obj-4ead9f6a3c4050b14f09af6cb1ab5c5a.mesh", "res://.godot/imported/hex_rock_roadG_detail.obj-4ead9f6a3c4050b14f09af6cb1ab5c5a.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

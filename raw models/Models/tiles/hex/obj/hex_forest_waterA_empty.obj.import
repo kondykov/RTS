@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://blpvkff5j6877"
+path="res://.godot/imported/hex_forest_waterA_empty.obj-b5720618908a8c99adcb873e8f6d9937.mesh"
+
+[deps]
+
+files=["res://.godot/imported/hex_forest_waterA_empty.obj-b5720618908a8c99adcb873e8f6d9937.mesh"]
+
+source_file="res://raw models/Models/tiles/hex/obj/hex_forest_waterA_empty.obj"
+dest_files=["res://.godot/imported/hex_forest_waterA_empty.obj-b5720618908a8c99adcb873e8f6d9937.mesh", "res://.godot/imported/hex_forest_waterA_empty.obj-b5720618908a8c99adcb873e8f6d9937.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cguwbewsv7utl"
+path="res://.godot/imported/square_rock.obj-e490c2e904f61c61ad9b70837fc844d7.mesh"
+
+[deps]
+
+files=["res://.godot/imported/square_rock.obj-e490c2e904f61c61ad9b70837fc844d7.mesh"]
+
+source_file="res://raw models/Models/tiles/square/obj/square_rock.obj"
+dest_files=["res://.godot/imported/square_rock.obj-e490c2e904f61c61ad9b70837fc844d7.mesh", "res://.godot/imported/square_rock.obj-e490c2e904f61c61ad9b70837fc844d7.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

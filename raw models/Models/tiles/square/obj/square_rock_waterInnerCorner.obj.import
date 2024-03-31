@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://clyxdevkw4162"
+path="res://.godot/imported/square_rock_waterInnerCorner.obj-10a4d33f1a02e15fb1b744ebcea5bc6d.mesh"
+
+[deps]
+
+files=["res://.godot/imported/square_rock_waterInnerCorner.obj-10a4d33f1a02e15fb1b744ebcea5bc6d.mesh"]
+
+source_file="res://raw models/Models/tiles/square/obj/square_rock_waterInnerCorner.obj"
+dest_files=["res://.godot/imported/square_rock_waterInnerCorner.obj-10a4d33f1a02e15fb1b744ebcea5bc6d.mesh", "res://.godot/imported/square_rock_waterInnerCorner.obj-10a4d33f1a02e15fb1b744ebcea5bc6d.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

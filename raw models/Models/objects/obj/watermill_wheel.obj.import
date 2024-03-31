@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bkd2vrt08ov6t"
+path="res://.godot/imported/watermill_wheel.obj-5d49b0af0996718c53dd8f430ad6bd4a.mesh"
+
+[deps]
+
+files=["res://.godot/imported/watermill_wheel.obj-5d49b0af0996718c53dd8f430ad6bd4a.mesh"]
+
+source_file="res://raw models/Models/objects/obj/watermill_wheel.obj"
+dest_files=["res://.godot/imported/watermill_wheel.obj-5d49b0af0996718c53dd8f430ad6bd4a.mesh", "res://.godot/imported/watermill_wheel.obj-5d49b0af0996718c53dd8f430ad6bd4a.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

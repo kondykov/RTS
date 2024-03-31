@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bwpqwns0ohw24"
+path="res://.godot/imported/hex_sand_waterB.obj-f315e076eb0173f548398f75aeb67abf.mesh"
+
+[deps]
+
+files=["res://.godot/imported/hex_sand_waterB.obj-f315e076eb0173f548398f75aeb67abf.mesh"]
+
+source_file="res://raw models/Models/tiles/hex/obj/hex_sand_waterB.obj"
+dest_files=["res://.godot/imported/hex_sand_waterB.obj-f315e076eb0173f548398f75aeb67abf.mesh", "res://.godot/imported/hex_sand_waterB.obj-f315e076eb0173f548398f75aeb67abf.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false
