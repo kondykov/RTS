@@ -1,4 +1,4 @@
-using Godot;
+/*using Godot;
 using System;
 
 public partial class CameraFollow : Camera3D
@@ -18,3 +18,4 @@ public partial class CameraFollow : Camera3D
     Position = Position.Lerp(CameraRoot.Position, (float)delta * camAccel);
   }
 }
+*/

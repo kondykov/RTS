@@ -2,7 +2,7 @@
 
 [ext_resource type="MeshLibrary" uid="uid://cgd56dn01psfs" path="res://models/meshLibrary.tres" id="1_pyv14"]
 [ext_resource type="Script" path="res://scripts/Builder.cs" id="2_k5w38"]
-[ext_resource type="Script" path="res://GridMap.cs" id="3_bvgv6"]
+[ext_resource type="PackedScene" uid="uid://d2rkw6ei20jdw" path="res://testFiles/unit_hex.glb" id="4_05pxf"]
 [ext_resource type="Script" path="res://Camera3D.cs" id="4_pwkfi"]
 
 [node name="Node3D" type="Node3D"]
@@ -10,18 +10,20 @@ script = ExtResource("2_k5w38")
 
 [node name="GridMap" type="GridMap" parent="."]
 rotation_order = 0
+visible = false
 mesh_library = ExtResource("1_pyv14")
-cell_size = Vector3(2, 1, 2)
 data = {
 "cells": PackedInt32Array(-65536, 65535, 1441792, -1, 65535, 1441792, 0, 65535, 1441792, 0, 0, 1441792, -65536, 0, 1441792, -1, 0, 1441792, -1, 1, 1441792, -65536, 1, 1441792, -65536, 2, 1441792, -65535, 2, 1441792, -65534, 1, 1441792, -65534, 0, 1441792, -65535, 0, 1441792, -65535, 65535, 1441792, -65536, 65534, 1441792, -1, 65534, 1441792, -65535, 1, 1441792, -65534, 2, 1441792, -2, 0, 1441792, -2, 65535, 1441792, -2, 65534, 1441792, -2, 65533, 1441792, -1, 65533, 1441792, -65536, 65533, 1441792, -65535, 65533, 1441792, -65535, 65534, 1441792, -65534, 65534, 1441792, -65533, 65534, 1441792, -65533, 65535, 1441792, -65533, 0, 1441792, -1, 2, 1441792, -2, 1, 1441792, -65534, 65535, 1441792, 1, 65535, 1441792, 1, 0, 1441792, 1, 1, 1441792, 0, 1, 1441792, -65534, 65533, 1441792, -65533, 65533, 1441792, -65533, 1, 1441792, -65533, 2, 1441792, -2, 2, 1441792, -65533, 3, 1441792, -65534, 3, 1441792, -65535, 3, 1441792, -65536, 3, 1441792, -1, 3, 1441792, -2, 3, 1441792, -3, 3, 1441792, -3, 2, 1441792, -3, 1, 1441792, -3, 0, 1441792, -3, 65535, 1441792, -3, 65533, 1441792, -3, 65534, 1441792, 65535, 1, 1441792, 65535, 0, 1441792, 65535, 65535, 1441792)
 }
-script = ExtResource("3_bvgv6")
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.894502, -0.0527421, 0.443941, -0.109492, 0.936929, 0.331928, -0.433448, -0.345518, 0.83231, 6.02804, 11.1251, 20.5788)
+transform = Transform3D(0.892361, -0.29344, 0.342905, 0.125753, 0.891353, 0.435518, -0.433448, -0.345518, 0.83231, 6.02804, 11.1251, 20.5788)
 fov = 79.2217
 script = ExtResource("4_pwkfi")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.789149, 0.433013, -0.435596, -0.0473672, 0.75, 0.65974, 0.612372, -0.5, 0.612372, -4.96852, 6.26727, 0)
+
+[node name="unit_hex" parent="." instance=ExtResource("4_05pxf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 1)
