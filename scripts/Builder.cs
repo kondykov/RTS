@@ -60,6 +60,9 @@ public partial class Builder : Node3D
 			Console.WriteLine($"GET CHILDREN: {item.Name}");
         }
 
+		var n3d = GetNode("Node3D");
+		
+
 		Console.WriteLine("Added child node.");
 
 
