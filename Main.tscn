@@ -1,12 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://ct1603crj6l3"]
+[gd_scene load_steps=3 format=3 uid="uid://ct1603crj6l3"]
 
 [ext_resource type="MeshLibrary" uid="uid://cgd56dn01psfs" path="res://models/meshLibrary.tres" id="1_pyv14"]
-[ext_resource type="Script" path="res://scripts/Builder.cs" id="2_k5w38"]
-[ext_resource type="PackedScene" uid="uid://d2rkw6ei20jdw" path="res://testFiles/unit_hex.glb" id="4_05pxf"]
-[ext_resource type="Script" path="res://Camera3D.cs" id="4_pwkfi"]
+[ext_resource type="Script" path="res://Builder.cs" id="1_qdhcy"]
 
 [node name="Node3D" type="Node3D"]
-script = ExtResource("2_k5w38")
+script = ExtResource("1_qdhcy")
 
 [node name="GridMap" type="GridMap" parent="."]
 rotation_order = 0
@@ -20,10 +18,6 @@ metadata/_editor_floor_ = Vector3(0, 0, 0)
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.892361, -0.29344, 0.342905, 0.125753, 0.891353, 0.435518, -0.433448, -0.345518, 0.83231, 6.02804, 11.1251, 20.5788)
 fov = 79.2217
-script = ExtResource("4_pwkfi")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.789149, 0.433013, -0.435596, -0.0473672, 0.75, 0.65974, 0.612372, -0.5, 0.612372, -4.96852, 6.26727, 0)
-
-[node name="unit_hex" parent="." instance=ExtResource("4_05pxf")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 1)
