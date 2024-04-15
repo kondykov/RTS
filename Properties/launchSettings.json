@@ -5,14 +5,14 @@
     },
     "GD.exe": {
       "commandName": "Executable",
-      "executablePath": "C:\\Users\\7\\Desktop\\Godot_v4.2.1-stable_mono_win64\\Godot_v4.2.1-stable_mono_win64.exe",
+      "executablePath": "C:\\Godot_v4.2.1-stable_mono_win64\\Godot_v4.2.1-stable_mono_win64.exe",
       "commandLineArgs": "--path . --verbose",
       "workingDirectory": ".",
       "nativeDebugging": true
     },
     "GD_Console.exe": {
       "commandName": "Executable",
-      "executablePath": "C:\\Users\\7\\Desktop\\Godot_v4.2.1-stable_mono_win64\\Godot_v4.2.1-stable_mono_win64_console.exe",
+      "executablePath": "C:\\Godot_v4.2.1-stable_mono_win64\\Godot_v4.2.1-stable_mono_win64_console.exe",
       "commandLineArgs": "--path . --verbose",
       "workingDirectory": ".",
       "nativeDebugging": true

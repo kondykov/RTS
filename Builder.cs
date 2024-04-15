@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class Builder : Node3D
+public partial class Builder2 : Node3D
 {
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -22,20 +22,15 @@ public partial class Builder : Node3D
 
 		var node = tiles.Instantiate<Node3D>();
 		var vector = new Vector3(10, 0, 0);
-		var node2 = tiles.Instantiate();
+		var node2 = tiles.Instantiate<Node3D>();
 		
 		node.Name = "NewTile1";
-		AddChild(node);
-		node.GlobalPosition = new Vector3(2, 0, 0);
+		node.GlobalPosition = new Vector3(0, 0, 0);
 		node2.Name = "NewTile2";
-		Console.Clear();
+		AddChild(node);
 		AddChild(node2);
-		
-		//node = Transform.Basis.X.Rotated(new Vector3(10, 5, 0), 0);
-		foreach (var child in GetChildren())
-        {
-			Console.WriteLine();
-        }
+		Console.Clear();
+        node.GlobalPosition = new Vector3(-2, -2, 0);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

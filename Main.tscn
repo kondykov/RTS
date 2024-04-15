@@ -1,10 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://ct1603crj6l3"]
+[gd_scene load_steps=6 format=3 uid="uid://ct1603crj6l3"]
 
 [ext_resource type="MeshLibrary" uid="uid://cgd56dn01psfs" path="res://models/meshLibrary.tres" id="1_pyv14"]
-[ext_resource type="Script" path="res://Builder.cs" id="1_qdhcy"]
+[ext_resource type="Script" path="res://scripts/Builder.cs" id="1_sjoog"]
+[ext_resource type="Script" path="res://CharacterBody3D.cs" id="3_2as24"]
+[ext_resource type="PackedScene" uid="uid://b565untpf7mml" path="res://prefabs/tiles/GrassTile_Simple.tscn" id="4_alwwn"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5083h"]
 
 [node name="Node3D" type="Node3D"]
-script = ExtResource("1_qdhcy")
+script = ExtResource("1_sjoog")
 
 [node name="GridMap" type="GridMap" parent="."]
 rotation_order = 0
@@ -15,9 +19,19 @@ data = {
 }
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(0.892361, -0.29344, 0.342905, 0.125753, 0.891353, 0.435518, -0.433448, -0.345518, 0.83231, 6.02804, 11.1251, 20.5788)
-fov = 79.2217
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.789149, 0.433013, -0.435596, -0.0473672, 0.75, 0.65974, 0.612372, -0.5, 0.612372, -4.96852, 6.26727, 0)
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+transform = Transform3D(-1, 3.69465e-08, -7.92319e-08, 0, 0.906308, 0.422618, 8.74228e-08, 0.422618, -0.906308, 0, 10, -10)
+script = ExtResource("3_2as24")
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_5083h")
+disabled = true
+
+[node name="Tile" parent="." instance=ExtResource("4_alwwn")]

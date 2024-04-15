@@ -1,78 +1,45 @@
 using Godot;
 using System;
 
-public partial class Builder2 : Node3D
+public partial class Builder : Node3D
 {
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-		Console.Clear();
-		Console.WriteLine("Started");
-		base._Ready();
-		
-		GenerateField();
-    }
-
-	const float TILESIZE = 1.0f;
-
-	private void GenerateField()
-	{
-        Console.WriteLine("Generating field!");
+    const float _TileSize = 1.0f;
+    float index2 = 0;
+    private void GenerateField()
+    {
         var tileIndex = 0;
-        var gridSize = 10;
+        var gridSize = 20;
+        int index = 0;
 
-
-        for (int x = 0; x < gridSize; x++)
+        PackedScene tiles = GD.Load<PackedScene>("res://prefabs/tiles/GrassTile_Simple.tscn");
+        for (int i = 0; i < gridSize * 2; i += 2)
         {
-            var tileCoords = Vector2.Zero;
-            tileCoords.X = x * TILESIZE * Mathf.Cos(Mathf.DegToRad(30));
-            tileCoords.Y = x % 2 == 0 ? 0 : TILESIZE / 2;
-            for (int y = 0; y < gridSize; y++)
+            for (int j = 0; j < gridSize * 2; j += 2)
             {
+                var newTile = tiles.Instantiate<Node3D>();
+                Node3D node = new Node3D();
+                node = tiles.Instantiate<Node3D>();
+                node.Name = $"Tile_{i}-{j}";
 
-                tileIndex++;
+                node.Position = new Vector3(i, 0, j);
+                Console.WriteLine(node.Position);
+
+                AddChild(node);
             }
         }
-        Console.WriteLine("Loading mesh.");
-        PackedScene tiles = GD.Load<PackedScene>("res://models/meshLibrary.tscn");
-
-        tiles.Get("GrassCell Simple");
-        Node node = new Node();
-
-        node = tiles.Instantiate();
-
-        Console.WriteLine("Mesh loaded.");
-        Console.WriteLine("Adding child node.");
-
-        Console.WriteLine(node.GetChild(0).Name);
-        Console.WriteLine();
-
-        foreach (var item in node.GetChildren())
-        {
-            Console.WriteLine(item.Name);
-        }
-        Console.WriteLine();
-
-        AddChild(node);
-
-        foreach (var item in GetChildren())
-        {
-            Console.WriteLine($"GET CHILDREN: {item.Name}");
-        }
-
-        var n3d = GetNode("Node3D");
-
-
-        Console.WriteLine("Added child node.");
-
-
-        Console.WriteLine("Generating field completed!");
+        var node2 = GetNode<Node3D>("Tile_2-2");
+        node2.Position = new Vector3(3, 2, 1);
+        Console.WriteLine($"{node2.Name}");
     }
-
-    private Node GetNodeFromScene() => null;
-
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
+    public override void _Ready()
+    {
+        GenerateField();
+    }
     public override void _Process(double delta)
-	{
-	}
+    {
+        var node2 = GetNode<Node3D>("Tile_2-2");
+        var node3 = GetNode<Node3D>("Tile_10-2");
+        node2.Position = new Vector3(2, index2 += 0.1f, 2);
+        node3.Position = new Vector3(3, 5, 1);
+    }
 }
