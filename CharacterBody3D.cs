@@ -7,11 +7,14 @@ public partial class CharacterBody3D : Godot.CharacterBody3D
 	public const float Speed = 5.0f;
     [Export]
     public int FallAcceleration = 75;
-
     private Vector3 _targetVelocity = Vector3.Zero;
-    bool ready = true;
+    public override void _Ready()
+    {
+        base._Ready();
+        RotateY(45);
+    }
 
-	public override void _PhysicsProcess(double delta)
+    public override void _PhysicsProcess(double delta)
 	{
 		var direction = Vector3.Zero;
 

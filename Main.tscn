@@ -1,37 +1,73 @@
-[gd_scene load_steps=6 format=3 uid="uid://ct1603crj6l3"]
+[gd_scene load_steps=5 format=3 uid="uid://ct1603crj6l3"]
 
 [ext_resource type="MeshLibrary" uid="uid://cgd56dn01psfs" path="res://models/meshLibrary.tres" id="1_pyv14"]
 [ext_resource type="Script" path="res://scripts/Builder.cs" id="1_sjoog"]
-[ext_resource type="Script" path="res://CharacterBody3D.cs" id="3_2as24"]
-[ext_resource type="PackedScene" uid="uid://b565untpf7mml" path="res://prefabs/tiles/GrassTile_Simple.tscn" id="4_alwwn"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_5083h"]
+[ext_resource type="PackedScene" uid="uid://3slpr7xr3l5x" path="res://prefabs/tiles/TestObject.tscn" id="3_hb6cm"]
+[ext_resource type="Script" path="res://scripts/Camera3D.cs" id="4_gv45f"]
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_sjoog")
 
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.789149, 0.433013, -0.435596, -0.0473672, 0.75, 0.65974, 0.612372, -0.5, 0.612373, -4.96852, 40.2911, 0)
+shadow_enabled = true
+directional_shadow_mode = 0
+
+[node name="RTSCamera" type="Camera3D" parent="."]
+transform = Transform3D(-0.707107, 0.525483, -0.473147, 0, 0.669131, 0.743145, 0.707107, 0.525483, -0.473147, -30, 50, -30)
+projection = 1
+current = true
+fov = 50.0
+size = 50.0
+script = ExtResource("4_gv45f")
+
+[node name="Tile" parent="RTSCamera" instance=ExtResource("3_hb6cm")]
+transform = Transform3D(-0.707107, 0, 0.707107, 0.525483, 0.669131, 0.525483, -0.473147, 0.743145, -0.473147, 0.347274, -30.8323, -36.5125)
+skeleton = NodePath("../..")
+
 [node name="GridMap" type="GridMap" parent="."]
-rotation_order = 0
-visible = false
 mesh_library = ExtResource("1_pyv14")
+cell_size = Vector3(2, 1, 2)
+cell_center_y = false
 data = {
-"cells": PackedInt32Array(-65536, 65535, 1441792, -1, 65535, 1441792, 0, 65535, 1441792, 0, 0, 1441792, -65536, 0, 1441792, -1, 0, 1441792, -1, 1, 1441792, -65536, 1, 1441792, -65536, 2, 1441792, -65535, 2, 1441792, -65534, 1, 1441792, -65534, 0, 1441792, -65535, 0, 1441792, -65535, 65535, 1441792, -65536, 65534, 1441792, -1, 65534, 1441792, -65535, 1, 1441792, -65534, 2, 1441792, -2, 0, 1441792, -2, 65535, 1441792, -2, 65534, 1441792, -2, 65533, 1441792, -1, 65533, 1441792, -65536, 65533, 1441792, -65535, 65533, 1441792, -65535, 65534, 1441792, -65534, 65534, 1441792, -65533, 65534, 1441792, -65533, 65535, 1441792, -65533, 0, 1441792, -1, 2, 1441792, -2, 1, 1441792, -65534, 65535, 1441792, 1, 65535, 1441792, 1, 0, 1441792, 1, 1, 1441792, 0, 1, 1441792, -65534, 65533, 1441792, -65533, 65533, 1441792, -65533, 1, 1441792, -65533, 2, 1441792, -2, 2, 1441792, -65533, 3, 1441792, -65534, 3, 1441792, -65535, 3, 1441792, -65536, 3, 1441792, -1, 3, 1441792, -2, 3, 1441792, -3, 3, 1441792, -3, 2, 1441792, -3, 1, 1441792, -3, 0, 1441792, -3, 65535, 1441792, -3, 65533, 1441792, -3, 65534, 1441792, 65535, 1, 1441792, 65535, 0, 1441792, 65535, 65535, 1441792)
+"cells": PackedInt32Array(65535, 0, 1441795, 65534, 0, 655364, 65534, 65535, 2, 65535, 1, 655361, 65534, 1, 655360, 65535, 65534, 655361, 65534, 65534, 1, 65535, 65533, 1441795, 65534, 65533, 1441794, 0, 65533, 655368, 1, 65534, 1441801, 2, 65534, 1441801, 2, 65533, 1441801, 1, 65533, 1441801, 0, 65534, 655368, 0, 65535, 655366, 1, 65535, 1441800, 2, 65535, 1441800, 65535, 2, 655360, 65534, 2, 1441795, 65533, 2, 1441794, 65533, 1, 655360, 65533, 0, 1048577, 65533, 65535, 655360, 65533, 65534, 655360, 65533, 65533, 1048577, 65533, 65532, 655360, 65534, 65532, 655360, 65535, 65532, 655360, 0, 65532, 655368, 2, 65532, 655369, 1, 65532, 655369, 65535, 65535, 1441792, 3, 65532, 1441801, 3, 65533, 1441801, 3, 65534, 1441801, 65534, 3, 655362, 65533, 3, 655360, 65535, 3, 655360, 3, 65535, 1441800, 65532, 2, 1048577, 65532, 3, 1048576, 65532, 1, 1048576, 65532, 0, 1048576, 65532, 65535, 1048576, 65532, 65534, 1048576, 65532, 65533, 1048576, 65532, 65532, 1048576)
 }
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.789149, 0.433013, -0.435596, -0.0473672, 0.75, 0.65974, 0.612372, -0.5, 0.612372, -4.96852, 6.26727, 0)
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
-transform = Transform3D(-1, 3.69465e-08, -7.92319e-08, 0, 0.906308, 0.422618, 8.74228e-08, 0.422618, -0.906308, 0, 10, -10)
-script = ExtResource("3_2as24")
+[node name="DebugContainer2" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -183.0
+offset_bottom = 101.0
+grow_horizontal = 0
 
-[node name="Camera3D" type="Camera3D" parent="CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+[node name="DebugLabel" type="Label" parent="CanvasLayer/DebugContainer2"]
+layout_mode = 2
+text = "Controls:
+WASD - Move camera
+QE - Zoom
++/- = Speed"
+horizontal_alignment = 2
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-shape = SubResource("BoxShape3D_5083h")
-disabled = true
+[node name="AboutGameMarginContainer" type="MarginContainer" parent="CanvasLayer"]
+offset_left = 4.0
+offset_right = 359.0
+offset_bottom = 26.0
 
-[node name="Tile" parent="." instance=ExtResource("4_alwwn")]
+[node name="Label" type="Label" parent="CanvasLayer/AboutGameMarginContainer"]
+layout_mode = 2
+text = "RTS game. Work in progress.
+"
+
+[node name="DebugContainer" type="MarginContainer" parent="CanvasLayer"]
+offset_left = 5.0
+offset_top = 30.0
+offset_right = 355.0
+offset_bottom = 57.0
+
+[node name="DebugLabel" type="Label" parent="CanvasLayer/DebugContainer"]
+layout_mode = 2
+text = "Debug panel"
