@@ -1,9 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://ct1603crj6l3"]
+[gd_scene load_steps=8 format=3 uid="uid://ct1603crj6l3"]
 
 [ext_resource type="MeshLibrary" uid="uid://cgd56dn01psfs" path="res://models/meshLibrary.tres" id="1_pyv14"]
 [ext_resource type="Script" path="res://scripts/Builder.cs" id="1_sjoog"]
+[ext_resource type="Script" path="res://scripts/CameraMover.cs" id="2_g36hx"]
+[ext_resource type="Script" path="res://scripts/DebugMenu.cs" id="2_uemnq"]
 [ext_resource type="PackedScene" uid="uid://3slpr7xr3l5x" path="res://prefabs/tiles/TestObject.tscn" id="3_hb6cm"]
 [ext_resource type="Script" path="res://scripts/Camera3D.cs" id="4_gv45f"]
+[ext_resource type="LabelSettings" uid="uid://b3e24axr84y8u" path="res://fonts/TestLabelSettings.tres" id="6_8dqmx"]
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_sjoog")
@@ -13,16 +16,20 @@ transform = Transform3D(0.789149, 0.433013, -0.435596, -0.0473672, 0.75, 0.65974
 shadow_enabled = true
 directional_shadow_mode = 0
 
-[node name="RTSCamera" type="Camera3D" parent="."]
-transform = Transform3D(-0.707107, 0.525483, -0.473147, 0, 0.669131, 0.743145, 0.707107, 0.525483, -0.473147, -30, 50, -30)
+[node name="RTSCameraBody" type="Node3D" parent="."]
+transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 0, 0, 0)
+script = ExtResource("2_g36hx")
+
+[node name="RTSCamera" type="Camera3D" parent="RTSCameraBody"]
+transform = Transform3D(1, 0, 0, 0, 0.669131, 0.743145, 0, -0.743145, 0.669131, 0, 50, 42.4264)
 projection = 1
 current = true
 fov = 50.0
 size = 50.0
 script = ExtResource("4_gv45f")
 
-[node name="Tile" parent="RTSCamera" instance=ExtResource("3_hb6cm")]
-transform = Transform3D(-0.707107, 0, 0.707107, 0.525483, 0.669131, 0.525483, -0.473147, 0.743145, -0.473147, 0.347274, -30.8323, -36.5125)
+[node name="Tile" parent="RTSCameraBody" instance=ExtResource("3_hb6cm")]
+transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 0, 0, -1.41421)
 skeleton = NodePath("../..")
 
 [node name="GridMap" type="GridMap" parent="."]
@@ -49,7 +56,9 @@ layout_mode = 2
 text = "Controls:
 WASD - Move camera
 QE - Zoom
-+/- = Speed"
++/- - Speed
+F3 - Debug menu"
+label_settings = ExtResource("6_8dqmx")
 horizontal_alignment = 2
 
 [node name="AboutGameMarginContainer" type="MarginContainer" parent="CanvasLayer"]
@@ -61,13 +70,16 @@ offset_bottom = 26.0
 layout_mode = 2
 text = "RTS game. Work in progress.
 "
+label_settings = ExtResource("6_8dqmx")
 
 [node name="DebugContainer" type="MarginContainer" parent="CanvasLayer"]
 offset_left = 5.0
 offset_top = 30.0
 offset_right = 355.0
 offset_bottom = 57.0
+script = ExtResource("2_uemnq")
 
 [node name="DebugLabel" type="Label" parent="CanvasLayer/DebugContainer"]
 layout_mode = 2
-text = "Debug panel"
+text = "Failed to load debug menu."
+label_settings = ExtResource("6_8dqmx")
