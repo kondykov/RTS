@@ -10,6 +10,6 @@ public partial class Camera3D : Godot.Camera3D
     {
         if (Input.IsActionPressed("zoom_in")) Size += ZoomSpeed * (float)delta;
         if (Input.IsActionPressed("zoom_out")) Size -= ZoomSpeed * (float)delta;
-        Size = Math.Clamp(Size, 10, 100);
+        Size = Math.Clamp(Size, 10, 150);
     }
 }

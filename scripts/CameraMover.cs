@@ -1,9 +1,9 @@
 using Godot;
 using System;
 
-public partial class CameraMover : Node3D
+public partial class CameraMover : Godot.CharacterBody3D
 {
-    [Export] public int Speed = 100;
+    [Export] public int Speed = 20;
     public override void _Process(double delta)
 	{
         var direction = Vector3.Zero;
@@ -11,10 +11,15 @@ public partial class CameraMover : Node3D
         if (Input.IsActionPressed("camera_backward")) direction += Vector3.Back;
         if (Input.IsActionPressed("camera_left")) direction += Vector3.Left;
         if (Input.IsActionPressed("camera_right")) direction += Vector3.Right;
+        if (Input.IsActionPressed("ui_page_up")) direction += Vector3.Up;
+        if (Input.IsActionPressed("ui_page_down")) direction += Vector3.Down;
         if (Input.IsActionJustPressed("space")) Position = new Vector3(0, 0, 0);
-        if (direction != Vector3.Zero) Translate(direction.Rotated(new Vector3(1, 0, 0), -Rotation.X) * Speed * (float)delta);
+        if (direction != Vector3.Zero)
+            direction = direction.Normalized();
+            Translate(direction.Rotated(new Vector3(1, 0, 0), -Rotation.X) * Speed * (float)delta);
         if (Input.IsActionPressed("camera_speed_max")) Speed++;
         if (Input.IsActionPressed("camera_speed_min")) Speed--;
         Speed = Math.Clamp(Speed, 10, 100);
+        MoveAndSlide();
     }
 }

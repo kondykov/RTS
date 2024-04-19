@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ct1603crj6l3"]
+[gd_scene load_steps=9 format=3 uid="uid://ct1603crj6l3"]
 
 [ext_resource type="MeshLibrary" uid="uid://cgd56dn01psfs" path="res://models/meshLibrary.tres" id="1_pyv14"]
 [ext_resource type="Script" path="res://scripts/Builder.cs" id="1_sjoog"]
@@ -8,17 +8,21 @@
 [ext_resource type="Script" path="res://scripts/Camera3D.cs" id="4_gv45f"]
 [ext_resource type="LabelSettings" uid="uid://b3e24axr84y8u" path="res://fonts/TestLabelSettings.tres" id="6_8dqmx"]
 
-[node name="Node3D" type="Node3D"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_tylgm"]
+
+[node name="root" type="Node3D"]
 script = ExtResource("1_sjoog")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.789149, 0.433013, -0.435596, -0.0473672, 0.75, 0.65974, 0.612372, -0.5, 0.612373, -4.96852, 40.2911, 0)
-shadow_enabled = true
-directional_shadow_mode = 0
-
-[node name="RTSCameraBody" type="Node3D" parent="."]
+[node name="RTSCameraBody" type="CharacterBody3D" parent="."]
 transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 0, 0, 0)
 script = ExtResource("2_g36hx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RTSCameraBody"]
+transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 0, 2, -1.41421)
+shape = SubResource("BoxShape3D_tylgm")
+
+[node name="Tile" parent="RTSCameraBody" instance=ExtResource("3_hb6cm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00878859, 1, -1.60172)
 
 [node name="RTSCamera" type="Camera3D" parent="RTSCameraBody"]
 transform = Transform3D(1, 0, 0, 0, 0.669131, 0.743145, 0, -0.743145, 0.669131, 0, 50, 42.4264)
@@ -28,18 +32,22 @@ fov = 50.0
 size = 50.0
 script = ExtResource("4_gv45f")
 
-[node name="Tile" parent="RTSCameraBody" instance=ExtResource("3_hb6cm")]
-transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 0, 0, -1.41421)
-skeleton = NodePath("../..")
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.789149, 0.433013, -0.435596, -0.0473672, 0.75, 0.65974, 0.612372, -0.5, 0.612373, -4.96852, 40.2911, 0)
+shadow_enabled = true
+directional_shadow_mode = 0
 
 [node name="GridMap" type="GridMap" parent="."]
 mesh_library = ExtResource("1_pyv14")
 cell_size = Vector3(2, 1, 2)
 cell_center_y = false
 data = {
-"cells": PackedInt32Array(65535, 0, 1441795, 65534, 0, 655364, 65534, 65535, 2, 65535, 1, 655361, 65534, 1, 655360, 65535, 65534, 655361, 65534, 65534, 1, 65535, 65533, 1441795, 65534, 65533, 1441794, 0, 65533, 655368, 1, 65534, 1441801, 2, 65534, 1441801, 2, 65533, 1441801, 1, 65533, 1441801, 0, 65534, 655368, 0, 65535, 655366, 1, 65535, 1441800, 2, 65535, 1441800, 65535, 2, 655360, 65534, 2, 1441795, 65533, 2, 1441794, 65533, 1, 655360, 65533, 0, 1048577, 65533, 65535, 655360, 65533, 65534, 655360, 65533, 65533, 1048577, 65533, 65532, 655360, 65534, 65532, 655360, 65535, 65532, 655360, 0, 65532, 655368, 2, 65532, 655369, 1, 65532, 655369, 65535, 65535, 1441792, 3, 65532, 1441801, 3, 65533, 1441801, 3, 65534, 1441801, 65534, 3, 655362, 65533, 3, 655360, 65535, 3, 655360, 3, 65535, 1441800, 65532, 2, 1048577, 65532, 3, 1048576, 65532, 1, 1048576, 65532, 0, 1048576, 65532, 65535, 1048576, 65532, 65534, 1048576, 65532, 65533, 1048576, 65532, 65532, 1048576)
+"cells": PackedInt32Array(65535, 0, 1441795, 65534, 0, 655364, 65534, 65535, 2, 65535, 1, 655361, 65534, 1, 655360, 65535, 65534, 655361, 65534, 65534, 1, 65535, 65533, 1441795, 65534, 65533, 1441794, 0, 65533, 655368, 1, 65534, 1441801, 2, 65534, 1441801, 2, 65533, 1441801, 1, 65533, 1441801, 0, 65534, 655368, 0, 65535, 655366, 1, 65535, 1441800, 2, 65535, 1441800, 65535, 2, 655360, 65534, 2, 1441795, 65533, 2, 1441794, 65533, 1, 655360, 65533, 0, 1048577, 65533, 65535, 655360, 65533, 65534, 655360, 65533, 65533, 1048577, 65533, 65532, 655360, 65534, 65532, 655360, 65535, 65532, 655360, 0, 65532, 655368, 2, 65532, 655369, 1, 65532, 655369, 65535, 65535, 1441792, 3, 65532, 1441801, 3, 65533, 1441801, 3, 65534, 1441801, 65534, 3, 655362, 65533, 3, 655360, 65535, 3, 655360, 3, 65535, 1441800, 65532, 2, 1048577, 65532, 3, 1048576, 65532, 1, 1048576, 65532, 0, 1048576, 65532, 65535, 1048576, 65532, 65534, 1048576, 65532, 65533, 1048576, 65532, 65532, 1048576, 65536, 65535, 0, 131071, 0, 0)
 }
-metadata/_editor_floor_ = Vector3(0, 0, 0)
+metadata/_editor_floor_ = Vector3(0, 1, 0)
+
+[node name="Field" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.999998, 0, 0.999998)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -48,7 +56,7 @@ anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -183.0
-offset_bottom = 101.0
+offset_bottom = 127.0
 grow_horizontal = 0
 
 [node name="DebugLabel" type="Label" parent="CanvasLayer/DebugContainer2"]
@@ -62,9 +70,9 @@ label_settings = ExtResource("6_8dqmx")
 horizontal_alignment = 2
 
 [node name="AboutGameMarginContainer" type="MarginContainer" parent="CanvasLayer"]
-offset_left = 4.0
-offset_right = 359.0
-offset_bottom = 26.0
+offset_left = 3.0
+offset_right = 223.0
+offset_bottom = 23.0
 
 [node name="Label" type="Label" parent="CanvasLayer/AboutGameMarginContainer"]
 layout_mode = 2
@@ -73,10 +81,10 @@ text = "RTS game. Work in progress.
 label_settings = ExtResource("6_8dqmx")
 
 [node name="DebugContainer" type="MarginContainer" parent="CanvasLayer"]
-offset_left = 5.0
-offset_top = 30.0
-offset_right = 355.0
-offset_bottom = 57.0
+offset_left = 3.0
+offset_top = 20.0
+offset_right = 353.0
+offset_bottom = 43.0
 script = ExtResource("2_uemnq")
 
 [node name="DebugLabel" type="Label" parent="CanvasLayer/DebugContainer"]
