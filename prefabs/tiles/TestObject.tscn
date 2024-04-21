@@ -5,4 +5,4 @@
 [node name="Tile" type="MeshInstance3D"]
 
 [node name="archeryrange" parent="." instance=ExtResource("2_83y3x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.09665, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.09665, 0)

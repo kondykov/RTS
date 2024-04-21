@@ -1,4 +1,5 @@
 using Godot;
+using Godot.Collections;
 using System;
 
 public partial class Camera3D : Godot.Camera3D
@@ -8,8 +9,11 @@ public partial class Camera3D : Godot.Camera3D
 
     public override void _Process(double delta)
     {
-        if (Input.IsActionPressed("zoom_in")) Size += ZoomSpeed * (float)delta;
-        if (Input.IsActionPressed("zoom_out")) Size -= ZoomSpeed * (float)delta;
+        if (Input.IsActionPressed("mouse_circle_up")) Size += ZoomSpeed * (float)delta;
+        if (Input.IsActionPressed("mouse_circle_down")) Size -= ZoomSpeed * (float)delta;
+        if (Input.IsActionJustPressed("mouse_circle_up")) Fov -= ZoomSpeed * (float)delta;
+        if (Input.IsActionJustPressed("mouse_circle_down")) Fov += ZoomSpeed * (float)delta;
         Size = Math.Clamp(Size, 10, 300);
+        Fov = Math.Clamp(Fov, 10, 110);
     }
 }

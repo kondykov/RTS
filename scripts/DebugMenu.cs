@@ -13,7 +13,19 @@ public partial class DebugMenu : MarginContainer
         var label = GetNode<Label>("DebugLabel");
         label.Visible = false;
         _root = GetParent().GetParent();
+        string info = "Controlls:\n" +
+            "WASD - Walk\n" +
+            "Page Up - To up\n" +
+            "Page Down - To down\n" +
+            "Mouse wheel - Zoom\n" +
+            "Mouse left btn - Select cell\n" +
+            "Mouse right btn - N/A\n" +
+            "Space - Return position to start\n" +
+            "Escape - Deselect cell\n";
+        var rightLabel = GetParent().GetNode<Label>("DebugContainerRight/Label");
+        rightLabel.Text = info;
     }
+
     public override void _Process(double delta)
     {
         base._Process(delta);
@@ -41,11 +53,11 @@ public partial class DebugMenu : MarginContainer
     {
         string info = "";
 
+        info += $"Grid size: {Builder.GridSize}\n";
         if (_root.GetNodeOrNull("3DCursor") != null)
         {
             info += $"Selector position: {_root.GetNode<Node3D>("3DCursor").Position}\n";
             info += $"3D mouse position: {MousePosition}\n";
-            info += $"Grid size: {Builder.GridSize}\n";
         }
         return info;
     }
@@ -56,8 +68,10 @@ public partial class DebugMenu : MarginContainer
         var camera = _root.GetNode<Camera3D>("RTSCameraBody/RTSCamera");
 
         return $"Position:\nX: {camBody.Position.X}\nY: {camBody.Position.Y}\nZ: {camBody.Position.Z}\n" +
-            $"Zoom: {camera.Size}\n" +
-            $"Speed: {camBody.Get("Speed")}\n";
+            $"Zoom isometric cam: {camera.Size}\n" +
+            $"Zoom perspective cam: {camera.Fov}\n" +
+            $"Speed: {camBody.Get("Speed")}\n" +
+            $"Rotation: {camBody.Rotation}\n";
     }
     private string GetPressedKeys()
     {
@@ -66,8 +80,8 @@ public partial class DebugMenu : MarginContainer
         if (Input.IsActionPressed("camera_right")) keysPressed += "A ";
         if (Input.IsActionPressed("camera_backward")) keysPressed += "S ";
         if (Input.IsActionPressed("camera_left")) keysPressed += "D ";
-        if (Input.IsActionPressed("zoom_in")) keysPressed += "Q ";
-        if (Input.IsActionPressed("zoom_out")) keysPressed += "E ";
+        if (Input.IsActionPressed("mouse_circle_up")) keysPressed += "Q ";
+        if (Input.IsActionPressed("mouse_circle_down")) keysPressed += "E ";
         if (Input.IsActionPressed("space")) keysPressed += "Space ";
         if (Input.IsActionPressed("camera_speed_max")) keysPressed += "+ ";
         if (Input.IsActionPressed("camera_speed_min")) keysPressed += "- ";
@@ -76,7 +90,7 @@ public partial class DebugMenu : MarginContainer
 
         return keysPressed;
     }
-    private string GetField()
+/*    private string GetField()
     {
         string field = "";
         var cells = Cell.GetCells();
@@ -93,7 +107,7 @@ public partial class DebugMenu : MarginContainer
             i++;
         }
         return field;
-    }
+    }*/
     
     private string FormatPosition(Vector3 position)
     {

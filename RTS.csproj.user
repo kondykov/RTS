@@ -4,6 +4,6 @@
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup>
-    <ActiveDebugProfile>GD_Console.exe</ActiveDebugProfile>
+    <ActiveDebugProfile>GD.exe</ActiveDebugProfile>
   </PropertyGroup>
 </Project>

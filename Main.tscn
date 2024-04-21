@@ -8,7 +8,7 @@
 [ext_resource type="Script" path="res://scripts/Camera3D.cs" id="4_gv45f"]
 [ext_resource type="LabelSettings" uid="uid://b3e24axr84y8u" path="res://fonts/TestLabelSettings.tres" id="6_8dqmx"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_tylgm"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_i21la"]
 
 [node name="rootNode" type="Node3D"]
 script = ExtResource("1_sjoog")
@@ -18,15 +18,14 @@ transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107
 script = ExtResource("2_g36hx")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RTSCameraBody"]
-transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 0, 2, -1.41421)
-shape = SubResource("BoxShape3D_tylgm")
+transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 0, 2, 0)
+shape = SubResource("CapsuleShape3D_i21la")
 
 [node name="Tile" parent="RTSCameraBody" instance=ExtResource("3_hb6cm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00878859, 1, -1.60172)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="RTSCamera" type="Camera3D" parent="RTSCameraBody"]
 transform = Transform3D(1, 0, 0, 0, 0.669131, 0.743145, 0, -0.743145, 0.669131, 0, 50, 42.4264)
-projection = 1
 current = true
 fov = 50.0
 size = 50.0
@@ -51,7 +50,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.999998, 0, 0.999998)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="DebugContainer2" type="MarginContainer" parent="CanvasLayer"]
+[node name="DebugContainerRight" type="MarginContainer" parent="CanvasLayer"]
 layout_direction = 2
 anchors_preset = 1
 anchor_left = 1.0
@@ -62,7 +61,7 @@ offset_right = -7.0
 offset_bottom = 130.0
 grow_horizontal = 0
 
-[node name="DebugLabel" type="Label" parent="CanvasLayer/DebugContainer2"]
+[node name="Label" type="Label" parent="CanvasLayer/DebugContainerRight"]
 layout_mode = 2
 text = "Controls:
 WASD - Move camera
@@ -72,12 +71,12 @@ F3 - Debug menu"
 label_settings = ExtResource("6_8dqmx")
 horizontal_alignment = 2
 
-[node name="AboutGameMarginContainer" type="MarginContainer" parent="CanvasLayer"]
+[node name="About" type="MarginContainer" parent="CanvasLayer"]
 offset_left = 3.0
 offset_right = 223.0
 offset_bottom = 23.0
 
-[node name="Label" type="Label" parent="CanvasLayer/AboutGameMarginContainer"]
+[node name="Label" type="Label" parent="CanvasLayer/About"]
 layout_mode = 2
 text = "RTS game. Work in progress.
 "
