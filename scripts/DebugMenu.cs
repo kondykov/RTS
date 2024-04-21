@@ -6,6 +6,7 @@ public partial class DebugMenu : MarginContainer
 {
     private bool dbgField = false;
     static Node _root;
+    static public Vector3 MousePosition = new Vector3(0, 0, 0);
     public override void _Ready()
     {
         base._Ready();
@@ -17,21 +18,38 @@ public partial class DebugMenu : MarginContainer
     {
         base._Process(delta);
         string debugInfo = $"";
+        debugInfo += $"FPS: {Engine.GetFramesPerSecond()}\n";
 
         debugInfo += GetCamData();
-        if (Input.IsActionJustPressed("dbg_field"))
+        if (Input.IsActionJustPressed("F2"))
             if (dbgField) dbgField = false;
             else dbgField = true;
-        if (dbgField) debugInfo += GetField();
+        if (dbgField) debugInfo += $"\n{Get3DCursorInfo()}\n";
         else debugInfo += GetPressedKeys();
+        FormatPosition(new Vector3(3, 5, 2));
 
         var label = GetNode<Label>("DebugLabel");
-        if (Input.IsActionJustPressed("dbg"))
+        if (Input.IsActionJustPressed("F3"))
             if (label.Visible) label.Visible = false;
             else label.Visible = true;
 
+
         label.Text = debugInfo;
     }
+
+    private string Get3DCursorInfo()
+    {
+        string info = "";
+
+        if (_root.GetNodeOrNull("3DCursor") != null)
+        {
+            info += $"Selector position: {_root.GetNode<Node3D>("3DCursor").Position}\n";
+            info += $"3D mouse position: {MousePosition}\n";
+            info += $"Grid size: {Builder.GridSize}\n";
+        }
+        return info;
+    }
+
     private string GetCamData()
     {
         var camBody = _root.GetNode<Node3D>("RTSCameraBody");
@@ -61,14 +79,34 @@ public partial class DebugMenu : MarginContainer
     private string GetField()
     {
         string field = "";
-        for (int i = 0; i < Builder.gridSize; i+=2)
+        var cells = Cell.GetCells();
+        int i = 0;
+        foreach ( var cell in cells )
         {
-            for (int j = 0; j < Builder.gridSize; j += 2)
+            if (i >= Builder.GridSize)
             {
-                field += $"{Cell.GetCell(new Vector3(i, 0, j)).Name, 10}";
+                field += "\n";
+                i = 0;
             }
-            field += "\n";
+            var pos = $"{FormatPosition(cell.Node.Position)}";
+            field += $"{pos}";
+            i++;
         }
         return field;
+    }
+    
+    private string FormatPosition(Vector3 position)
+    {
+        string X = position.X.ToString();
+        string Y = position.Y.ToString();
+        string Z = position.Z.ToString();
+
+        if (X.Length < 2) X = $"0{X}";
+        //if (X.Length < 3) X = $"0{X}";
+/*        if (Y.Length < 2) Y = $"00{Y}";
+        if (Y.Length < 3) Y = $"0{Y}";*/
+        if (Z.Length < 2) Z = $"0{Z}";
+        //if (Z.Length < 3) Z = $"0{Z}";
+        return $"|{X}::{Z}|";
     }
 }

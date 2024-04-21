@@ -14,16 +14,14 @@ public partial class Cell : Node
 
     public int Id { get => _id; set => _id = value; }
     public Node3D Node { get => node; set => node = value; }
-    public Cell()
-    {
-        Cells.Add(this);
-    }
+    public Cell() { }
     public static List<Cell> GetCells() => Cells;
+    public static void AppendCell(Cell cell) => Cells.Add(cell);
+    public static void RemoveCell(Cell cell) => Cells.Remove(cell);
     public static Cell GetCell(Vector3 position)
     {
         foreach (var cell in Cells)
             if(cell._position == position) return cell;
-        var node = new Cell();
-        return node;
+        return null;
     }
 }
