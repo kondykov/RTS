@@ -1,35 +1,37 @@
-[gd_scene load_steps=9 format=3 uid="uid://ct1603crj6l3"]
+[gd_scene load_steps=10 format=3 uid="uid://ct1603crj6l3"]
 
+[ext_resource type="Script" path="res://scripts/MainCommandHandler.cs" id="1_pyno1"]
 [ext_resource type="MeshLibrary" uid="uid://cgd56dn01psfs" path="res://models/meshLibrary.tres" id="1_pyv14"]
-[ext_resource type="Script" path="res://scripts/Builder.cs" id="1_sjoog"]
-[ext_resource type="Script" path="res://scripts/CameraMover.cs" id="2_g36hx"]
-[ext_resource type="Script" path="res://scripts/DebugMenu.cs" id="2_uemnq"]
-[ext_resource type="PackedScene" uid="uid://3slpr7xr3l5x" path="res://prefabs/tiles/TestObject.tscn" id="3_hb6cm"]
-[ext_resource type="Script" path="res://scripts/Camera3D.cs" id="4_gv45f"]
+[ext_resource type="Script" path="res://scripts/camera/WorldCameraMover.cs" id="2_30mit"]
+[ext_resource type="Script" path="res://scripts/camera/WorldCamera.cs" id="4_mjgsw"]
 [ext_resource type="LabelSettings" uid="uid://b3e24axr84y8u" path="res://fonts/TestLabelSettings.tres" id="6_8dqmx"]
+[ext_resource type="Script" path="res://scripts/dbg/DebugMenu.cs" id="6_8lt3s"]
+[ext_resource type="Script" path="res://new_script.gd" id="7_scce0"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_i21la"]
 
-[node name="rootNode" type="Node3D"]
-script = ExtResource("1_sjoog")
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_83fwt"]
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_pyno1")
 
 [node name="RTSCameraBody" type="CharacterBody3D" parent="."]
 transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 0, 0, 0)
-script = ExtResource("2_g36hx")
+script = ExtResource("2_30mit")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RTSCameraBody"]
 transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 0, 2, 0)
 shape = SubResource("CapsuleShape3D_i21la")
 
-[node name="Tile" parent="RTSCameraBody" instance=ExtResource("3_hb6cm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RTSCameraBody/CollisionShape3D"]
+mesh = SubResource("CapsuleMesh_83fwt")
 
 [node name="RTSCamera" type="Camera3D" parent="RTSCameraBody"]
 transform = Transform3D(1, 0, 0, 0, 0.669131, 0.743145, 0, -0.743145, 0.669131, 0, 50, 42.4264)
 current = true
 fov = 50.0
 size = 50.0
-script = ExtResource("4_gv45f")
+script = ExtResource("4_mjgsw")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.789149, 0.433013, -0.435596, -0.0473672, 0.75, 0.65974, 0.612372, -0.5, 0.612373, -4.96852, 40.2911, 0)
@@ -60,6 +62,8 @@ offset_top = 3.0
 offset_right = -7.0
 offset_bottom = 130.0
 grow_horizontal = 0
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
 
 [node name="Label" type="Label" parent="CanvasLayer/DebugContainerRight"]
 layout_mode = 2
@@ -72,9 +76,10 @@ label_settings = ExtResource("6_8dqmx")
 horizontal_alignment = 2
 
 [node name="About" type="MarginContainer" parent="CanvasLayer"]
-offset_left = 3.0
-offset_right = 223.0
-offset_bottom = 23.0
+offset_right = 228.0
+offset_bottom = 28.0
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
 
 [node name="Label" type="Label" parent="CanvasLayer/About"]
 layout_mode = 2
@@ -83,13 +88,49 @@ text = "RTS game. Work in progress.
 label_settings = ExtResource("6_8dqmx")
 
 [node name="DebugContainer" type="MarginContainer" parent="CanvasLayer"]
-offset_left = 4.0
 offset_top = 24.0
 offset_right = 353.0
 offset_bottom = 48.0
-script = ExtResource("2_uemnq")
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+script = ExtResource("6_8lt3s")
 
 [node name="DebugLabel" type="Label" parent="CanvasLayer/DebugContainer"]
 layout_mode = 2
 text = "Failed to load debug menu."
 label_settings = ExtResource("6_8dqmx")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -46.0
+offset_right = 101.0
+grow_vertical = 0
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+
+[node name="TileEditor" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Tile Editor
+"
+script = ExtResource("7_scce0")
+
+[node name="Object Editor" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Object Editor
+"
+
+[node name="Exit" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Exit
+"
+
+[connection signal="pressed" from="CanvasLayer/MarginContainer/VBoxContainer/TileEditor" to="." method="SelectTileEditor"]
+[connection signal="pressed" from="CanvasLayer/MarginContainer/VBoxContainer/TileEditor" to="." method="_on_tile_editor_pressed"]
+[connection signal="pressed" from="CanvasLayer/MarginContainer/VBoxContainer/TileEditor" to="CanvasLayer/MarginContainer/VBoxContainer/TileEditor" method="_on_pressed"]
+[connection signal="pressed" from="CanvasLayer/MarginContainer/VBoxContainer/Object Editor" to="." method="SelectObjectEditor"]
+[connection signal="pressed" from="CanvasLayer/MarginContainer/VBoxContainer/Exit" to="." method="ClearSelector"]

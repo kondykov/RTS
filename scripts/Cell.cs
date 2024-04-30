@@ -4,13 +4,10 @@ using System.Collections.Generic;
 
 public partial class Cell : Node
 {
-    int _id;
-    Vector3 _position;
-    Node3D node;
-    /// <summary>
-    /// List of field cells
-    /// </summary>
-    static List<Cell> Cells = new List<Cell>();
+    private int _id;
+    private Vector3 _position;
+    private Node3D node;
+    private static List<Cell> Cells = new List<Cell>();
 
     public int Id { get => _id; set => _id = value; }
     public Node3D Node { get => node; set => node = value; }

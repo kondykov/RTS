@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 project/assembly_name="RTS"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/m_terrain/plugin.cfg")
+
 [input]
 
 mouse_circle_up={
