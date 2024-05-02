@@ -13,6 +13,7 @@ public partial class Cell : Node
     public Node3D Node { get => node; set => node = value; }
     public Cell() { }
     public static List<Cell> GetCells() => Cells;
+
     public static List<Node3D> GetNodes() 
     {
         List<Node3D> nodes = new List<Node3D>();

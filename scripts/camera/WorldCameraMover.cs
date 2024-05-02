@@ -12,10 +12,10 @@ namespace RTS.Camera
 
             if (Input.IsActionPressed("E")) RotateY(0.05f);
             if (Input.IsActionPressed("Q")) RotateY(-0.05f);
-            if (Input.IsActionPressed("camera_forward")) direction += Vector3.Forward;
-            if (Input.IsActionPressed("camera_backward")) direction += Vector3.Back;
-            if (Input.IsActionPressed("camera_left")) direction += Vector3.Left;
-            if (Input.IsActionPressed("camera_right")) direction += Vector3.Right;
+            if (Input.IsActionPressed("W")) direction += Vector3.Forward;
+            if (Input.IsActionPressed("S")) direction += Vector3.Back;
+            if (Input.IsActionPressed("A")) direction += Vector3.Left;
+            if (Input.IsActionPressed("D")) direction += Vector3.Right;
             if (Input.IsActionPressed("ui_page_up")) direction += Vector3.Up;
             if (Input.IsActionPressed("ui_page_down")) direction += Vector3.Down;
             if (Input.IsActionJustPressed("space")) // Return to start position

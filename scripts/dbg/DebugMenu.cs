@@ -40,7 +40,7 @@ namespace RTS.Debug
             if (Input.IsActionJustPressed("F2"))
                 if (dbgField) dbgField = false;
                 else dbgField = true;
-            debugInfo += GetPressedKeys();
+            //debugInfo += GetPressedKeys();
             if (dbgField) debugInfo += $"\n{Get3DCursorInfo()}\n";
             label.Text = debugInfo;
         }
@@ -68,10 +68,10 @@ namespace RTS.Debug
         private string GetPressedKeys()
         {
             string keysPressed = "Pressed keys:\n";
-            if (Input.IsActionPressed("camera_forward")) keysPressed += "W ";
-            if (Input.IsActionPressed("camera_right")) keysPressed += "A ";
-            if (Input.IsActionPressed("camera_backward")) keysPressed += "S ";
-            if (Input.IsActionPressed("camera_left")) keysPressed += "D ";
+            if (Input.IsActionPressed("W")) keysPressed += "W ";
+            if (Input.IsActionPressed("A")) keysPressed += "A ";
+            if (Input.IsActionPressed("S")) keysPressed += "S ";
+            if (Input.IsActionPressed("D")) keysPressed += "D ";
             if (Input.IsActionPressed("mouse_circle_up")) keysPressed += "Q ";
             if (Input.IsActionPressed("mouse_circle_down")) keysPressed += "E ";
             if (Input.IsActionPressed("space")) keysPressed += "Space ";
