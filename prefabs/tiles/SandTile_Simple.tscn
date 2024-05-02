@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://by4gxtn4nnma3"]
+
+[ext_resource type="PackedScene" uid="uid://fypr7yseo6d6" path="res://prefabs/tiles/SquareTemplate.tscn" id="1_mnax6"]
+[ext_resource type="ArrayMesh" uid="uid://m21r14rqlej7" path="res://raw models/Models/tiles/square/obj/square_rock_detail.obj" id="1_qj7pk"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Tile" parent="." instance=ExtResource("1_mnax6")]
+
+[node name="SquareForestDetail" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_qj7pk")

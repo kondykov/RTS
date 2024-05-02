@@ -1,8 +1,8 @@
 using Godot;
 using RTS.Camera;
-using RTS.editor;
+using RTS.Editor;
 using RTS.Loaders;
-using RTS.scripts.dbg;
+using RTS.Debug;
 using System;
 
 namespace RTS.Editor
@@ -20,13 +20,12 @@ namespace RTS.Editor
                 for (int j = 0; j < MainCommand.GridSize * 2; j += 2)
                 {
                     Cell cell = new Cell();
-                    //cell.Node = tiles.Instantiate<Node3D>();
-                    cell.Node = tile.Instantiate<Node3D>();
+                    cell.Node = tiles.Instantiate<Node3D>();
                     cell.Node.Name = $"{MainCommand.SUFFIX}{i}-{j}";
                     cell.Node.Position = new Vector3(i, 0, j);
                     Cell.AppendCell(cell);
-                    //cell.Node.SetScript("res://scripts/editor/tile/TileScript.cs");
                     field.AddChild(cell.Node);
+                    Console.WriteLine(cell.Node.GetPath());
                 }
             }
         }
@@ -38,14 +37,14 @@ namespace RTS.Editor
                 MainCommand.RootNode.RemoveChild(MainCommand.RootNode.GetNode<Node3D>("3DCursor"));
             }
         }
-        public void AddSelector(Vector3 raycastResult)
+        public void AddSelector(Vector3 cellPosition)
         {
+            var vec = MainCommandHandler.Vector3FloatToInt(cellPosition);
+            
             PackedScene tiles = GD.Load<PackedScene>("res://prefabs/ui/Selector.tscn");
             Node3D node = tiles.Instantiate<Node3D>();
-            var vec = MainCommandHandler.Vector3FloatToInt(raycastResult);
-            if ((int)vec.X % 2 == 0) vec.X += 1;
-            if ((int)vec.Z % 2 == 0) vec.Z += 1;
-            vec.Y = 1;
+            vec = MapEditorCommand.LastClickedNode.GlobalPosition;
+            vec.Y = MapEditorCommand.LastClickedPosition.Y;
             node.Position = vec;
             node.Name = "3DCursor";
             if (MainCommand.RootNode.GetNodeOrNull("3DCursor") != null) RemoveSelector();
@@ -59,19 +58,18 @@ namespace RTS.Editor
                     RemoveSelector();
             if (Input.IsActionJustPressed("mouse_left_click"))
             {
-                var raycastResult = _camera.GetRaycast();
-                if (raycastResult.X >= 0 && raycastResult.X < MainCommand.GridSize * 2 && raycastResult.Z >= 0 && raycastResult.Z < MainCommand.GridSize * 2)
-                    AddSelector(raycastResult);
+                if(MapEditorCommand.LastClickedNode != null)
+                    AddSelector(MapEditorCommand.LastClickedNode.GlobalPosition);
             }
             if (Input.IsActionJustPressed("F5") && MapEditorCommand.FieldSelector != null)
             {
                 Node3D replaceNode;
                 Node field = MainCommand.RootNode.GetNode("Field");
-                var nodeForRemoving = field.GetNode($"{MainCommand.SUFFIX}{MapEditorCommand.FieldSelector.Position.X - 1}-{MapEditorCommand.FieldSelector.Position.Z - 1}");
-                field.RemoveChild(nodeForRemoving);
                 replaceNode = GD.Load<PackedScene>("res://prefabs/tiles/SandTile_Simple.tscn").Instantiate<Node3D>();
-                replaceNode.Name = nodeForRemoving.Name;
-                replaceNode.Position = new Vector3(MapEditorCommand.FieldSelector.Position.X - 1, 0, MapEditorCommand.FieldSelector.Position.Z - 1);
+                replaceNode.Name = MapEditorCommand.LastClickedNode.GetParent().GetParent().Name;
+                replaceNode.Position = new Vector3(MapEditorCommand.FieldSelector.Position.X - 1, 6, MapEditorCommand.FieldSelector.Position.Z - 1);
+                var node = field.GetNode(MapEditorCommand.LastClickedNode.GetParent().GetParent().Name.ToString());
+                field.RemoveChild(node);
                 field.AddChild(replaceNode);
             }
         }

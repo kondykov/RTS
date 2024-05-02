@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ct1603crj6l3"]
+[gd_scene load_steps=9 format=3 uid="uid://ct1603crj6l3"]
 
 [ext_resource type="Script" path="res://scripts/MainCommandHandler.cs" id="1_pyno1"]
 [ext_resource type="MeshLibrary" uid="uid://cgd56dn01psfs" path="res://models/meshLibrary.tres" id="1_pyv14"]
@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://scripts/camera/WorldCamera.cs" id="4_mjgsw"]
 [ext_resource type="LabelSettings" uid="uid://b3e24axr84y8u" path="res://fonts/TestLabelSettings.tres" id="6_8dqmx"]
 [ext_resource type="Script" path="res://scripts/dbg/DebugMenu.cs" id="6_8lt3s"]
-[ext_resource type="Script" path="res://new_script.gd" id="7_scce0"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_i21la"]
 
@@ -67,11 +66,7 @@ theme_override_constants/margin_right = 5
 
 [node name="Label" type="Label" parent="CanvasLayer/DebugContainerRight"]
 layout_mode = 2
-text = "Controls:
-WASD - Move camera
-QE - Zoom
-+/- - Speed
-F3 - Debug menu"
+text = "Controls:"
 label_settings = ExtResource("6_8dqmx")
 horizontal_alignment = 2
 
@@ -97,7 +92,7 @@ script = ExtResource("6_8lt3s")
 
 [node name="DebugLabel" type="Label" parent="CanvasLayer/DebugContainer"]
 layout_mode = 2
-text = "Failed to load debug menu."
+text = "Fatal error: failed to load debug menu."
 label_settings = ExtResource("6_8dqmx")
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
@@ -117,7 +112,6 @@ layout_mode = 2
 layout_mode = 2
 text = "Tile Editor
 "
-script = ExtResource("7_scce0")
 
 [node name="Object Editor" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -129,8 +123,6 @@ layout_mode = 2
 text = "Exit
 "
 
-[connection signal="pressed" from="CanvasLayer/MarginContainer/VBoxContainer/TileEditor" to="." method="_on_tile_editor_pressed"]
 [connection signal="pressed" from="CanvasLayer/MarginContainer/VBoxContainer/TileEditor" to="." method="SelectTileEditor"]
-[connection signal="pressed" from="CanvasLayer/MarginContainer/VBoxContainer/TileEditor" to="CanvasLayer/MarginContainer/VBoxContainer/TileEditor" method="_on_pressed"]
 [connection signal="pressed" from="CanvasLayer/MarginContainer/VBoxContainer/Object Editor" to="." method="SelectObjectEditor"]
 [connection signal="pressed" from="CanvasLayer/MarginContainer/VBoxContainer/Exit" to="." method="ClearSelector"]

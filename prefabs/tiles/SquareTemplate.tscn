@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://fypr7yseo6d6"]
+
+[ext_resource type="Script" path="res://scripts/editor/tile/StaticNodeHandler.cs" id="1_w5yki"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fejbj"]
+size = Vector3(2.01419, 0.987982, 2.01831)
+
+[node name="Tile" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+script = ExtResource("1_w5yki")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000656128, 0.503434, 0.00549316)
+shape = SubResource("BoxShape3D_fejbj")

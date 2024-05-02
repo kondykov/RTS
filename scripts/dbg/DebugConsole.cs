@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RTS.Loaders;
+﻿using RTS.Editor;
+using System;
 
-namespace RTS.scripts.dbg
+namespace RTS.Debug
 {
-    internal class DebugConsole
+    public static class DebugConsole
     {
-        public void Print()
+        public static void PrintLastClickedNode()
         {
-            
-        }
-        public static void TestLoader()
-        {
-            Loaders.Preloader.GetTiles("res://prefabs/tiles");
+            if (MapEditorCommand.LastClickedNode == null) Console.WriteLine("Clicked node: NULL");
+            else Console.WriteLine($"Clicked node: {MapEditorCommand.LastClickedNode} {MapEditorCommand.LastClickedNode.GlobalPosition}, path {MapEditorCommand.LastClickedNode.GetPath()}");
         }
     }
 }
