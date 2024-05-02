@@ -22,8 +22,8 @@ namespace RTS
         public override void _Ready()
         {
             MainCommand.RootNode = GetTree().Root.GetChild<Node3D>(0);
+            Preloader.GetTiles("res://prefabs/tiles");
             _mapEditor.GenerateSimpleField();
-            Preloader.GetFileNamesFromFolder("res://prefabs/tiles");
         }
         public override void _Process(double delta)
         {            

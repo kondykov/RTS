@@ -15,7 +15,7 @@ namespace RTS.scripts.dbg
         }
         public static void TestLoader()
         {
-            Loaders.Preloader.GetFileNamesFromFolder("res://prefabs/tiles");
+            Loaders.Preloader.GetTiles("res://prefabs/tiles");
         }
     }
 }

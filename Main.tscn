@@ -129,8 +129,8 @@ layout_mode = 2
 text = "Exit
 "
 
-[connection signal="pressed" from="CanvasLayer/MarginContainer/VBoxContainer/TileEditor" to="." method="SelectTileEditor"]
 [connection signal="pressed" from="CanvasLayer/MarginContainer/VBoxContainer/TileEditor" to="." method="_on_tile_editor_pressed"]
+[connection signal="pressed" from="CanvasLayer/MarginContainer/VBoxContainer/TileEditor" to="." method="SelectTileEditor"]
 [connection signal="pressed" from="CanvasLayer/MarginContainer/VBoxContainer/TileEditor" to="CanvasLayer/MarginContainer/VBoxContainer/TileEditor" method="_on_pressed"]
 [connection signal="pressed" from="CanvasLayer/MarginContainer/VBoxContainer/Object Editor" to="." method="SelectObjectEditor"]
 [connection signal="pressed" from="CanvasLayer/MarginContainer/VBoxContainer/Exit" to="." method="ClearSelector"]

@@ -1,6 +1,7 @@
 using Godot;
 using RTS.Camera;
 using RTS.editor;
+using RTS.Loaders;
 using RTS.scripts.dbg;
 using System;
 
@@ -12,17 +13,19 @@ namespace RTS.Editor
         {
 
             PackedScene tiles = GD.Load<PackedScene>("res://prefabs/tiles/GrassTile_Simple.tscn");
+            var tile = Preloader.GetTile(1);
             var field = MainCommand.RootNode.GetNode("Field");
             for (int i = 0; i < MainCommand.GridSize * 2; i += 2)
             {
                 for (int j = 0; j < MainCommand.GridSize * 2; j += 2)
                 {
                     Cell cell = new Cell();
-                    cell.Node = tiles.Instantiate<Node3D>();
+                    //cell.Node = tiles.Instantiate<Node3D>();
+                    cell.Node = tile.Instantiate<Node3D>();
                     cell.Node.Name = $"{MainCommand.SUFFIX}{i}-{j}";
                     cell.Node.Position = new Vector3(i, 0, j);
                     Cell.AppendCell(cell);
-
+                    //cell.Node.SetScript("res://scripts/editor/tile/TileScript.cs");
                     field.AddChild(cell.Node);
                 }
             }

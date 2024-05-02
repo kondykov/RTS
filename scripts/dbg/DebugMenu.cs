@@ -49,7 +49,6 @@ public partial class DebugMenu : MarginContainer
 
         if (Input.IsActionJustPressed("F5"))
         {
-            Console.WriteLine(GetTreeDBG());
             debugInfo += GetTileList();
         }
         label.Text = debugInfo;
