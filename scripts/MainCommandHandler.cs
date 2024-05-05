@@ -1,6 +1,7 @@
 using Godot;
 using Godot.Collections;
 using RTS.Camera;
+using RTS.Debug;
 using RTS.Editor;
 using RTS.Loaders;
 using System;
@@ -16,18 +17,21 @@ namespace RTS
         private Vector3 _selectorPosition = new Vector3(-1, -1, -1);
         private MapEditorCommandHandler _mapEditor = new MapEditorCommandHandler();
         private WorldCamera _camera = new WorldCamera();
+        
         public void ClearSelector() => MainCommand.Mode = ControlModes.None;
         public void SelectTileEditor() => MainCommand.Mode = ControlModes.TileEditor;
         public void SelectObjectEditor() => MainCommand.Mode = ControlModes.ObjectEditor;
 
         public override void _Ready()
         {
+            MainCommand.CurrentCamera = _camera;
             MainCommand.RootNode = GetTree().Root.GetChild<Node3D>(0);
             Preloader.GetTiles("res://prefabs/tiles");
             _mapEditor.GenerateSimpleField();
         }
         public override void _Process(double delta)
-        {            
+        {
+            DebugConsole.Print();
             switch (MainCommand.Mode) 
             { 
                 case ControlModes.TileEditor:

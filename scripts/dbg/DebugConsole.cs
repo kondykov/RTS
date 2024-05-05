@@ -1,14 +1,15 @@
 ﻿using RTS.Editor;
+using RTS.Camera;
+using Godot;
 using System;
 
 namespace RTS.Debug
 {
     public static class DebugConsole
     {
-        public static void PrintLastClickedNode()
+        public static void Print()
         {
-            if (MapEditorCommand.LastClickedNode == null) Console.WriteLine("Clicked node: NULL");
-            else Console.WriteLine($"Clicked node: {MapEditorCommand.LastClickedNode} {MapEditorCommand.LastClickedNode.GlobalPosition}, path {MapEditorCommand.LastClickedNode.GetPath()}");
+            if (Input.IsActionJustPressed("mouse_left_click")) Console.WriteLine(MainCommand.CurrentCamera.GetRaycast());
         }
     }
 }

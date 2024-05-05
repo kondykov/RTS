@@ -19,7 +19,7 @@ namespace RTS.Camera
             Size = Math.Clamp(Size, 10, 300);
             Fov = Math.Clamp(Fov, 10, 110);
         }
-        public Vector3 GetRaycast()
+        public Dictionary GetRaycast()
         {
             var camera = MainCommand.RootNode.GetNode<Camera3D>("RTSCameraBody/RTSCamera");
             var mousePosition = MainCommand.RootNode.GetViewport().GetMousePosition();
@@ -31,7 +31,7 @@ namespace RTS.Camera
             rayQuery.To = to;
             var raycastResult = space.IntersectRay(rayQuery);
             Debug.DebugMenu.MousePosition = raycastResult["position"].AsVector3();
-            return raycastResult["position"].AsVector3();
+            return raycastResult;
         }
     }
 }

@@ -25,7 +25,6 @@ namespace RTS.Editor
                     cell.Node.Position = new Vector3(i, 0, j);
                     Cell.AppendCell(cell);
                     field.AddChild(cell.Node);
-                    Console.WriteLine(cell.Node.GetPath());
                 }
             }
         }
@@ -69,6 +68,7 @@ namespace RTS.Editor
                 replaceNode.Name = MapEditorCommand.LastClickedNode.GetParent().GetParent().Name;
                 replaceNode.Position = new Vector3(MapEditorCommand.FieldSelector.Position.X - 1, 6, MapEditorCommand.FieldSelector.Position.Z - 1);
                 var node = field.GetNode(MapEditorCommand.LastClickedNode.GetParent().GetParent().Name.ToString());
+                
                 field.RemoveChild(node);
                 field.AddChild(replaceNode);
             }

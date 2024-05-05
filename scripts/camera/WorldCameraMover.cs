@@ -18,7 +18,7 @@ namespace RTS.Camera
             if (Input.IsActionPressed("D")) direction += Vector3.Right;
             if (Input.IsActionPressed("ui_page_up")) direction += Vector3.Up;
             if (Input.IsActionPressed("ui_page_down")) direction += Vector3.Down;
-            if (Input.IsActionJustPressed("space")) // Return to start position
+            if (Input.IsActionJustPressed("space"))
             {
                 Position = new Vector3(0, 0, 0);
                 Rotation = new Vector3(0, -2.35f, 0);
