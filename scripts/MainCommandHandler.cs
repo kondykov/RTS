@@ -17,6 +17,7 @@ namespace RTS
         private Vector3 _selectorPosition = new Vector3(-1, -1, -1);
         private MapEditorCommandHandler _mapEditor = new MapEditorCommandHandler();
         private WorldCamera _camera = new WorldCamera();
+        private bool _camPhysicMode = false;
         
         public void ClearSelector() => MainCommand.Mode = ControlModes.None;
         public void SelectTileEditor() => MainCommand.Mode = ControlModes.TileEditor;
@@ -26,8 +27,9 @@ namespace RTS
         {
             MainCommand.CurrentCamera = _camera;
             MainCommand.RootNode = GetTree().Root.GetChild<Node3D>(0);
-            Preloader.GetTiles("res://prefabs/tiles");
-            AddChild(GD.Load<PackedScene>("res://testFiles/terrain.tscn").Instantiate<Node3D>());
+            Run();
+            //Preloader.GetTiles("res://prefabs/tiles");
+            //AddChild(GD.Load<PackedScene>("res://testFiles/terrain.tscn").Instantiate<Node3D>());
             //_mapEditor.GenerateSimpleField();
         }
         public override void _Process(double delta)
@@ -51,6 +53,17 @@ namespace RTS
             newVector.Z = (int)vector.Z;
             return newVector;
         }
+        /*
+         * Calling GDScript methods
+         */
 
+        private void Run()
+        {
+
+            GDScript hTerrain = GD.Load<GDScript>("res://scripts/TestHTerrains.gd");
+            GodotObject hTerrainObject = (GodotObject)hTerrain.New(); // This is a GodotObject.
+
+            hTerrainObject.Call("run");
+        }
     }
 }
