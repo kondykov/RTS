@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/MainCommandHandler.cs" id="1_pyno1"]
 [ext_resource type="MeshLibrary" uid="uid://cgd56dn01psfs" path="res://models/meshLibrary.tres" id="1_pyv14"]
-[ext_resource type="Script" path="res://scripts/camera/CharacterController.cs" id="2_vd8tk"]
+[ext_resource type="Script" path="res://scripts/camera/WorldCameraMover.cs" id="2_0nseo"]
 [ext_resource type="Script" path="res://scripts/camera/WorldCamera.cs" id="4_mjgsw"]
 [ext_resource type="Script" path="res://scripts/editor/gridMap/GridMap.cs" id="5_d5oxq"]
 [ext_resource type="LabelSettings" uid="uid://b3e24axr84y8u" path="res://fonts/TestLabelSettings.tres" id="6_8dqmx"]
@@ -17,7 +17,7 @@ script = ExtResource("1_pyno1")
 
 [node name="RTSCameraBody" type="CharacterBody3D" parent="."]
 transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 0, 0, 0)
-script = ExtResource("2_vd8tk")
+script = ExtResource("2_0nseo")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RTSCameraBody"]
 transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 0, 2, 0)
@@ -26,15 +26,22 @@ shape = SubResource("CapsuleShape3D_i21la")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RTSCameraBody/CollisionShape3D"]
 mesh = SubResource("CapsuleMesh_83fwt")
 
+[node name="SpotLight3D" type="SpotLight3D" parent="RTSCameraBody/CollisionShape3D/MeshInstance3D"]
+transform = Transform3D(-0.689975, 0.126763, -0.712646, 0.000561086, 0.984639, 0.174601, 0.723832, 0.12007, -0.679448, 0, 0, 0)
+shadow_enabled = true
+spot_range = 296.465
+spot_angle = 28.441
+
 [node name="RTSCamera" type="Camera3D" parent="RTSCameraBody"]
-transform = Transform3D(1, 0, 0, 0, 0.669131, 0.743145, 0, -0.743145, 0.669131, 0, 50, 42.4264)
+transform = Transform3D(1, 0, 0, 0, 0.669131, 0.743145, 0, -0.743145, 0.66913, 0, 50, 42.4264)
 current = true
 fov = 50.0
 size = 50.0
+near = 0.3
 script = ExtResource("4_mjgsw")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.789149, 0.433013, -0.435596, -0.0473672, 0.75, 0.65974, 0.612372, -0.5, 0.612373, -4.96852, 40.2911, 0)
+transform = Transform3D(0.789149, 0.433013, -0.435596, -0.0473672, 0.75, 0.65974, 0.612372, -0.5, 0.612372, -4.96852, 40.2911, 0)
 shadow_enabled = true
 directional_shadow_mode = 0
 

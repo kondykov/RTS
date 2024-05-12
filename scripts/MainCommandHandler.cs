@@ -27,7 +27,8 @@ namespace RTS
             MainCommand.CurrentCamera = _camera;
             MainCommand.RootNode = GetTree().Root.GetChild<Node3D>(0);
             Preloader.GetTiles("res://prefabs/tiles");
-            _mapEditor.GenerateSimpleField();
+            AddChild(GD.Load<PackedScene>("res://testFiles/terrain.tscn").Instantiate<Node3D>());
+            //_mapEditor.GenerateSimpleField();
         }
         public override void _Process(double delta)
         {

@@ -16,7 +16,7 @@ namespace RTS
     public static class MainCommand
     {
         public const string SUFFIX = "Tile_";
-        static public int GridSize = 100;
+        static public int GridSize = 10;
         static public ControlModes Mode = ControlModes.None;
         static public Node3D RootNode;
         static public WorldCamera CurrentCamera; 

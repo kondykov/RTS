@@ -25,7 +25,7 @@ namespace RTS.Camera
                 Rotation = new Vector3(0, -2.35f, 0);
             }
 
-            if (!IsOnFloor())
+            if (!IsOnFloor() && !Input.IsActionPressed("mouse_left_click"))
                 velocity.Y -= _gravity * (float)delta;
 
             if (Input.IsActionJustPressed("ui_page_up") && IsOnFloor())
