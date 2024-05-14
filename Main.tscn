@@ -106,6 +106,7 @@ script = ExtResource("6_yaji3")
 metadata/debug_wirecube_mesh = SubResource("ArrayMesh_q422v")
 
 [node name="HTerrain" type="Node3D" parent="Field"]
+visible = false
 script = ExtResource("6_o5vye")
 _terrain_data = ExtResource("7_4kv2j")
 chunk_size = 32

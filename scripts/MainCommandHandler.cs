@@ -27,10 +27,12 @@ namespace RTS
         {
             MainCommand.CurrentCamera = _camera;
             MainCommand.RootNode = GetTree().Root.GetChild<Node3D>(0);
-            Run();
+            //Run();
             //Preloader.GetTiles("res://prefabs/tiles");
             //AddChild(GD.Load<PackedScene>("res://testFiles/terrain.tscn").Instantiate<Node3D>());
             //_mapEditor.GenerateSimpleField();
+            HTerrainTest hTerrainTest = new HTerrainTest();
+            hTerrainTest._Init();
         }
         public override void _Process(double delta)
         {

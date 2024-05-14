@@ -6,17 +6,20 @@ using System.Threading.Tasks;
 using Godot;
 using GodotPlugins;
 
-namespace RTS.scripts.editor.tile
+namespace RTS.Editor
 {
     public class HTerrainTest
     { 
         //GDScript gdScript = GD.Load<GDScript>("res://addons/zylann.hterrain/hterrain.gd");
-        GDScript gdScript = GD.Load<GDScript>("res://script/TestHTerrain/HTerrain.gd");
-        Node _HTerrain = MainCommand.RootNode.GetNode("RootHTerrain/HTerrain");
-        void _Init()
+        GDScript gdScript = GD.Load<GDScript>("res://scripts/TestHTerrains.gd");
+        Node _HTerrain = MainCommand.RootNode.GetNode("Field/HTerrain");
+        static Node _hTerrain;
+        public void _Init()
         {
+            _hTerrain = MainCommand.RootNode.GetNode("Field/HTerrain");
+            Console.WriteLine(_hTerrain.Name);
             var asd = (GodotObject)gdScript.New(_HTerrain);
-            asd.Call("test");
+            asd.Call("_ready");
         }
     }
 }

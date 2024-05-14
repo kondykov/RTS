@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using RTS.Debug;
 using System;
 
 namespace RTS.Camera
@@ -21,17 +22,25 @@ namespace RTS.Camera
         }
         public Dictionary GetRaycast()
         {
-            var camera = MainCommand.RootNode.GetNode<Camera3D>("RTSCameraBody/RTSCamera");
-            var mousePosition = MainCommand.RootNode.GetViewport().GetMousePosition();
-            var from = camera.ProjectRayOrigin(mousePosition);
-            var to = from + camera.ProjectRayNormal(mousePosition) * _arrayLenth;
-            var space = MainCommand.RootNode.GetWorld3D().DirectSpaceState;
-            var rayQuery = new PhysicsRayQueryParameters3D();
-            rayQuery.From = from;
-            rayQuery.To = to;
-            var raycastResult = space.IntersectRay(rayQuery);
-            Debug.DebugMenu.MousePosition = raycastResult["position"].AsVector3();
-            return raycastResult;
+            try
+            {
+                var camera = MainCommand.RootNode.GetNode<Camera3D>("RTSCameraBody/RTSCamera");
+                var mousePosition = MainCommand.RootNode.GetViewport().GetMousePosition();
+                var from = camera.ProjectRayOrigin(mousePosition);
+                var to = from + camera.ProjectRayNormal(mousePosition) * _arrayLenth;
+                var space = MainCommand.RootNode.GetWorld3D().DirectSpaceState;
+                var rayQuery = new PhysicsRayQueryParameters3D();
+                rayQuery.From = from;
+                rayQuery.To = to;
+                var raycastResult = space.IntersectRay(rayQuery);
+                Debug.DebugMenu.MousePosition = raycastResult["position"].AsVector3();
+                return raycastResult;
+            }
+            catch (Exception ex)
+            {
+                RTSMessageWriter.WriteError(ex.Message);
+            }
+            return null;
         }
     }
 }
