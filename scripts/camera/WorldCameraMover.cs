@@ -23,7 +23,9 @@ namespace RTS.Camera
             {
                 Position = new Vector3(0, 0, 0);
                 Rotation = new Vector3(0, -2.35f, 0);
-            }            
+            }
+            if (Input.IsActionPressed("Shift")) Speed = 100;
+            else Speed = 20;
             if (direction != Vector3.Zero)
             {
                 direction = direction.Normalized();

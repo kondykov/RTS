@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://ct1603crj6l3"]
+[gd_scene load_steps=23 format=3 uid="uid://ct1603crj6l3"]
 
 [ext_resource type="Script" path="res://scripts/MainCommandHandler.cs" id="1_pyno1"]
 [ext_resource type="MeshLibrary" uid="uid://cgd56dn01psfs" path="res://models/meshLibrary.tres" id="1_pyv14"]
@@ -10,11 +10,37 @@
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain.gd" id="6_o5vye"]
 [ext_resource type="Script" path="res://scripts/TestHTerrains.gd" id="6_yaji3"]
 [ext_resource type="Resource" path="res://testFiles/data.hterrain" id="7_4kv2j"]
-[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="8_dj825"]
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="8_15hw7"]
+[ext_resource type="Texture2D" uid="uid://difgpg8fvp8rh" path="res://testFiles/slot0_albedo_bump.png" id="9_153l0"]
+[ext_resource type="Texture2D" uid="uid://bp8kgaalvq3qu" path="res://testFiles/slot1_albedo_bump.png" id="10_wrtin"]
+[ext_resource type="Texture2D" uid="uid://buvw0nq2lmvfs" path="res://testFiles/slot0_normal_roughness.png" id="11_lxcry"]
+[ext_resource type="Texture2D" uid="uid://n4lt48q4j3s7" path="res://testFiles/slot1_normal_roughness.png" id="12_nltu5"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_i21la"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_83fwt"]
+
+[sub_resource type="Resource" id="Resource_e1skj"]
+script = ExtResource("8_15hw7")
+mode = 0
+textures = [[ExtResource("9_153l0"), ExtResource("10_wrtin")], [ExtResource("11_lxcry"), ExtResource("12_nltu5")]]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qoia3"]
+shading_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ugi1j"]
+_surfaces = [{
+"aabb": AABB(0, 0, 0, 1, 1, 1),
+"attribute_data": PackedByteArray(255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255),
+"format": 34359742473,
+"index_count": 24,
+"index_data": PackedByteArray(0, 0, 1, 0, 1, 0, 2, 0, 2, 0, 3, 0, 3, 0, 0, 0, 4, 0, 5, 0, 5, 0, 6, 0, 6, 0, 7, 0, 7, 0, 4, 0, 0, 0, 4, 0, 1, 0, 5, 0, 2, 0, 6, 0, 3, 0, 7, 0),
+"material": SubResource("StandardMaterial3D_qoia3"),
+"primitive": 1,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 8,
+"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63)
+}]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jh0rk"]
 shading_mode = 0
@@ -27,28 +53,6 @@ _surfaces = [{
 "index_count": 24,
 "index_data": PackedByteArray(0, 0, 1, 0, 1, 0, 2, 0, 2, 0, 3, 0, 3, 0, 0, 0, 4, 0, 5, 0, 5, 0, 6, 0, 6, 0, 7, 0, 7, 0, 4, 0, 0, 0, 4, 0, 1, 0, 5, 0, 2, 0, 6, 0, 3, 0, 7, 0),
 "material": SubResource("StandardMaterial3D_jh0rk"),
-"primitive": 1,
-"uv_scale": Vector4(0, 0, 0, 0),
-"vertex_count": 8,
-"vertex_data": PackedByteArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 128, 63, 0, 0, 0, 0, 0, 0, 128, 63, 0, 0, 128, 63)
-}]
-
-[sub_resource type="Resource" id="Resource_x64dd"]
-script = ExtResource("8_dj825")
-mode = 0
-textures = [[], []]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1lt71"]
-shading_mode = 0
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_4lxiy"]
-_surfaces = [{
-"aabb": AABB(0, 0, 0, 1, 1, 1),
-"attribute_data": PackedByteArray(255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255),
-"format": 34359742473,
-"index_count": 24,
-"index_data": PackedByteArray(0, 0, 1, 0, 1, 0, 2, 0, 2, 0, 3, 0, 3, 0, 0, 0, 4, 0, 5, 0, 5, 0, 6, 0, 6, 0, 7, 0, 7, 0, 4, 0, 0, 0, 4, 0, 1, 0, 5, 0, 2, 0, 6, 0, 3, 0, 7, 0),
-"material": SubResource("StandardMaterial3D_1lt71"),
 "primitive": 1,
 "uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 8,
@@ -101,12 +105,8 @@ metadata/_editor_floor_ = Vector3(0, 1, 0)
 [node name="Field" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.999998, 0, 0.999998)
 
-[node name="HTerr" type="Node3D" parent="Field"]
-script = ExtResource("6_yaji3")
-metadata/debug_wirecube_mesh = SubResource("ArrayMesh_q422v")
-
 [node name="HTerrain" type="Node3D" parent="Field"]
-visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.999998, 0, -0.999998)
 script = ExtResource("6_o5vye")
 _terrain_data = ExtResource("7_4kv2j")
 chunk_size = 32
@@ -116,7 +116,7 @@ collision_mask = 1
 shader_type = "Classic4Lite"
 custom_shader = null
 custom_globalmap_shader = null
-texture_set = SubResource("Resource_x64dd")
+texture_set = SubResource("Resource_e1skj")
 render_layers = 1
 cast_shadow = 1
 shader_params/u_ground_uv_scale = 20
@@ -124,7 +124,11 @@ shader_params/u_depth_blending = true
 shader_params/u_triplanar = false
 shader_params/u_tile_reduction = Vector4(0, 0, 0, 0)
 shader_params/u_specular = 0.5
-metadata/debug_wirecube_mesh = SubResource("ArrayMesh_4lxiy")
+metadata/debug_wirecube_mesh = SubResource("ArrayMesh_ugi1j")
+
+[node name="HTerr" type="Node3D" parent="Field"]
+script = ExtResource("6_yaji3")
+metadata/debug_wirecube_mesh = SubResource("ArrayMesh_q422v")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

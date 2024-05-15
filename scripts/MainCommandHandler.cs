@@ -1,13 +1,9 @@
 using Godot;
-using Godot.Collections;
 using RTS.Camera;
 using RTS.Debug;
 using RTS.Editor;
-using RTS.Loaders;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Runtime.CompilerServices;
+using Terrain;
 
 namespace RTS
 {
@@ -18,7 +14,7 @@ namespace RTS
         private MapEditorCommandHandler _mapEditor = new MapEditorCommandHandler();
         private WorldCamera _camera = new WorldCamera();
         private bool _camPhysicMode = false;
-        
+
         public void ClearSelector() => MainCommand.Mode = ControlModes.None;
         public void SelectTileEditor() => MainCommand.Mode = ControlModes.TileEditor;
         public void SelectObjectEditor() => MainCommand.Mode = ControlModes.ObjectEditor;
@@ -27,22 +23,23 @@ namespace RTS
         {
             MainCommand.CurrentCamera = _camera;
             MainCommand.RootNode = GetTree().Root.GetChild<Node3D>(0);
-            //Run();
             //Preloader.GetTiles("res://prefabs/tiles");
             //AddChild(GD.Load<PackedScene>("res://testFiles/terrain.tscn").Instantiate<Node3D>());
             //_mapEditor.GenerateSimpleField();
             HTerrainTest hTerrainTest = new HTerrainTest();
             hTerrainTest._Init();
+
+        
         }
         public override void _Process(double delta)
         {
             DebugConsole.Print();
-            switch (MainCommand.Mode) 
-            { 
+            switch (MainCommand.Mode)
+            {
                 case ControlModes.TileEditor:
                     _mapEditor.EditorHandler(_camera);
                     break;
-                default: 
+                default:
                     _mapEditor.RemoveSelector();
                     break;
             }
@@ -54,18 +51,6 @@ namespace RTS
             newVector.Y = (int)vector.Y;
             newVector.Z = (int)vector.Z;
             return newVector;
-        }
-        /*
-         * Calling GDScript methods
-         */
-
-        private void Run()
-        {
-
-            GDScript hTerrain = GD.Load<GDScript>("res://scripts/TestHTerrains.gd");
-            GodotObject hTerrainObject = (GodotObject)hTerrain.New(); // This is a GodotObject.
-
-            hTerrainObject.Call("run");
         }
     }
 }

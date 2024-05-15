@@ -33,12 +33,12 @@ namespace RTS.Camera
                 rayQuery.From = from;
                 rayQuery.To = to;
                 var raycastResult = space.IntersectRay(rayQuery);
-                Debug.DebugMenu.MousePosition = raycastResult["position"].AsVector3();
+                DebugMenu.MousePosition = raycastResult["position"].AsVector3();
                 return raycastResult;
             }
-            catch (Exception ex)
-            {
-                RTSMessageWriter.WriteError(ex.Message);
+            catch
+            { 
+                Messager.WriteMessage(Status.WARNING_RAYCAST_RETURNS_NULL);
             }
             return null;
         }
