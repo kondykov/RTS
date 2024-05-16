@@ -22,9 +22,9 @@ namespace RTS.Camera
         }
         public Dictionary GetRaycast()
         {
+            var camera = MainCommand.RootNode.GetNode<Camera3D>("RTSCameraBody/RTSCamera");
             try
             {
-                var camera = MainCommand.RootNode.GetNode<Camera3D>("RTSCameraBody/RTSCamera");
                 var mousePosition = MainCommand.RootNode.GetViewport().GetMousePosition();
                 var from = camera.ProjectRayOrigin(mousePosition);
                 var to = from + camera.ProjectRayNormal(mousePosition) * _arrayLenth;
