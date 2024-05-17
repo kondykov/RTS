@@ -21,7 +21,7 @@ project/assembly_name="RTS"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/m_terrain/plugin.cfg", "res://addons/smooth_terrain/plugin.cfg", "res://addons/zylann.hterrain/plugin.cfg")
+enabled=PackedStringArray("res://addons/TerrainPlugin/plugin.cfg", "res://addons/zylann.hterrain/plugin.cfg")
 
 [input]
 

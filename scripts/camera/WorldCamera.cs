@@ -23,6 +23,7 @@ namespace RTS.Camera
         }
         public Dictionary GetRaycast()
         {
+            var camera = MainCommand.PerspectiveCamera;
             try
             {
                 var camera = MainCommand.PerspectiveCamera;
