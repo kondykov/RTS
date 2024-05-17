@@ -26,7 +26,6 @@ namespace RTS.Camera
             var camera = MainCommand.PerspectiveCamera;
             try
             {
-                var camera = MainCommand.PerspectiveCamera;
                 var mousePosition = MainCommand.RootNode.GetViewport().GetMousePosition();
                 var from = camera.ProjectRayOrigin(mousePosition);
                 var to = from + camera.ProjectRayNormal(mousePosition) * _arrayLenth;

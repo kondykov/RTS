@@ -22,11 +22,6 @@ namespace RTS
         public override void _Ready()
         {
             _Init();
-            //Preloader.GetTiles("res://prefabs/tiles");
-            //AddChild(GD.Load<PackedScene>("res://testFiles/terrain.tscn").Instantiate<Node3D>());
-            //_mapEditor.GenerateSimpleField();
-            HTerrainTest hTerrainTest = new HTerrainTest();
-            hTerrainTest._Init();        
         }
         private void _Init()
         {
