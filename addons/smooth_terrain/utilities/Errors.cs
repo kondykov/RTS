@@ -16,7 +16,7 @@ namespace Terrain
         ERR_UNCOFIGURED,
         ERR_UNATHORIZED
     }
-    public static class StN
+    public class StN
     {
         public static readonly Dictionary<Status, string> StatusNames = new Dictionary<Status, string>()
         {
@@ -27,7 +27,7 @@ namespace Terrain
         
         public static string GetMessage(Status status)
         {
-            if(StatusNames.ContainsKey(status)) return StatusNames[status];
+            if (StatusNames.ContainsKey(status)) return StatusNames[status];
             return $"{status}";
         }
     }

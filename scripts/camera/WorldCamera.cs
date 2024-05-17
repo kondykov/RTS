@@ -9,6 +9,7 @@ namespace RTS.Camera
     {
         [Export] private int zoomSpeed = 100;
         private int _arrayLenth = 1000;
+        public bool IsActive = true;
         public int ZoomSpeed { get => zoomSpeed; set => zoomSpeed = value; }
         public WorldCamera() { }
         public override void _Process(double delta)
@@ -24,7 +25,7 @@ namespace RTS.Camera
         {
             try
             {
-                var camera = MainCommand.RootNode.GetNode<Camera3D>("RTSCameraBody/RTSCamera");
+                var camera = MainCommand.PerspectiveCamera;
                 var mousePosition = MainCommand.RootNode.GetViewport().GetMousePosition();
                 var from = camera.ProjectRayOrigin(mousePosition);
                 var to = from + camera.ProjectRayNormal(mousePosition) * _arrayLenth;
@@ -33,14 +34,10 @@ namespace RTS.Camera
                 rayQuery.From = from;
                 rayQuery.To = to;
                 var raycastResult = space.IntersectRay(rayQuery);
-                DebugMenu.MousePosition = raycastResult["position"].AsVector3();
-                return raycastResult;
+                try { DebugMenu.MousePosition = raycastResult["position"].AsVector3(); return raycastResult; }
+                catch { DebugConsole.WriteMessage(FunctionStatus.WARNING_WORLD_CAMERA_RAYCAST_RETURNS_NULL); return null; }                
             }
-            catch
-            { 
-                Messager.WriteMessage(Status.WARNING_RAYCAST_RETURNS_NULL);
-            }
-            return null;
+            catch { DebugConsole.WriteMessage(FunctionStatus.ERR_FAILED_TO_GET_CAMERA_DATA); return null; }
         }
     }
 }

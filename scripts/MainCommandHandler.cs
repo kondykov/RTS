@@ -21,19 +21,28 @@ namespace RTS
 
         public override void _Ready()
         {
-            MainCommand.CurrentCamera = _camera;
-            MainCommand.RootNode = GetTree().Root.GetChild<Node3D>(0);
+            _Init();
             //Preloader.GetTiles("res://prefabs/tiles");
             //AddChild(GD.Load<PackedScene>("res://testFiles/terrain.tscn").Instantiate<Node3D>());
             //_mapEditor.GenerateSimpleField();
             HTerrainTest hTerrainTest = new HTerrainTest();
-            hTerrainTest._Init();
-
-        
+            hTerrainTest._Init();        
+        }
+        private void _Init()
+        {
+            try
+            {
+                MainCommand.CurrentCamera = _camera;
+                MainCommand.RootNode = GetTree().Root.GetChild<Node3D>(0);
+                MainCommand.PerspectiveCamera = MainCommand.RootNode.GetNode<Camera3D>("RTSCameraBody/RTSCamera");
+            }
+            catch
+            {
+                throw;
+            }
         }
         public override void _Process(double delta)
         {
-            DebugConsole.Print();
             switch (MainCommand.Mode)
             {
                 case ControlModes.TileEditor:
