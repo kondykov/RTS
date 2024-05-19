@@ -6,7 +6,7 @@ public partial class Chunk : StaticBody3D
 {
     [Export] public CollisionShape3D CollisionShape { get; set; }
     [Export] public MeshInstance3D MeshInstance { get; set; }
-    public static Vector3I dimensions = new Vector3I(16, 64, 16);
+    [Export] public static Vector3I dimensions = new Vector3I(16, 64, 16);
     private static readonly Vector3I[] _verties = new Vector3I[]
     {
         new Vector3I(0,0,0),
@@ -40,19 +40,12 @@ public partial class Chunk : StaticBody3D
             {
                 for (int z = 0; z < dimensions.Z; z++)
                 {
-                    try
-                    {
-                        Block block;
-                        var groundHeight = 40;
-                        if (y < groundHeight) block = BlockManager.Instance.Dirt;
-                        else if (y == groundHeight) block = BlockManager.Instance.Grass;
-                        else block = BlockManager.Instance.Air;
-                        _blocks[x, y, z] = block;
-                    }
-                    catch (Exception e) 
-                    {
-                        Console.WriteLine($"FOR {x}x{y}x{z}, EXCEPTION {e}.");
-                    }
+                    Block block;
+                    var groundHeight = 40;
+                    if (y < groundHeight) block = BlockManager.Instance.Dirt;
+                    else if (y == groundHeight) block = BlockManager.Instance.Grass;
+                    else block = BlockManager.Instance.Air;
+                    _blocks[x, y, z] = block;
                 }
             }
         }
@@ -81,7 +74,6 @@ public partial class Chunk : StaticBody3D
     {
         var block = _blocks[blockPosition.X, blockPosition.Y, blockPosition.Z];
         if (block == BlockManager.Instance.Air) return;
-
         if (CheckTransparent(blockPosition + Vector3I.Up)) CreateFaceMesh(_top, blockPosition, block.Texture);
         if (CheckTransparent(blockPosition + Vector3I.Down)) CreateFaceMesh(_bottom, blockPosition, block.Texture);
         if (CheckTransparent(blockPosition + Vector3I.Left)) CreateFaceMesh(_left, blockPosition, block.Texture);
@@ -115,7 +107,7 @@ public partial class Chunk : StaticBody3D
 
         _surfaceTool.AddTriangleFan(triagle1, uvTruagle1);
         _surfaceTool.AddTriangleFan(triagle2, uvTruagle2);
-            }
+    }
     private bool CheckTransparent(Vector3I blockPosition)
     {
         if (blockPosition.X < 0 || blockPosition.X >= dimensions.X) return true;

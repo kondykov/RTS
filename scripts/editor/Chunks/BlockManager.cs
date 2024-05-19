@@ -10,8 +10,8 @@ public partial class BlockManager : Node
     [Export] public Block Dirt { get; set; }
 
     private readonly Dictionary<Texture2D, Vector2I> _atlasLookup = new();
-    private int _gridWidth = 4;
-    private int _gridHeight;
+    private int _gridWidth = 16;
+    private int _gridHeight = 16;
 
     public Vector2I BlockTextureSize { get; } = new(16, 16);
     public Vector2 TextureAtlasSize { get; private set; }
@@ -37,6 +37,7 @@ public partial class BlockManager : Node
                 var currentImage = blockTextures[imgIndex].GetImage();
                 currentImage.Convert(Image.Format.Rgba8);
                 image.BlitRect(currentImage, new Rect2I(Vector2I.Zero, BlockTextureSize), new Vector2I(x,y) * BlockTextureSize);
+                //image.Resize(BlockTextureSize.X, BlockTextureSize.Y);
             }
         }
         var textureAtlas = ImageTexture.CreateFromImage(image);
