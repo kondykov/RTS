@@ -34,15 +34,25 @@ public partial class Chunk : StaticBody3D
     }
     public void Generate()
     {
-        var block = new Block();
-
         for (int x = 0; x < dimensions.X; x++)
         {
             for (int y = 0; y < dimensions.Y; y++)
             {
                 for (int z = 0; z < dimensions.Z; z++)
                 {
-                    _blocks[x, y, z] = block;
+                    try
+                    {
+                        Block block;
+                        var groundHeight = 40;
+                        if (y < groundHeight) block = BlockManager.Instance.Dirt;
+                        else if (y == groundHeight) block = BlockManager.Instance.Grass;
+                        else block = BlockManager.Instance.Air;
+                        _blocks[x, y, z] = block;
+                    }
+                    catch (Exception e) 
+                    {
+                        Console.WriteLine($"FOR {x}x{y}x{z}, EXCEPTION {e}.");
+                    }
                 }
             }
         }
@@ -61,42 +71,56 @@ public partial class Chunk : StaticBody3D
             }
         }
 
+        _surfaceTool.SetMaterial(BlockManager.Instance.ChunkMaterial);
+
         var mesh = _surfaceTool.Commit();
         MeshInstance.Mesh = mesh;
         CollisionShape.Shape = mesh.CreateTrimeshShape();
     }
     private void CreateBlockMesh(Vector3I blockPosition)
     {
-        if (CheckTransparent(blockPosition + Vector3I.Up)) CreateFaceMesh(_top, blockPosition);
-        if (CheckTransparent(blockPosition + Vector3I.Down)) CreateFaceMesh(_bottom, blockPosition);
-        if (CheckTransparent(blockPosition + Vector3I.Left)) CreateFaceMesh(_left, blockPosition);
-        if (CheckTransparent(blockPosition + Vector3I.Right)) CreateFaceMesh(_right, blockPosition);
-        if (CheckTransparent(blockPosition + Vector3I.Back)) CreateFaceMesh(_back, blockPosition);
-        if (CheckTransparent(blockPosition + Vector3I.Forward)) CreateFaceMesh(_front, blockPosition);
+        var block = _blocks[blockPosition.X, blockPosition.Y, blockPosition.Z];
+        if (block == BlockManager.Instance.Air) return;
 
+        if (CheckTransparent(blockPosition + Vector3I.Up)) CreateFaceMesh(_top, blockPosition, block.Texture);
+        if (CheckTransparent(blockPosition + Vector3I.Down)) CreateFaceMesh(_bottom, blockPosition, block.Texture);
+        if (CheckTransparent(blockPosition + Vector3I.Left)) CreateFaceMesh(_left, blockPosition, block.Texture);
+        if (CheckTransparent(blockPosition + Vector3I.Right)) CreateFaceMesh(_right, blockPosition, block.Texture);
+        if (CheckTransparent(blockPosition + Vector3I.Back)) CreateFaceMesh(_back, blockPosition, block.Texture);
+        if (CheckTransparent(blockPosition + Vector3I.Forward)) CreateFaceMesh(_front, blockPosition, block.Texture);
     }
-    private void CreateFaceMesh(int[] face, Vector3I blockPosition)
+    private void CreateFaceMesh(int[] face, Vector3I blockPosition, Texture2D texture)
     {
-        try
-        {
-            var a = _verties[face[0]] + blockPosition;
-            var b = _verties[face[1]] + blockPosition;
-            var c = _verties[face[2]] + blockPosition;
-            var d = _verties[face[3]] + blockPosition;
-            var triagle1 = new Vector3[] { a, b, c };
-            var triagle2 = new Vector3[] { a, c, d };
+        var texturePosition = BlockManager.Instance.GetTextureAtlasPosition(texture);
+        var textureAtlasSize = BlockManager.Instance.TextureAtlasSize;
+        var uvOffset = texturePosition / textureAtlasSize;
+        var uvWidth = 1f / textureAtlasSize.X;
+        var uvHeight = 1f / textureAtlasSize.Y;
 
-            _surfaceTool.AddTriangleFan(triagle1);
-            _surfaceTool.AddTriangleFan(triagle2);
-        }
-        catch (Exception e)
-        {
+        var uvA = uvOffset + new Vector2(0, 0);
+        var uvB = uvOffset + new Vector2(0, uvHeight);
+        var uvC = uvOffset + new Vector2(uvWidth, uvHeight);
+        var uvD = uvOffset + new Vector2(uvWidth, 0);
 
-        }
+        var a = _verties[face[0]] + blockPosition;
+        var b = _verties[face[1]] + blockPosition;
+        var c = _verties[face[2]] + blockPosition;
+        var d = _verties[face[3]] + blockPosition;
 
-    }
+        var uvTruagle1 = new Vector2[] { uvA, uvB, uvC };
+        var uvTruagle2 = new Vector2[] { uvA, uvC, uvD };
+
+        var triagle1 = new Vector3[] { a, b, c };
+        var triagle2 = new Vector3[] { a, c, d };
+
+        _surfaceTool.AddTriangleFan(triagle1, uvTruagle1);
+        _surfaceTool.AddTriangleFan(triagle2, uvTruagle2);
+            }
     private bool CheckTransparent(Vector3I blockPosition)
     {
-        return true;
+        if (blockPosition.X < 0 || blockPosition.X >= dimensions.X) return true;
+        if (blockPosition.Y < 0 || blockPosition.Y >= dimensions.Y) return true;
+        if (blockPosition.Z < 0 || blockPosition.Z >= dimensions.Z) return true;
+        return _blocks[blockPosition.X, blockPosition.Y, blockPosition.Z] == BlockManager.Instance.Air;
     }
 }
