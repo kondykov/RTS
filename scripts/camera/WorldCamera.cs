@@ -12,6 +12,7 @@ namespace RTS.Camera
         public bool IsActive = true;
         public int ZoomSpeed { get => zoomSpeed; set => zoomSpeed = value; }
         public WorldCamera() { }
+        public override void _Ready() { MainCommand.CurrentCamera = this; }
         public override void _Process(double delta)
         {
             if (Input.IsActionPressed("mouse_circle_up")) Size += ZoomSpeed * (float)delta;
@@ -23,7 +24,7 @@ namespace RTS.Camera
         }
         public Dictionary GetRaycast()
         {
-            var camera = MainCommand.PerspectiveCamera;
+            var camera = MainCommand.CurrentCamera;
             try
             {
                 var mousePosition = MainCommand.RootNode.GetViewport().GetMousePosition();

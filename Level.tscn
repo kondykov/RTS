@@ -1,12 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://ckgk1qgutb8vr"]
+[gd_scene load_steps=10 format=3 uid="uid://ckgk1qgutb8vr"]
 
 [ext_resource type="Script" path="res://scripts/editor/Chunks/BlockManager.cs" id="1_c6isc"]
 [ext_resource type="PackedScene" uid="uid://cvv0trwtb88m2" path="res://scripts/editor/Chunks/Chunk.tscn" id="1_mdba7"]
 [ext_resource type="Script" path="res://scripts/editor/Chunks/Block.cs" id="2_i3bqc"]
 [ext_resource type="Texture2D" uid="uid://2kujc2h8h8hk" path="res://prefabs/textures/FaultyTexture.png" id="2_nfecc"]
 [ext_resource type="Texture2D" uid="uid://b1o53v234a0nw" path="res://prefabs/textures/test2x2.png" id="3_igo1o"]
-[ext_resource type="Script" path="res://scripts/camera/WorldCameraMover.cs" id="7_msbli"]
-[ext_resource type="Script" path="res://scripts/camera/WorldCamera.cs" id="8_i0l1b"]
+[ext_resource type="Script" path="res://scripts/camera/FreeCamera.cs" id="6_8kuut"]
 
 [sub_resource type="Resource" id="Resource_mrkd3"]
 script = ExtResource("2_i3bqc")
@@ -29,19 +28,16 @@ Dirt = SubResource("Resource_wl8x4")
 
 [node name="Chunk" parent="." instance=ExtResource("1_mdba7")]
 
-[node name="RTSCameraBody" type="CharacterBody3D" parent="."]
-transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 0, 0, 0)
-script = ExtResource("7_msbli")
-
-[node name="RTSCamera" type="Camera3D" parent="RTSCameraBody"]
-transform = Transform3D(1, 0, 0, 0, 0.669131, 0.743145, 0, -0.743145, 0.66913, 0, 50, 42.4264)
+[node name="RTSCamera" type="Camera3D" parent="." node_paths=PackedStringArray("Camera")]
+transform = Transform3D(-0.707107, 0.525483, -0.473147, 0, 0.669131, 0.743145, 0.707107, 0.525483, -0.473147, -30, 50, -30)
 current = true
 fov = 50.0
 size = 50.0
 near = 0.3
-script = ExtResource("8_i0l1b")
+script = ExtResource("6_8kuut")
+Camera = NodePath(".")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="RTSCameraBody"]
-transform = Transform3D(0.789149, 0.433013, -0.435596, -0.0473672, 0.75, 0.65974, 0.612372, -0.5, 0.612372, -4.96852, 40.2911, 0)
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.991025, 0.0473674, -0.125, -0.0473672, 0.75, 0.65974, 0.125, 0.65974, -0.741025, 3.51328, 40.2911, -3.51328)
 shadow_enabled = true
 directional_shadow_mode = 0

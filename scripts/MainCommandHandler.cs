@@ -28,7 +28,6 @@ namespace RTS
             {
                 MainCommand.CurrentCamera = _camera;
                 MainCommand.RootNode = GetTree().Root.GetChild<Node3D>(0);
-                MainCommand.PerspectiveCamera = MainCommand.RootNode.GetNode<Camera3D>("RTSCameraBody/RTSCamera");
             }
             catch
             {
