@@ -3,7 +3,6 @@ using RTS.Camera;
 using RTS.Debug;
 using RTS.Editor;
 using System;
-using Terrain;
 
 namespace RTS
 {
