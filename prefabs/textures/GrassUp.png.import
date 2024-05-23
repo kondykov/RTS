@@ -3,26 +3,25 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b6hdd24o8ks00"
-path.s3tc="res://.godot/imported/GrassUp.png-891932726fb1f32e1837ce2a454f7651.s3tc.ctex"
+path="res://.godot/imported/GrassUp.png-891932726fb1f32e1837ce2a454f7651.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://prefabs/textures/GrassUp.png"
-dest_files=["res://.godot/imported/GrassUp.png-891932726fb1f32e1837ce2a454f7651.s3tc.ctex"]
+dest_files=["res://.godot/imported/GrassUp.png-891932726fb1f32e1837ce2a454f7651.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""

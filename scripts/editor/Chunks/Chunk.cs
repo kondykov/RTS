@@ -6,7 +6,8 @@ public partial class Chunk : StaticBody3D
 {
 	[Export] public CollisionShape3D CollisionShape { get; set; }
 	[Export] public MeshInstance3D MeshInstance { get; set; }
-	[Export] public static Vector3I dimensions = new Vector3I(16, 64, 16);
+	[Export] public FastNoiseLite Noise { get; set; }
+	public static Vector3I dimensions = new Vector3I(16, 64, 16);
 	private static readonly Vector3I[] _verties = new Vector3I[]
 	{
 		new Vector3I(0,0,0),
@@ -25,10 +26,13 @@ public partial class Chunk : StaticBody3D
 	private static readonly int[] _back = new int[] { 7, 5, 4, 6 };
 	private static readonly int[] _front = new int[] { 2, 0, 1, 3 };
 
+	public Vector2I ChunkPosition { get; private set; }
 	private SurfaceTool _surfaceTool = new();
 	private Block[,,] _blocks = new Block[dimensions.X, dimensions.Y, dimensions.Z];
 	public override void _Ready()
 	{
+        ChunkPosition = new(Mathf.FloorToInt(GlobalPosition.X / dimensions.X), Mathf.FloorToInt(GlobalRotation.Z / dimensions.Z));
+
 		Generate();
 		Update();
 	}
@@ -41,7 +45,8 @@ public partial class Chunk : StaticBody3D
 				for (int z = 0; z < dimensions.Z; z++)
 				{
 					Block block;
-					var groundHeight = 40;
+                    var globalBlockPosition = ChunkPosition + new Vector2I(dimensions.X, dimensions.Z) * new Vector2(x, z);
+                    var groundHeight = (int)(dimensions.Y * (Noise.GetNoise2D(globalBlockPosition.X, globalBlockPosition.Y) + 1f / 2f));
 					if (y < groundHeight) block = BlockManager.Instance.Dirt;
 					else if (y == groundHeight) block = BlockManager.Instance.Grass;
 					else block = BlockManager.Instance.Air;

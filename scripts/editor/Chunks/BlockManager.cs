@@ -53,5 +53,6 @@ public partial class BlockManager : Node
 	{
 		if (texture == null) return Vector2I.Zero;
 		else return _atlasLookup[texture];
-	}
+    }
+    public static void GetMissingTexture(Block missingBlockTexture) => missingBlockTexture.Texture = GD.Load<Texture2D>("res://prefabs/textures/MissingTexture.png");
 }
