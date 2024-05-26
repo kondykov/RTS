@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using RTS.services.logService;
 using System;
 using System.Linq;
 
@@ -19,7 +20,11 @@ public partial class BlockManager : Node
 	public StandardMaterial3D ChunkMaterial { get; private set; }
 	public override void _Ready()
 	{
-		Instance = this;
+
+        FileService fileService = new();
+        fileService.Write("test");
+
+        Instance = this;
 		var blockTextures = new Block[] { Air, Grass, Dirt, }.Select(block => block.Texture).Where(texture => texture != null).Distinct().ToArray();
 		for (int i = 0; i < blockTextures.Length; i++)
 		{
