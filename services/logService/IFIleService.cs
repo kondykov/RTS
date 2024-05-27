@@ -1,4 +1,4 @@
-﻿using RTS.services.logService;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,8 @@ namespace LoggerService
 {
     public interface IFIleService
     {
-        public void CreateLogFile();
-        public Task Write(string message);
+        public Task WriteLog(string message);
+        public Task ReadLog();
+        public Task ClearLog();
     }
 }

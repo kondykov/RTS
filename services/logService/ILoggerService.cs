@@ -9,14 +9,16 @@ namespace LoggerService
     public enum LogStatus
     {
         OK,
-        CANCELED,
         WARNING,
+        ERROR,
         CRITICAL_ERROR,
     }
-    public interface ILoggerService
+    public interface ILoggerService<T>
     {
-        public string Read();
-        public void Write(string message);
-        protected string CollectMessage<T>(string message, T obj, LogStatus logStatus, Exception ex = null);
+        public string CollectMessage(string message, LogStatus logStatus, Exception ex = null);
+        public void LogInformation(string message);
+        public void LogWarning(string message);
+        public void LogError(string message, Exception ex);
+        public void LogCritical(string message, Exception ex);
     }
 }

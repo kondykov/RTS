@@ -2,7 +2,6 @@ using Godot;
 using RTS.Camera;
 using RTS.Debug;
 using RTS.Editor;
-using RTS.services.logService;
 using System;
 
 namespace RTS
@@ -25,7 +24,6 @@ namespace RTS
         }
         private void _Init()
         {
-
             try
             {
                 MainCommand.CurrentCamera = _camera;

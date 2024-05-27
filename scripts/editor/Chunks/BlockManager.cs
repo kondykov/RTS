@@ -1,10 +1,11 @@
 using Godot;
 using Godot.Collections;
-using RTS.services.logService;
+using LoggerService;
 using System;
 using System.Linq;
-
-public partial class BlockManager : Node
+namespace Chunk
+{
+	public partial class BlockManager : Node
 {
 	[Export] public Block Air {  get; set; }
 	[Export] public Block Grass { get; set; }
@@ -20,10 +21,9 @@ public partial class BlockManager : Node
 	public StandardMaterial3D ChunkMaterial { get; private set; }
 	public override void _Ready()
 	{
+		Logger<BlockManager> log = new(new FileService());
 
-        FileService fileService = new();
-        fileService.Write("test");
-
+		log.Log(LogStatus.OK, "BlockManager created.");
         Instance = this;
 		var blockTextures = new Block[] { Air, Grass, Dirt, }.Select(block => block.Texture).Where(texture => texture != null).Distinct().ToArray();
 		for (int i = 0; i < blockTextures.Length; i++)
@@ -60,4 +60,5 @@ public partial class BlockManager : Node
 		else return _atlasLookup[texture];
     }
     public static void GetMissingTexture(Block missingBlockTexture) => missingBlockTexture.Texture = GD.Load<Texture2D>("res://prefabs/textures/MissingTexture.png");
+}
 }
