@@ -35,7 +35,7 @@ namespace RTS.Camera
                 rayQuery.From = from;
                 rayQuery.To = to;
                 var raycastResult = space.IntersectRay(rayQuery);
-                try { DebugMenu.MousePosition = raycastResult["position"].AsVector3(); return raycastResult; }
+                try { Debug.DebugMenu.MousePosition = raycastResult["position"].AsVector3(); return raycastResult; }
                 catch { DebugConsole.WriteMessage(FunctionStatus.WARNING_WORLD_CAMERA_RAYCAST_RETURNS_NULL); return null; }                
             }
             catch { DebugConsole.WriteMessage(FunctionStatus.ERR_FAILED_TO_GET_CAMERA_DATA); return null; }

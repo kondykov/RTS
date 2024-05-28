@@ -1,14 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://ct1603crj6l3"]
+[gd_scene load_steps=9 format=3 uid="uid://ct1603crj6l3"]
 
 [ext_resource type="Script" path="res://scripts/MainCommandHandler.cs" id="1_pyno1"]
 [ext_resource type="Script" path="res://scripts/camera/WorldCameraMover.cs" id="2_0nseo"]
 [ext_resource type="Script" path="res://scripts/camera/WorldCamera.cs" id="4_mjgsw"]
 [ext_resource type="LabelSettings" uid="uid://b3e24axr84y8u" path="res://fonts/TestLabelSettings.tres" id="6_8dqmx"]
 [ext_resource type="Script" path="res://scripts/dbg/DebugMenu.cs" id="6_8lt3s"]
+[ext_resource type="PackedScene" uid="uid://ckgk1qgutb8vr" path="res://Level.tscn" id="6_wccm7"]
+[ext_resource type="Script" path="res://addons/DebugTools/Labels.cs" id="7_mjlrc"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_i21la"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_83fwt"]
+[sub_resource type="Environment" id="Environment_2pys1"]
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_pyno1")
@@ -16,20 +16,6 @@ script = ExtResource("1_pyno1")
 [node name="RTSCameraBody" type="CharacterBody3D" parent="."]
 transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 0, 0, 0)
 script = ExtResource("2_0nseo")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RTSCameraBody"]
-transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 0, 2, 0)
-shape = SubResource("CapsuleShape3D_i21la")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RTSCameraBody/CollisionShape3D"]
-visible = false
-mesh = SubResource("CapsuleMesh_83fwt")
-
-[node name="SpotLight3D" type="SpotLight3D" parent="RTSCameraBody/CollisionShape3D/MeshInstance3D"]
-transform = Transform3D(-0.689975, 0.126763, -0.712646, 0.000561086, 0.984639, 0.174601, 0.723832, 0.12007, -0.679448, 0, 0, 0)
-shadow_enabled = true
-spot_range = 296.465
-spot_angle = 28.441
 
 [node name="RTSCamera" type="Camera3D" parent="RTSCameraBody"]
 transform = Transform3D(1, 0, 0, 0, 0.669131, 0.743145, 0, -0.743145, 0.66913, 0, 50, 42.4264)
@@ -39,14 +25,11 @@ size = 50.0
 near = 0.3
 script = ExtResource("4_mjgsw")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.789149, 0.433013, -0.435596, -0.0473672, 0.75, 0.65974, 0.612372, -0.5, 0.612372, -4.96852, 40.2911, 0)
-shadow_enabled = true
-directional_shadow_mode = 0
-
 [node name="Field" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.999998, 0, 0.999998)
 visible = false
+
+[node name="Level" parent="." instance=ExtResource("6_wccm7")]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -121,6 +104,15 @@ text = "Object Editor
 layout_mode = 2
 text = "Exit
 "
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_2pys1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.336, 0, 19.7305)
+
+[node name="DebugMenu" type="CanvasLayer" parent="."]
+script = ExtResource("7_mjlrc")
 
 [connection signal="pressed" from="CanvasLayer/MarginContainer/VBoxContainer/TileEditor" to="." method="SelectTileEditor"]
 [connection signal="pressed" from="CanvasLayer/MarginContainer/VBoxContainer/Object Editor" to="." method="SelectObjectEditor"]
