@@ -7,5 +7,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="addons\DebugTools\Fonts\" />
+    <Folder Include="scripts\editor\terrain\player\" />
   </ItemGroup>
 </Project>

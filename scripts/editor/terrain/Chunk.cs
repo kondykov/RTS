@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 namespace Terrain
 {
@@ -9,7 +10,8 @@ namespace Terrain
 		[Export] public CollisionShape3D CollisionShape { get; set; }
 		[Export] public MeshInstance3D MeshInstance { get; set; }
 		[Export] public FastNoiseLite Noise { get; set; }
-		public static Vector3I dimensions = new Vector3I(16, 128, 16);
+		[Export] public Noise NewNoise { get; set; }
+		public static Vector3I dimensions = new Vector3I(16, 64, 16);
 		private static readonly Vector3I[] _verties = new Vector3I[]
 		{
 			new Vector3I(0,0,0),
@@ -31,46 +33,60 @@ namespace Terrain
 		public Vector2I ChunkPosition { get; private set; }
 		private SurfaceTool _surfaceTool = new();
 		private Block[,,] _blocks = new Block[dimensions.X, dimensions.Y, dimensions.Z];
-		private static int _h = 10;
 		public override void _Ready()
-		{
-			ChunkPosition = new(Mathf.FloorToInt(GlobalPosition.X / dimensions.X), Mathf.FloorToInt(GlobalRotation.Z / dimensions.Z));
-
-			GenerateChunk();
+        {
+            ChunkPosition = new((int)(GlobalPosition.X / dimensions.X), (int)(GlobalPosition.Z / dimensions.Z));
+			TestGetHeightMap(ChunkPosition);
+			Console.WriteLine();
+			TestGetHeightMap(new(1, 1));
+            GenerateChunk();
 			UpdateChunk();
 		}
 		private void GenerateChunk()
 		{
-			for (int x = 0; x < dimensions.X; x++)
+			bool foo = true;
+			Console.WriteLine();
+			for (int y = 0; y < dimensions.Y; y++)
 			{
-				for (int y = 0; y < dimensions.Y; y++)
+				for (int x = 0; x < dimensions.X; x++)
 				{
 					for (int z = 0; z < dimensions.Z; z++)
-					{
-						Block block;
-						var globalBlockPosition = ChunkPosition + new Vector2I(dimensions.X, dimensions.Z) * new Vector2(x, z);
-						var groundHeight = (int)(dimensions.Y * (Noise.GetNoise2D(globalBlockPosition.X, globalBlockPosition.Y) + 1f / 2f));
+                    {
+                        Block block;
+                        var globalBlockPosition = ChunkPosition + new Vector2I(dimensions.X, dimensions.Z) * new Vector2(x, z);
 
-						/*						if(ChunkPosition.X % 2 == 0 && ChunkPosition.Y % 2 == 0) groundHeight = (int)((64 + Math.Sin(x * 0.5) * 10) - ChunkPosition.X);
-                                                else groundHeight = (int)((64 + Math.Sin(z * 0.2) * 10) - ChunkPosition.Y);*/
-
-						//groundHeight = (int)((64 + Math.Sin(x * 0.8) * 2) - ChunkPosition.X);
-
-						groundHeight = _h;
+                        int groundHeight = GetHeightMap(globalBlockPosition);
 
                         if (y < groundHeight / 2) block = BlockManager.Instance.Dirt;
-						else if (y < groundHeight) block = BlockManager.Instance.OtherBlock;
-						else if (y == groundHeight) block = BlockManager.Instance.Grass;
-						else block = BlockManager.Instance.Air;
-						if (y == dimensions.Y) block = BlockManager.Instance.Dirt;
-						_blocks[x, y, z] = block;
-					}
-				}
+                        else if (y < groundHeight) block = BlockManager.Instance.OtherBlock;
+                        else if (y == groundHeight) block = BlockManager.Instance.Grass;
+                        else block = BlockManager.Instance.Air;
+                        _blocks[x, y, z] = block;
+						if(foo) 
+							Console.Write($"[{groundHeight}]");
+                    }
+					if(foo) 
+						Console.WriteLine();
+                }
+				foo = false;
 			}
-			_h++;
-		}
-		private void UpdateChunk()
+        }
+
+		void TestGetHeightMap(Vector2I chunkPosition = new())
 		{
+			for (int x = 0; x < 16; x++)
+			{
+				for (int y = 0; y < 16; y++)
+				{
+                    Console.Write($"[{GetHeightMap(new(x + chunkPosition.X, y + chunkPosition.Y))}]");
+				}
+				Console.WriteLine();
+			}
+		}
+
+
+        private void UpdateChunk()
+		{ 
 			_surfaceTool.Begin(Mesh.PrimitiveType.Triangles);
 			for (int x = 0; x < dimensions.X; x++)
 			{
@@ -124,8 +140,11 @@ namespace Terrain
 			var triagle1 = new Vector3[] { a, b, c };
 			var triagle2 = new Vector3[] { a, c, d };
 
-			_surfaceTool.AddTriangleFan(triagle1, uvTriagle1);
-			_surfaceTool.AddTriangleFan(triagle2, uvTriagle2);
+			Vector3 normal = ((Vector3)(c - a)).Cross((Vector3)(b - a)).Normalized();
+			var normals = new Vector3[] { normal, normal, normal };
+			
+			_surfaceTool.AddTriangleFan(triagle1, uvTriagle1, normals: normals);
+			_surfaceTool.AddTriangleFan(triagle2, uvTriagle2, normals: normals);
 		}
 		private bool CheckTransparent(Vector3I blockPosition)
 		{
@@ -134,5 +153,17 @@ namespace Terrain
 			if (blockPosition.Z < 0 || blockPosition.Z >= dimensions.Z) return true;
 			return _blocks[blockPosition.X, blockPosition.Y, blockPosition.Z] == BlockManager.Instance.Air;
 		}
-	}
+
+        public void SetBlock(Vector3I blockPosition, Block block)
+        {
+	        _blocks[blockPosition.X, blockPosition.Y, blockPosition.Z] = block;
+	        UpdateChunk();
+        }
+
+        private int GetHeightMap(Vector2 blockPosition, Vector2 offSet = new())
+        {
+	        return (int)(dimensions.Y * ((Noise.GetNoise2D(blockPosition.X, blockPosition.Y)) + 1f / 2f));
+        }
+
+    }
 }

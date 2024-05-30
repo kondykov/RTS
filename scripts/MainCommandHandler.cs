@@ -28,6 +28,7 @@ namespace RTS
             {
                 MainCommand.CurrentCamera = _camera;
                 MainCommand.RootNode = GetTree().Root.GetChild<Node3D>(0);
+                _mapEditor.GenerateSimpleField();
             }
             catch
             {

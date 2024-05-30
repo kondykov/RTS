@@ -13,7 +13,6 @@ namespace RTS.Editor
         {
 
             PackedScene tiles = GD.Load<PackedScene>("res://prefabs/tiles/GrassTile_Simple.tscn");
-            var tile = Preloader.GetTile(1);
             var field = MainCommand.RootNode.GetNode("Field");
             for (int i = 0; i < MainCommand.GridSize * 2; i += 2)
             {

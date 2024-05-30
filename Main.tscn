@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ct1603crj6l3"]
+[gd_scene load_steps=8 format=3 uid="uid://ct1603crj6l3"]
 
 [ext_resource type="Script" path="res://scripts/MainCommandHandler.cs" id="1_pyno1"]
 [ext_resource type="Script" path="res://scripts/camera/WorldCameraMover.cs" id="2_0nseo"]
@@ -6,7 +6,6 @@
 [ext_resource type="LabelSettings" uid="uid://b3e24axr84y8u" path="res://fonts/TestLabelSettings.tres" id="6_8dqmx"]
 [ext_resource type="Script" path="res://scripts/dbg/DebugMenu.cs" id="6_8lt3s"]
 [ext_resource type="PackedScene" uid="uid://ckgk1qgutb8vr" path="res://Level.tscn" id="6_wccm7"]
-[ext_resource type="Script" path="res://addons/DebugTools/Labels.cs" id="7_mjlrc"]
 
 [sub_resource type="Environment" id="Environment_2pys1"]
 
@@ -27,9 +26,14 @@ script = ExtResource("4_mjgsw")
 
 [node name="Field" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.999998, 0, 0.999998)
-visible = false
 
 [node name="Level" parent="." instance=ExtResource("6_wccm7")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_2pys1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.336, 0, 19.7305)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -104,16 +108,3 @@ text = "Object Editor
 layout_mode = 2
 text = "Exit
 "
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_2pys1")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.336, 0, 19.7305)
-
-[node name="DebugMenu" type="CanvasLayer" parent="."]
-script = ExtResource("7_mjlrc")
-
-[connection signal="pressed" from="CanvasLayer/MarginContainer/VBoxContainer/TileEditor" to="." method="SelectTileEditor"]
-[connection signal="pressed" from="CanvasLayer/MarginContainer/VBoxContainer/Object Editor" to="." method="SelectObjectEditor"]
-[connection signal="pressed" from="CanvasLayer/MarginContainer/VBoxContainer/Exit" to="." method="ClearSelector"]
