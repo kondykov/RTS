@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-namespace Terrain.Player
+namespace Terrain.Character
 {
     public partial class Player : CharacterBody3D
     {
@@ -40,6 +40,7 @@ namespace Terrain.Player
         }
         public override void _Process(double delta)
         {
+            if(Input.IsActionJustPressed("ESC")) ChangeCaptureMouseMode();
             if(RayCast.IsColliding() && RayCast.GetCollider() is Chunk chunk)
             {
                 BlockHighlight.Visible = true;
@@ -47,9 +48,9 @@ namespace Terrain.Player
                 var intBlockPosition = new Vector3(Mathf.FloorToInt(blockPosition.X), Mathf.FloorToInt(blockPosition.Y), Mathf.FloorToInt(blockPosition.Z));
                 BlockHighlight.GlobalPosition = intBlockPosition + new Vector3(.5f, .5f, .5f);
                 if (Input.IsActionJustPressed("mouse_left_click"))
-                    chunk.SetBlock((Vector3I)(intBlockPosition - chunk.GlobalPosition), BlockManager.Instance.Air);
+                    chunk.SetBlock((Vector3I)(intBlockPosition - chunk.GlobalPosition), BlockManager.Instance.Air, this);
                 if (Input.IsActionJustPressed("mouse_right_click"))
-                    chunk.SetBlock((Vector3I)(intBlockPosition - chunk.GlobalPosition + RayCast.GetCollisionNormal()), BlockManager.Instance.Dirt);
+                    chunk.SetBlock((Vector3I)(intBlockPosition - chunk.GlobalPosition + RayCast.GetCollisionNormal()), BlockManager.Instance.Dirt, this);
             }
             else
             {
@@ -72,5 +73,11 @@ namespace Terrain.Player
             Velocity = velocity;
             MoveAndSlide();
         }
+
+        public Vector3 GetPlayerPosition() => this.GlobalPosition;
+
+        private void ChangeCaptureMouseMode() => Input.MouseMode = Input.MouseMode == Input.MouseModeEnum.Captured
+                ? Input.MouseModeEnum.Visible
+                : Input.MouseModeEnum.Captured;
     }
 }
