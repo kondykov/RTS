@@ -1,83 +1,92 @@
 using Godot;
-using System;
 
-namespace Terrain.Character
+namespace Terrain.Character;
+
+public partial class Player : CharacterBody3D
 {
-    public partial class Player : CharacterBody3D
+    private float _cameraXRotation;
+    private float _gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
+    [Export] private float _jumpVelocity = 10f;
+
+    [Export] private float _mouseSensivity = .3f;
+    [Export] private float _movementSpeed = 16f;
+    [Export] public Node3D Head { get; set; }
+    [Export] public Camera3D Camera { get; set; }
+    [Export] public RayCast3D RayCast { get; set; }
+    [Export] public MeshInstance3D BlockHighlight { get; set; }
+    public static Player Instance { get; private set; }
+
+    public override void _Ready()
     {
-        [Export] public Node3D Head { get; set; }
-        [Export] public Camera3D Camera { get; set; }
-        [Export] public RayCast3D RayCast { get; set; }
-        [Export] public MeshInstance3D BlockHighlight { get; set; }
+        Instance = this;
+        Input.MouseMode = Input.MouseModeEnum.Captured;
+    }
 
-        [Export] private float _mouseSensivity = .3f;
-        [Export] private float _movementSpeed = 16f;
-        [Export] private float _jumpVelocity = 10f;
-        private float _cameraXRotation;
-        private float _gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
-        public static Player Instance { get; private set; }
+    public override void _Input(InputEvent @event)
+    {
+        if (@event is InputEventMouseMotion)
+        {
+            var mouseMotion = @event as InputEventMouseMotion;
+            var deltaX = mouseMotion.Relative.Y * _mouseSensivity;
+            var deltaY = -mouseMotion.Relative.X * _mouseSensivity;
 
-        public override void _Ready()
-        {
-            Instance = this;
-            Input.MouseMode = Input.MouseModeEnum.Captured;
-        }
-        public override void _Input(InputEvent @event)
-        {
-            if(@event is InputEventMouseMotion)
+            Head.RotateY(Mathf.DegToRad(deltaY));
+            if (_cameraXRotation + deltaX > -90 && _cameraXRotation + deltaX < 90)
             {
-                var mouseMotion = @event as InputEventMouseMotion;
-                var deltaX = mouseMotion.Relative.Y * _mouseSensivity;
-                var deltaY = -mouseMotion.Relative.X * _mouseSensivity;
-
-                Head.RotateY(Mathf.DegToRad(deltaY));
-                if (_cameraXRotation + deltaX > -90 && _cameraXRotation + deltaX < 90)
-                {
-                    Camera.RotateX(Mathf.DegToRad(-deltaX));
-                    _cameraXRotation += deltaX;
-                }
+                Camera.RotateX(Mathf.DegToRad(-deltaX));
+                _cameraXRotation += deltaX;
             }
         }
-        public override void _Process(double delta)
+    }
+
+    public override void _Process(double delta)
+    {
+        if (Input.IsActionJustPressed("ESC")) ChangeCaptureMouseMode();
+        if (RayCast.IsColliding() && RayCast.GetCollider() is Chunk chunk)
         {
-            if(Input.IsActionJustPressed("ESC")) ChangeCaptureMouseMode();
-            if(RayCast.IsColliding() && RayCast.GetCollider() is Chunk chunk)
-            {
-                BlockHighlight.Visible = true;
-                var blockPosition = RayCast.GetCollisionPoint() - .5f * RayCast.GetCollisionNormal();
-                var intBlockPosition = new Vector3(Mathf.FloorToInt(blockPosition.X), Mathf.FloorToInt(blockPosition.Y), Mathf.FloorToInt(blockPosition.Z));
-                BlockHighlight.GlobalPosition = intBlockPosition + new Vector3(.5f, .5f, .5f);
-                if (Input.IsActionJustPressed("mouse_left_click"))
-                    chunk.SetBlock((Vector3I)(intBlockPosition - chunk.GlobalPosition), BlockManager.Instance.Air, this);
-                if (Input.IsActionJustPressed("mouse_right_click"))
-                    chunk.SetBlock((Vector3I)(intBlockPosition - chunk.GlobalPosition + RayCast.GetCollisionNormal()), BlockManager.Instance.Dirt, this);
-            }
-            else
-            {
-                BlockHighlight.Visible = false;
-            }
+            BlockHighlight.Visible = true;
+            var blockPosition = RayCast.GetCollisionPoint() - .5f * RayCast.GetCollisionNormal();
+            var intBlockPosition = new Vector3(Mathf.FloorToInt(blockPosition.X), Mathf.FloorToInt(blockPosition.Y),
+                Mathf.FloorToInt(blockPosition.Z));
+            BlockHighlight.GlobalPosition = intBlockPosition + new Vector3(.5f, .5f, .5f);
+            if (Input.IsActionJustPressed("mouse_left_click"))
+                chunk.SetBlock((Vector3I)(intBlockPosition - chunk.GlobalPosition), BlockManager.Instance.Air);
+            if (Input.IsActionJustPressed("mouse_right_click"))
+                chunk.SetBlock((Vector3I)(intBlockPosition - chunk.GlobalPosition + RayCast.GetCollisionNormal()),
+                    BlockManager.Instance.Dirt);
         }
-        public override void _PhysicsProcess(double delta)
+        else
         {
-            var velocity = Velocity;
-            if (!IsOnFloor()) velocity.Y -= _gravity * (float)delta;
-            if (Input.IsActionJustPressed("space") && IsOnFloor()) velocity.Y = _jumpVelocity;
-            var inputDirection = Input.GetVector("A", "D", "W", "S").Normalized();
-            var direction = Vector3.Zero;
-            direction += inputDirection.X * Head.GlobalBasis.X;
-            direction += inputDirection.Y * Head.GlobalBasis.Z;
-
-            velocity.X = direction.X * _movementSpeed;
-            velocity.Z = direction.Z * _movementSpeed;
-
-            Velocity = velocity;
-            MoveAndSlide();
+            BlockHighlight.Visible = false;
         }
+    }
 
-        public Vector3 GetPlayerPosition() => this.GlobalPosition;
+    public override void _PhysicsProcess(double delta)
+    {
+        var velocity = Velocity;
+        if (!IsOnFloor()) velocity.Y -= _gravity * (float)delta;
+        if (Input.IsActionJustPressed("space") && IsOnFloor()) velocity.Y = _jumpVelocity;
+        var inputDirection = Input.GetVector("A", "D", "W", "S").Normalized();
+        var direction = Vector3.Zero;
+        direction += inputDirection.X * Head.GlobalBasis.X;
+        direction += inputDirection.Y * Head.GlobalBasis.Z;
 
-        private void ChangeCaptureMouseMode() => Input.MouseMode = Input.MouseMode == Input.MouseModeEnum.Captured
-                ? Input.MouseModeEnum.Visible
-                : Input.MouseModeEnum.Captured;
+        velocity.X = direction.X * _movementSpeed;
+        velocity.Z = direction.Z * _movementSpeed;
+
+        Velocity = velocity;
+        MoveAndSlide();
+    }
+
+    public Vector3 GetPlayerPosition()
+    {
+        return GlobalPosition;
+    }
+
+    private void ChangeCaptureMouseMode()
+    {
+        Input.MouseMode = Input.MouseMode == Input.MouseModeEnum.Captured
+            ? Input.MouseModeEnum.Visible
+            : Input.MouseModeEnum.Captured;
     }
 }
