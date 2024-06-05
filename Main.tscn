@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://scripts/camera/WorldCamera.cs" id="4_mjgsw"]
 [ext_resource type="PackedScene" uid="uid://ke7emiirmjn1" path="res://scripts/editor/terrain/player/Player.tscn" id="5_ndg8h"]
 [ext_resource type="LabelSettings" uid="uid://b3e24axr84y8u" path="res://fonts/TestLabelSettings.tres" id="6_8dqmx"]
-[ext_resource type="Script" path="res://scripts/dbg/DebugMenu.cs" id="6_8lt3s"]
+[ext_resource type="Script" path="res://scripts/ui/DebugMenu.cs" id="6_8lt3s"]
 [ext_resource type="PackedScene" uid="uid://ckgk1qgutb8vr" path="res://Level.tscn" id="6_wccm7"]
 
 [sub_resource type="Environment" id="Environment_2pys1"]

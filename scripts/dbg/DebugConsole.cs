@@ -1,7 +1,4 @@
-﻿using RTS.Editor;
-using RTS.Camera;
-using Godot;
-using System;
+﻿using System;
 
 namespace RTS.Debug
 {

@@ -16,6 +16,7 @@ public partial class ChunkManager : Node
     private Vector3 _playerPosition;
     [Export] private int _renderDistance = 5;
     [Export] public PackedScene ChunkScene { get; set; }
+    [Export] public bool MovementChunkRender = true;
     public static ChunkManager Instance { get; private set; }
 
 
@@ -38,7 +39,7 @@ public partial class ChunkManager : Node
             _chunks[index].SetChunkPosition(new Vector2I(x - halfwidth, y - halfwidth));
         }
 
-        if (!Engine.IsEditorHint()) new Thread(ThreadProcess).Start();
+        if (!Engine.IsEditorHint() && MovementChunkRender) new Thread(ThreadProcess).Start();
     }
 
     public void UpdateChunkPosition(Chunk chunk, Vector2I currentPosition, Vector2I previousPosition)

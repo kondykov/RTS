@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://3slpr7xr3l5x"]
-
-[ext_resource type="PackedScene" uid="uid://d258oe7cau7xi" path="res://raw models/Models/objects/dae/archeryrange.dae" id="2_83y3x"]
-
-[node name="Tile" type="MeshInstance3D"]
-
-[node name="archeryrange" parent="." instance=ExtResource("2_83y3x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.09665, 0)

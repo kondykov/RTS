@@ -1,8 +1,5 @@
 using Godot;
 using RTS.Camera;
-using RTS.Debug;
-using RTS.Editor;
-using System;
 
 namespace RTS
 {
@@ -10,7 +7,6 @@ namespace RTS
     {
         private Vector3 _mousePosition;
         private Vector3 _selectorPosition = new Vector3(-1, -1, -1);
-        private MapEditorCommandHandler _mapEditor = new MapEditorCommandHandler();
         private WorldCamera _camera = new WorldCamera();
         private bool _camPhysicMode = false;
 
@@ -28,7 +24,6 @@ namespace RTS
             {
                 MainCommand.CurrentCamera = _camera;
                 MainCommand.RootNode = GetTree().Root.GetChild<Node3D>(0);
-                _mapEditor.GenerateSimpleField();
             }
             catch
             {
@@ -40,10 +35,8 @@ namespace RTS
             switch (MainCommand.Mode)
             {
                 case ControlModes.TileEditor:
-                    _mapEditor.EditorHandler(_camera);
                     break;
                 default:
-                    _mapEditor.RemoveSelector();
                     break;
             }
         }
