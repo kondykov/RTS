@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://ct1603crj6l3"]
+[gd_scene load_steps=9 format=3 uid="uid://ct1603crj6l3"]
 
 [ext_resource type="Script" path="res://scripts/MainCommandHandler.cs" id="1_pyno1"]
 [ext_resource type="Script" path="res://scripts/camera/WorldCameraMover.cs" id="2_0nseo"]
 [ext_resource type="Script" path="res://scripts/camera/WorldCamera.cs" id="4_mjgsw"]
+[ext_resource type="PackedScene" uid="uid://ke7emiirmjn1" path="res://scripts/editor/terrain/player/Player.tscn" id="5_ndg8h"]
 [ext_resource type="LabelSettings" uid="uid://b3e24axr84y8u" path="res://fonts/TestLabelSettings.tres" id="6_8dqmx"]
 [ext_resource type="Script" path="res://scripts/dbg/DebugMenu.cs" id="6_8lt3s"]
 [ext_resource type="PackedScene" uid="uid://ckgk1qgutb8vr" path="res://Level.tscn" id="6_wccm7"]
@@ -15,6 +16,9 @@ script = ExtResource("1_pyno1")
 [node name="RTSCameraBody" type="CharacterBody3D" parent="."]
 transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 0, 0, 0)
 script = ExtResource("2_0nseo")
+
+[node name="Player" parent="RTSCameraBody" instance=ExtResource("5_ndg8h")]
+transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 7.07107, 80, 0)
 
 [node name="RTSCamera" type="Camera3D" parent="RTSCameraBody"]
 transform = Transform3D(1, 0, 0, 0, 0.669131, 0.743145, 0, -0.743145, 0.66913, 0, 50, 42.4264)
