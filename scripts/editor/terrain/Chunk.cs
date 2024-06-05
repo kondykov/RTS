@@ -31,50 +31,33 @@ public partial class Chunk : StaticBody3D
     [Export] public CollisionShape3D CollisionShape { get; set; }
     [Export] public MeshInstance3D MeshInstance { get; set; }
     [Export] public FastNoiseLite Noise { get; set; }
-    [Export] public Noise NewNoise { get; set; }
 
     public Vector2I ChunkPosition { get; private set; }
 
-    public override void _Ready()
+    public void SetChunkPosition(Vector2I position)
     {
-        ChunkPosition = new Vector2I((int)(GlobalPosition.X / dimensions.X), (int)(GlobalPosition.Z / dimensions.Z));
-        TestGetHeightMap(ChunkPosition);
-        Console.WriteLine();
-        TestGetHeightMap(new Vector2(1, 1));
+        ChunkManager.Instance.UpdateChunkPosition(this, position, ChunkPosition);
+        ChunkPosition = position;
+        CallDeferred(Node3D.MethodName.SetGlobalPosition,new Vector3(ChunkPosition.X * dimensions.X, 0, ChunkPosition.Y * dimensions.Z));
+
         GenerateChunk();
         UpdateChunk();
     }
 
     private void GenerateChunk()
     {
-        var foo = true;
-        Console.WriteLine();
         for (var y = 0; y < dimensions.Y; y++)
+        for (var x = 0; x < dimensions.X; x++)
+        for (var z = 0; z < dimensions.Z; z++)
         {
-            for (var x = 0; x < dimensions.X; x++)
-            {
-                for (var z = 0; z < dimensions.Z; z++)
-                {
-                    Block block;
-                    var globalBlockPosition =
-                        ChunkPosition + new Vector2I(dimensions.X, dimensions.Z) * new Vector2(x, z);
-
-                    var groundHeight = GetHeightMap(globalBlockPosition);
-
-                    if (y < groundHeight / 2) block = BlockManager.Instance.Dirt;
-                    else if (y < groundHeight) block = BlockManager.Instance.OtherBlock;
-                    else if (y == groundHeight) block = BlockManager.Instance.Grass;
-                    else block = BlockManager.Instance.Air;
-                    _blocks[x, y, z] = block;
-                    if (foo)
-                        Console.Write($"[{groundHeight}]");
-                }
-
-                if (foo)
-                    Console.WriteLine();
-            }
-
-            foo = false;
+            Block block;
+            var globalBlockPosition = ChunkPosition + new Vector2I(dimensions.X, dimensions.Z) + new Vector2(x, z);
+            var groundHeight = GetHeightMap(globalBlockPosition);
+            if (y < groundHeight / 2) block = BlockManager.Instance.Dirt;
+            else if (y < groundHeight) block = BlockManager.Instance.OtherBlock;
+            else if (y == groundHeight) block = BlockManager.Instance.Grass;
+            else block = BlockManager.Instance.Air;
+            _blocks[x, y, z] = block;
         }
     }
 
