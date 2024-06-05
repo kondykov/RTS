@@ -9,4 +9,7 @@
     <Folder Include="addons\DebugTools\Fonts\" />
     <Folder Include="scripts\editor\terrain\player\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="scripts\ui\inventory\.gitkeep" />
+  </ItemGroup>
 </Project>
