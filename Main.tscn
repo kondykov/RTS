@@ -4,14 +4,15 @@
 [ext_resource type="Script" path="res://scripts/camera/WorldCameraMover.cs" id="2_0nseo"]
 [ext_resource type="Script" path="res://scripts/camera/WorldCamera.cs" id="4_mjgsw"]
 [ext_resource type="PackedScene" uid="uid://ke7emiirmjn1" path="res://scripts/editor/terrain/player/Player.tscn" id="5_ndg8h"]
-[ext_resource type="LabelSettings" uid="uid://b3e24axr84y8u" path="res://fonts/TestLabelSettings.tres" id="6_8dqmx"]
-[ext_resource type="Script" path="res://scripts/ui/DebugMenu.cs" id="6_8lt3s"]
-[ext_resource type="PackedScene" uid="uid://ckgk1qgutb8vr" path="res://Level.tscn" id="6_wccm7"]
+[ext_resource type="PackedScene" uid="uid://du8hoef1uyiq6" path="res://prefabs/DebugMenu.tscn" id="6_khav5"]
+[ext_resource type="PackedScene" uid="uid://ckgk1qgutb8vr" path="res://prefabs/scenes/Level.tscn" id="6_wccm7"]
+[ext_resource type="PackedScene" uid="uid://pv8x8kwhfrgy" path="res://prefabs/MainMenu.tscn" id="7_cfyxc"]
 
 [sub_resource type="Environment" id="Environment_2pys1"]
 
-[node name="World" type="Node3D"]
+[node name="World" type="Node3D" node_paths=PackedStringArray("Menu")]
 script = ExtResource("1_pyno1")
+Menu = NodePath("MainMenu")
 
 [node name="RTSCameraBody" type="CharacterBody3D" parent="."]
 transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 0, 0, 0)
@@ -39,76 +40,7 @@ environment = SubResource("Environment_2pys1")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.336, 0, 19.7305)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="DebugMenu" parent="." instance=ExtResource("6_khav5")]
 
-[node name="DebugContainerRight" type="MarginContainer" parent="CanvasLayer"]
-layout_direction = 2
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -190.0
-offset_top = 3.0
-offset_right = -7.0
-offset_bottom = 130.0
-grow_horizontal = 0
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-
-[node name="Label" type="Label" parent="CanvasLayer/DebugContainerRight"]
-layout_mode = 2
-text = "Controls:"
-label_settings = ExtResource("6_8dqmx")
-horizontal_alignment = 2
-
-[node name="About" type="MarginContainer" parent="CanvasLayer"]
-offset_right = 228.0
-offset_bottom = 28.0
-theme_override_constants/margin_left = 3
-theme_override_constants/margin_top = 3
-
-[node name="Label" type="Label" parent="CanvasLayer/About"]
-layout_mode = 2
-text = "RTS game. Work in progress.
-"
-label_settings = ExtResource("6_8dqmx")
-
-[node name="DebugContainer" type="MarginContainer" parent="CanvasLayer"]
-offset_top = 24.0
-offset_right = 353.0
-offset_bottom = 48.0
-theme_override_constants/margin_left = 3
-theme_override_constants/margin_top = 3
-script = ExtResource("6_8lt3s")
-
-[node name="DebugLabel" type="Label" parent="CanvasLayer/DebugContainer"]
-layout_mode = 2
-text = "Fatal error: failed to load debug menu."
-label_settings = ExtResource("6_8dqmx")
-
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -46.0
-offset_right = 101.0
-grow_vertical = 0
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_bottom = 15
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer"]
-layout_mode = 2
-
-[node name="TileEditor" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Tile Editor
-"
-
-[node name="Object Editor" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Object Editor
-"
-
-[node name="Exit" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Exit
-"
+[node name="MainMenu" parent="." instance=ExtResource("7_cfyxc")]
+process_mode = 3

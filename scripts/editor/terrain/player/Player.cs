@@ -41,7 +41,6 @@ public partial class Player : CharacterBody3D
 
     public override void _Process(double delta)
     {
-        if (Input.IsActionJustPressed("ESC")) ChangeCaptureMouseMode();
         if (RayCast.IsColliding() && RayCast.GetCollider() is Chunk chunk)
         {
             BlockHighlight.Visible = true;
@@ -81,12 +80,5 @@ public partial class Player : CharacterBody3D
     public Vector3 GetPlayerPosition()
     {
         return GlobalPosition;
-    }
-
-    private void ChangeCaptureMouseMode()
-    {
-        Input.MouseMode = Input.MouseMode == Input.MouseModeEnum.Captured
-            ? Input.MouseModeEnum.Visible
-            : Input.MouseModeEnum.Captured;
     }
 }

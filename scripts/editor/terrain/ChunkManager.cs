@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Godot;
+using RTS.Debug;
 using Terrain.Character;
 
 namespace Terrain;
@@ -15,8 +17,8 @@ public partial class ChunkManager : Node
     private List<Chunk> _chunks;
     private Vector3 _playerPosition;
     [Export] private int _renderDistance = 5;
-    [Export] public PackedScene ChunkScene { get; set; }
     [Export] public bool MovementChunkRender = true;
+    [Export] public PackedScene ChunkScene { get; set; }
     public static ChunkManager Instance { get; private set; }
 
 
@@ -101,7 +103,15 @@ public partial class ChunkManager : Node
                         var newPosition = new Vector2I(newChunkX, newChunkZ);
                         _chunkToPosition[chunk] = newPosition;
                         _positionToChunk[newPosition] = chunk;
-                        chunk.CallDeferred(nameof(Chunk.SetChunkPosition), newPosition);
+                        try
+                        {
+                            chunk.CallDeferred(nameof(Chunk.SetChunkPosition), newPosition);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine($"{StatusHandler.GetMessage(Status.WARNING_CHUNKMANAGER_THREAD_INTERRUPTED)}");
+                            return;
+                        }
                     }
 
                 Thread.Sleep(100);

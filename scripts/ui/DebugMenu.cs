@@ -9,25 +9,12 @@ namespace RTS.Debug
 
         public override void _Ready()
         {
-            base._Ready();
             var label = GetNode<Label>("DebugLabel");
             label.Visible = false;
-            string info = "Controlls:\n" +
-                          "WASD - Walk\n" +
-                          "Page Up - To up\n" +
-                          "Page Down - To down\n" +
-                          "Mouse wheel - Zoom\n" +
-                          "Mouse left btn - Select cell\n" +
-                          "Mouse right btn - N/A\n" +
-                          "Space - Return position to start\n" +
-                          "Escape - Deselect cell\n";
-            var rightLabel = GetParent().GetNode<Label>("DebugContainerRight/Label");
-            rightLabel.Text = info;
         }
 
         public override void _Process(double delta)
         {
-            base._Process(delta);
             var label = GetNode<Label>("DebugLabel");
             if (Input.IsActionJustPressed("F3"))
                 if (label.Visible) label.Visible = false;

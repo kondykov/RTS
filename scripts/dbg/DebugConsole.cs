@@ -11,19 +11,13 @@ namespace RTS.Debug
     }
     public class DebugConsole
     {
-        public static void WriteMessage(FunctionStatus error)
+        public static void WriteMessage(Status error)
         {
             ChangeColor(error);
             Console.WriteLine(StatusHandler.GetMessage(error));
             Console.ResetColor();
         }
-        public static void WriteMessage<Ru>(FunctionStatus error)
-        {
-            ChangeColor(error);
-            Console.WriteLine(StatusHandler.GetMessage<Ru>(error));
-            Console.ResetColor();
-        }
-        private static void ChangeColor(FunctionStatus type)
+        private static void ChangeColor(Status type)
         {
             string tmp = type.ToString();
             TypeofStatus selector = TypeofStatus.DEFAULT;
@@ -45,8 +39,6 @@ namespace RTS.Debug
                     break;
                 case TypeofStatus.SUCCESS:
                     Console.ForegroundColor = ConsoleColor.Green;
-                    break;
-                default:
                     break;
             }
         }

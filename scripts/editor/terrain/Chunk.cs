@@ -38,7 +38,15 @@ public partial class Chunk : StaticBody3D
     {
         ChunkManager.Instance.UpdateChunkPosition(this, position, ChunkPosition);
         ChunkPosition = position;
-        CallDeferred(Node3D.MethodName.SetGlobalPosition,new Vector3(ChunkPosition.X * dimensions.X, 0, ChunkPosition.Y * dimensions.Z));
+        try
+        {
+            CallDeferred(Node3D.MethodName.SetGlobalPosition,
+                new Vector3(ChunkPosition.X * dimensions.X, 0, ChunkPosition.Y * dimensions.Z));
+        }
+        catch (Exception e)
+        {
+            return;
+        }
 
         GenerateChunk();
         UpdateChunk();
