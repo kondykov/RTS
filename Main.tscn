@@ -1,36 +1,19 @@
-[gd_scene load_steps=9 format=3 uid="uid://ct1603crj6l3"]
+[gd_scene load_steps=8 format=3 uid="uid://ct1603crj6l3"]
 
 [ext_resource type="Script" path="res://scripts/MainCommandHandler.cs" id="1_pyno1"]
-[ext_resource type="Script" path="res://scripts/camera/WorldCameraMover.cs" id="2_0nseo"]
-[ext_resource type="Script" path="res://scripts/camera/WorldCamera.cs" id="4_mjgsw"]
 [ext_resource type="PackedScene" uid="uid://ke7emiirmjn1" path="res://scripts/terrain/player/Player.tscn" id="5_ndg8h"]
 [ext_resource type="PackedScene" path="res://prefabs/DebugMenu.tscn" id="6_khav5"]
+[ext_resource type="Script" path="res://scripts/ui/menus/PauseMenu.cs" id="6_oxuf3"]
 [ext_resource type="PackedScene" uid="uid://ckgk1qgutb8vr" path="res://prefabs/scenes/Level.tscn" id="6_wccm7"]
-[ext_resource type="PackedScene" path="res://prefabs/MainMenu.tscn" id="7_cfyxc"]
+[ext_resource type="PackedScene" uid="uid://xt3un03snoaw" path="res://prefabs/MainMenu.tscn" id="7_cfyxc"]
 
 [sub_resource type="Environment" id="Environment_2pys1"]
 
-[node name="World" type="Node3D" node_paths=PackedStringArray("Menu")]
+[node name="World" type="Node3D"]
 script = ExtResource("1_pyno1")
-Menu = NodePath("MainMenu")
 
-[node name="RTSCameraBody" type="CharacterBody3D" parent="."]
-transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 0, 0, 0)
-script = ExtResource("2_0nseo")
-
-[node name="Player" parent="RTSCameraBody" instance=ExtResource("5_ndg8h")]
-transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 7.07107, 80, 0)
-
-[node name="RTSCamera" type="Camera3D" parent="RTSCameraBody"]
-transform = Transform3D(1, 0, 0, 0, 0.669131, 0.743145, 0, -0.743145, 0.66913, 0, 50, 42.4264)
-current = true
-fov = 50.0
-size = 50.0
-near = 0.3
-script = ExtResource("4_mjgsw")
-
-[node name="Field" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.999998, 0, 0.999998)
+[node name="Player" parent="." instance=ExtResource("5_ndg8h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 80, 5)
 
 [node name="Level" parent="." instance=ExtResource("6_wccm7")]
 
@@ -44,3 +27,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48.336, 0, 19.7305)
 
 [node name="MainMenu" parent="." instance=ExtResource("7_cfyxc")]
 process_mode = 3
+script = ExtResource("6_oxuf3")

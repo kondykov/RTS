@@ -14,7 +14,7 @@ public partial class BlockManager : Node
     [Export] public Block Air { get; set; }
     [Export] public Block Grass { get; set; }
     [Export] public Block Dirt { get; set; }
-    [Export] public Block OtherBlock { get; set; }
+    [Export] public Block Stone { get; set; }
 
     public Vector2I BlockTextureSize { get; } = new(16, 16);
     public Vector2 TextureAtlasSize { get; private set; }
@@ -24,7 +24,7 @@ public partial class BlockManager : Node
     public override void _Ready()
     {
         Instance = this;
-        var blockTextures = new[] { Air, Grass, Dirt, OtherBlock }.Select(block => block.Texture)
+        var blockTextures = new[] { Air, Grass, Dirt, Stone }.Select(block => block.Texture)
             .Where(texture => texture != null).Distinct().ToArray();
         for (var i = 0; i < blockTextures.Length; i++)
         {

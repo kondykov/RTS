@@ -24,7 +24,8 @@ namespace RTS.Debug
             debugInfo += $"FPS: {Engine.GetFramesPerSecond()}\n";
             debugInfo += $"Delta: {delta}";
             debugInfo += $"Mode: {MainCommand.Mode}\n";
-            debugInfo += GetCamData();
+            debugInfo += GetPlayerData();
+            //debugInfo += GetCamData();
             if (Input.IsActionJustPressed("F2"))
                 if (dbgField) dbgField = false;
                 else dbgField = true;
@@ -32,7 +33,13 @@ namespace RTS.Debug
             label.Text = debugInfo;
         }
 
-
+        private string GetPlayerData()
+        {
+            var player = MainCommand.RootNode.GetNode<CharacterBody3D>("Player");
+            return $"Position:\nX: {player.Position.X}\nY: {player.Position.Y}\nZ: {player.Position.Z}\n" +
+                   $"Speed: {player.Get("Speed")}\n" +
+                   $"Rotation: {player.Rotation}\n";
+        }
         private string GetCamData()
         {
             var camBody = MainCommand.RootNode.GetNode<Node3D>("RTSCameraBody");

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://pv8x8kwhfrgy"]
+[gd_scene load_steps=9 format=3 uid="uid://xt3un03snoaw"]
 
 [ext_resource type="Script" path="res://scripts/ui/menus/MainMenu.cs" id="1_4r2nd"]
 [ext_resource type="Material" uid="uid://ldcc2j6xliys" path="res://textures/ui/materials/Blur.tres" id="2_24ubl"]

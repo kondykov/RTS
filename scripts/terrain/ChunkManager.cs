@@ -21,7 +21,7 @@ public partial class ChunkManager : Node
     [Export] public PackedScene ChunkScene { get; set; }
     public static ChunkManager Instance { get; private set; }
 
-
+    public Chunk GetChunk(Vector2I chunkPosition) => _positionToChunk[chunkPosition];
     public override void _Ready()
     {
         Instance = this;
@@ -114,10 +114,10 @@ public partial class ChunkManager : Node
                         }
                     }
 
-                Thread.Sleep(100);
+                Thread.Sleep(50);
             }
         }
 
-        Thread.Sleep(100);
+        Thread.Sleep(10);
     }
 }

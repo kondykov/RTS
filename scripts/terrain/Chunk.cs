@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using RTS.Debug;
 
 namespace Terrain;
 
@@ -45,6 +46,7 @@ public partial class Chunk : StaticBody3D
         }
         catch (Exception e)
         {
+            Console.WriteLine(StatusHandler.GetMessage(Status.WARNING_CHUNKMANAGER_THREAD_INTERRUPTED));
             return;
         }
 
@@ -59,10 +61,11 @@ public partial class Chunk : StaticBody3D
         for (var z = 0; z < dimensions.Z; z++)
         {
             Block block;
-            var globalBlockPosition = ChunkPosition + new Vector2I(dimensions.X, dimensions.Z) + new Vector2(x, z);
+            var globalBlockPosition = ChunkPosition * new Vector2I(dimensions.X, dimensions.Z) + new Vector2(x, z);
             var groundHeight = GetHeightMap(globalBlockPosition);
-            if (y < groundHeight / 2) block = BlockManager.Instance.Dirt;
-            else if (y < groundHeight) block = BlockManager.Instance.OtherBlock;
+
+            if (y < groundHeight / 2) block = BlockManager.Instance.Stone;
+            else if (y < groundHeight) block = BlockManager.Instance.Dirt;
             else if (y == groundHeight) block = BlockManager.Instance.Grass;
             else block = BlockManager.Instance.Air;
             _blocks[x, y, z] = block;
@@ -147,14 +150,25 @@ public partial class Chunk : StaticBody3D
         return _blocks[blockPosition.X, blockPosition.Y, blockPosition.Z] == BlockManager.Instance.Air;
     }
 
+    //ToDo: Доделать проверку на прозрачность блоков на стыках чанков
+    private bool CheckTransparentBlockChunks(Vector3I blockPosition)
+    {
+        if (blockPosition.X < 0 || blockPosition.X >= dimensions.X) return true;
+        if (blockPosition.Y < 0 || blockPosition.Y >= dimensions.Y) return true;
+        if (blockPosition.Z < 0 || blockPosition.Z >= dimensions.Z) return true;
+        return _blocks[blockPosition.X, blockPosition.Y, blockPosition.Z] == BlockManager.Instance.Air;
+    }
+
+
     public void SetBlock(Vector3I blockPosition, Block block)
     {
+        if (blockPosition.Y < 0 || blockPosition.Y >= dimensions.Y) return;
         _blocks[blockPosition.X, blockPosition.Y, blockPosition.Z] = block;
         UpdateChunk();
     }
 
     private int GetHeightMap(Vector2 blockPosition)
     {
-        return (int)(dimensions.Y * (Noise.GetNoise2D(blockPosition.X, blockPosition.Y) + 1f / 2f));
+        return (int)(dimensions.Y * ((Noise.GetNoise2D(blockPosition.X, blockPosition.Y) + 1f) / 2f));
     }
 }

@@ -3,11 +3,15 @@ using Godot;
 
 namespace RTS.UI.Menu;
 
-public partial class MainMenu : Control
+public partial class PauseMenu : Control
 {
     public void Continue() => Visible = false;
 
-    public void LoadGame() => GetTree().ChangeSceneToFile("res://Main.tscn");
+    public void LoadGame()
+    {
+        GetTree().Paused = false;
+        GetTree().ChangeSceneToFile("res://Main.tscn");
+    }
 
     public void ShowStats() => Console.WriteLine("ShowStatistics");
 

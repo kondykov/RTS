@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cg1x56ws4xx8d"]
+
+[ext_resource type="Script" path="res://scripts/camera/WorldCameraMover.cs" id="1_apja1"]
+[ext_resource type="Script" path="res://scripts/camera/WorldCamera.cs" id="2_rdmjm"]
+
+[node name="RTSCameraBody" type="CharacterBody3D"]
+transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, 0, 0, 0)
+script = ExtResource("1_apja1")
+
+[node name="RTSCamera2" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.669131, 0.743145, 0, -0.743145, 0.66913, 0, 50, 42.4264)
+current = true
+fov = 50.0
+size = 50.0
+near = 0.3
+script = ExtResource("2_rdmjm")
