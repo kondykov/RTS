@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://cvv0trwtb88m2"]
 
-[ext_resource type="Script" path="res://scripts/editor/terrain/Chunk.cs" id="1_qgth3"]
+[ext_resource type="Script" path="res://scripts/terrain/Chunk.cs" id="1_qgth3"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_r50cp"]
 

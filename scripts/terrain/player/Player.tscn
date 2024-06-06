@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://ke7emiirmjn1"]
 
-[ext_resource type="Script" path="res://scripts/editor/terrain/player/Player.cs" id="1_oy450"]
+[ext_resource type="Script" path="res://scripts/terrain/player/Player.cs" id="1_oy450"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_wjnfa"]
 height = 1.95
