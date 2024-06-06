@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://du8hoef1uyiq6"]
+
+[ext_resource type="LabelSettings" uid="uid://b3e24axr84y8u" path="res://fonts/LabelSettings.tres" id="1_88k5k"]
+[ext_resource type="FontFile" uid="uid://d2y10kx2pkfea" path="res://fonts/kenvector_future_thin.ttf" id="1_vyotu"]
+[ext_resource type="Script" path="res://scripts/ui/DebugMenu.cs" id="2_4av2f"]
+
+[node name="DebugMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="About" type="MarginContainer" parent="CanvasLayer"]
+offset_right = 228.0
+offset_bottom = 28.0
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+
+[node name="Label" type="Label" parent="CanvasLayer/About"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_vyotu")
+text = "Golden fever. Work in progress.
+"
+label_settings = ExtResource("1_88k5k")
+
+[node name="DebugContainer" type="MarginContainer" parent="CanvasLayer"]
+offset_top = 24.0
+offset_right = 353.0
+offset_bottom = 48.0
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+script = ExtResource("2_4av2f")
+
+[node name="DebugLabel" type="Label" parent="CanvasLayer/DebugContainer"]
+layout_mode = 2
+text = "Fatal error: failed to load debug menu."
+label_settings = ExtResource("1_88k5k")

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://cmgmffwc6ivq8"]
+
+[ext_resource type="Texture2D" uid="uid://ckcf025trwnax" path="res://prefabs/sprites/selector.png" id="1_r4h81"]
+
+[node name="Selector" type="Node3D"]
+transform = Transform3D(2, 0, 0, 0, -8.74228e-08, -2, 0, 2, -8.74228e-08, 1, 0.03, 1)
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0296824)
+texture = ExtResource("1_r4h81")
