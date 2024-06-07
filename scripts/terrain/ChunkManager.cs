@@ -16,7 +16,7 @@ public partial class ChunkManager : Node
     private readonly Dictionary<Vector2I, Chunk> _positionToChunk = new();
     private List<Chunk> _chunks;
     private Vector3 _playerPosition;
-    [Export] private int _renderDistance = 5;
+    [Export] private int _renderDistance = 15;
     [Export] public bool MovementChunkRender = true;
     [Export] public PackedScene ChunkScene { get; set; }
     public static ChunkManager Instance { get; private set; }

@@ -1,7 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://xt3un03snoaw"]
+[gd_scene load_steps=7 format=3 uid="uid://xt3un03snoaw"]
 
+[ext_resource type="Script" path="res://scripts/ui/UIHandler.cs" id="1_hjlqh"]
+[ext_resource type="Texture2D" uid="uid://wfhguobgh4dd" path="res://textures/ui/menus/background.png" id="1_iaupx"]
 [ext_resource type="PackedScene" uid="uid://dpjrqmx3fvhqa" path="res://prefabs/Button.tscn" id="2_06m76"]
 [ext_resource type="Material" uid="uid://ldcc2j6xliys" path="res://textures/ui/materials/Blur.tres" id="2_24ubl"]
+[ext_resource type="FontFile" uid="uid://cvu2ivpu1wejp" path="res://fonts/kenvector_future.ttf" id="4_kopqs"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_v2oho"]
+line_spacing = 0.0
+font_size = 25
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -12,6 +21,16 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+script = ExtResource("1_hjlqh")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_iaupx")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 material = ExtResource("2_24ubl")
@@ -22,7 +41,26 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="ColorRect"]
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_top = 130
+
+[node name="Label" type="Label" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_fonts/font = ExtResource("4_kopqs")
+theme_override_font_sizes/font_size = 453
+text = "Golden fever
+"
+label_settings = SubResource("LabelSettings_v2oho")
+horizontal_alignment = 1
+
+[node name="MainContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -30,19 +68,23 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ColorRect/MarginContainer"]
+[node name="Main" type="VBoxContainer" parent="MainContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="Single player" parent="ColorRect/MarginContainer/VBoxContainer" instance=ExtResource("2_06m76")]
+[node name="Single player" parent="MainContainer/Main" instance=ExtResource("2_06m76")]
 layout_mode = 2
 
-[node name="Statistics" parent="ColorRect/MarginContainer/VBoxContainer" instance=ExtResource("2_06m76")]
+[node name="Statistics" parent="MainContainer/Main" instance=ExtResource("2_06m76")]
 layout_mode = 2
 
-[node name="Settings" parent="ColorRect/MarginContainer/VBoxContainer" instance=ExtResource("2_06m76")]
+[node name="Settings" parent="MainContainer/Main" instance=ExtResource("2_06m76")]
+visible = false
 layout_mode = 2
 
-[node name="Exit" parent="ColorRect/MarginContainer/VBoxContainer" instance=ExtResource("2_06m76")]
+[node name="Exit" parent="MainContainer/Main" instance=ExtResource("2_06m76")]
 layout_mode = 2
+
+[connection signal="pressed" from="MainContainer/Main/Single player" to="." method="ShowWorldsPage"]
+[connection signal="pressed" from="MainContainer/Main/Exit" to="." method="Exit"]

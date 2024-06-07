@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=3 uid="uid://dfmcvky7naq6p"]
+
+[ext_resource type="Script" path="res://scripts/ui/UIHandler.cs" id="1_5vg3j"]
+[ext_resource type="Texture2D" uid="uid://wfhguobgh4dd" path="res://textures/ui/menus/background.png" id="2_qk0kh"]
+[ext_resource type="Material" uid="uid://ldcc2j6xliys" path="res://textures/ui/materials/Blur.tres" id="3_i7bao"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_5vg3j")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_qk0kh")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = ExtResource("3_i7bao")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

@@ -1,4 +1,5 @@
 using Godot;
+using RTS.Debug;
 
 namespace RTS;
 

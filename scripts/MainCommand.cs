@@ -1,15 +1,13 @@
 ﻿using Godot;
-using RTS.Camera;
 
-namespace RTS
+namespace RTS;
+
+
+public static class MainCommand
 {
-    public enum ControlModes
-    {
-        None, TileEditor, ObjectEditor
-    }
-    public static class MainCommand
-    {
-        static public ControlModes Mode = ControlModes.None;
-        static public Node3D RootNode;
-    }
+    public static Node3D RootNode;
+
+    public static string PathToMainMenu = "res://prefabs/menus/MainMenu.tscn";
+    public static string PathToWorldsPage = "res://prefabs/menus/WorldPageMenu.tscn";
+    public static string PathToSettings = null;
 }

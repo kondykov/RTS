@@ -1,0 +1,90 @@
+[gd_scene load_steps=5 format=3 uid="uid://l5dt1weck6mj"]
+
+[ext_resource type="Script" path="res://scripts/ui/UIHandler.cs" id="1_d1uvi"]
+[ext_resource type="PackedScene" uid="uid://dpjrqmx3fvhqa" path="res://prefabs/Button.tscn" id="2_q0up1"]
+[ext_resource type="Texture2D" uid="uid://dukyp8peo6tjv" path="res://textures/ui/menus/WorldsPageBackGround.jpg" id="2_t6hhk"]
+[ext_resource type="Material" uid="uid://ldcc2j6xliys" path="res://textures/ui/materials/Blur.tres" id="3_d4fa7"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_d1uvi")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -384.0
+offset_top = -216.0
+offset_right = 384.0
+offset_bottom = 216.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_t6hhk")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = ExtResource("3_d4fa7")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 100
+
+[node name="GroupContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/GroupContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="World 1" parent="MarginContainer/GroupContainer/VBoxContainer" instance=ExtResource("2_q0up1")]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+
+[node name="World 2" parent="MarginContainer/GroupContainer/VBoxContainer" instance=ExtResource("2_q0up1")]
+layout_mode = 2
+
+[node name="World 3" parent="MarginContainer/GroupContainer/VBoxContainer" instance=ExtResource("2_q0up1")]
+layout_mode = 2
+
+[node name="World 4" parent="MarginContainer/GroupContainer/VBoxContainer" instance=ExtResource("2_q0up1")]
+layout_mode = 2
+
+[node name="World 5" parent="MarginContainer/GroupContainer/VBoxContainer" instance=ExtResource("2_q0up1")]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_constants/separation = 35
+
+[node name="Back" parent="MarginContainer/HBoxContainer" instance=ExtResource("2_q0up1")]
+layout_mode = 2
+
+[node name="Button2" parent="MarginContainer/HBoxContainer" instance=ExtResource("2_q0up1")]
+visible = false
+layout_mode = 2
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Back" to="." method="ShowMainMenu"]

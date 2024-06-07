@@ -23,7 +23,6 @@ namespace RTS.Debug
             string debugInfo = $"";
             debugInfo += $"FPS: {Engine.GetFramesPerSecond()}\n";
             debugInfo += $"Delta: {delta}";
-            debugInfo += $"Mode: {MainCommand.Mode}\n";
             debugInfo += GetPlayerData();
             //debugInfo += GetCamData();
             if (Input.IsActionJustPressed("F2"))

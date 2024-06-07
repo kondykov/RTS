@@ -13,4 +13,5 @@ public partial class MouseModeHandler : Node
 
     public static void CaptureMouse() => Input.MouseMode = Input.MouseModeEnum.Captured;
     public static void VisibleMouse() => Input.MouseMode = Input.MouseModeEnum.Visible;
+    public static void SetDefaultMouseMode() => Input.MouseMode = Input.MouseModeEnum.Visible;
 }

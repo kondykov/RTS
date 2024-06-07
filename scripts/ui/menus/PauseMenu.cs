@@ -5,9 +5,13 @@ namespace RTS.UI.Menu;
 
 public partial class PauseMenu : Control
 {
-    public void Continue() => Visible = false;
+    public void Continue()
+    {
+        GetTree().Paused = false;
+        Visible = false;
+    }
 
-    public void NewGame()
+    public void CreateNewGame()
     {
         GetTree().Paused = false;
         GetTree().ChangeSceneToFile("res://Main.tscn");
@@ -21,6 +25,7 @@ public partial class PauseMenu : Control
 
     public override void _Process(double delta)
     {
+        if (!Visible) MouseModeHandler.CaptureMouse();
         if (Input.IsActionJustPressed("ESC"))
         {
             Visible = !Visible;
