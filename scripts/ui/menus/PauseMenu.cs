@@ -7,7 +7,7 @@ public partial class PauseMenu : Control
 {
     public void Continue() => Visible = false;
 
-    public void LoadGame()
+    public void NewGame()
     {
         GetTree().Paused = false;
         GetTree().ChangeSceneToFile("res://Main.tscn");
