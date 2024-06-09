@@ -91,4 +91,5 @@ layout_mode = 2
 visible = false
 layout_mode = 2
 
+[connection signal="pressed" from="MarginContainer/GroupContainer/VBoxContainer/New game" to="." method="LoadFirstWorld"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/Back" to="." method="BackToMainMenu"]

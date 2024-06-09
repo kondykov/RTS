@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Godot;
 using RTS.Debug;
 
@@ -27,7 +28,7 @@ public partial class Chunk : StaticBody3D
     private static readonly int[] _right = { 3, 1, 5, 7 };
     private static readonly int[] _back = { 7, 5, 4, 6 };
     private static readonly int[] _front = { 2, 0, 1, 3 };
-    private readonly Block[,,] _blocks = new Block[dimensions.X, dimensions.Y, dimensions.Z];
+    private Block[,,] _blocks = new Block[dimensions.X, dimensions.Y, dimensions.Z];
     private SurfaceTool _surfaceTool = new();
     [Export] public CollisionShape3D CollisionShape { get; set; }
     [Export] public MeshInstance3D MeshInstance { get; set; }
@@ -56,6 +57,14 @@ public partial class Chunk : StaticBody3D
 
     private void GenerateChunk()
     {
+        GenerateBlockInstances();
+        var chunk = ChunkLoader.GetChunkOrNull(ChunkPosition);
+        if(chunk == null) GenerateBlockInstances();
+        else SetBlockInstances(chunk);
+    }
+
+    private void GenerateBlockInstances()
+    {
         for (var y = 0; y < dimensions.Y; y++)
         for (var x = 0; x < dimensions.X; x++)
         for (var z = 0; z < dimensions.Z; z++)
@@ -70,6 +79,15 @@ public partial class Chunk : StaticBody3D
             else block = BlockManager.Instance.Air;
             _blocks[x, y, z] = block;
         }
+        ChunkLoader.AddCreatedChunk(ChunkPosition, this);
+    }
+    private void SetBlockInstances(Chunk chunk)
+    {
+        for (var y = 0; y < dimensions.Y; y++)
+        for (var x = 0; x < dimensions.X; x++)
+        for (var z = 0; z < dimensions.Z; z++)
+            _blocks[x, y, z] = chunk._blocks[x, y, z];
+        TestGetHeightMap(chunk.ChunkPosition);
     }
 
     private void TestGetHeightMap(Vector2 chunkPosition = new())
@@ -82,8 +100,7 @@ public partial class Chunk : StaticBody3D
             Console.WriteLine();
         }
     }
-
-
+    
     private void UpdateChunk()
     {
         _surfaceTool.Begin(Mesh.PrimitiveType.Triangles);
@@ -165,6 +182,7 @@ public partial class Chunk : StaticBody3D
         if (blockPosition.Y < 0 || blockPosition.Y >= dimensions.Y) return;
         _blocks[blockPosition.X, blockPosition.Y, blockPosition.Z] = block;
         UpdateChunk();
+        ChunkLoader.UpdateChunk(ChunkPosition, this);
     }
 
     private int GetHeightMap(Vector2 blockPosition)

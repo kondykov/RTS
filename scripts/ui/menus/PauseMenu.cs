@@ -19,7 +19,11 @@ public partial class PauseMenu : Control
 
     public void ShowStats() => Console.WriteLine("ShowStatistics");
 
-    public void Exit() => GetTree().Quit();
+    public void Exit()
+    {
+        GetTree().Paused = false;
+        GetTree().ChangeSceneToFile(MainCommand.PathToMainMenu);
+    }
 
     public override void _Ready() => Visible = false;
 

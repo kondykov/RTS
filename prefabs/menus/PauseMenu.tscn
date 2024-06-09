@@ -55,9 +55,9 @@ layout_mode = 2
 visible = false
 layout_mode = 2
 
-[node name="Exit" parent="MarginContainer/VBoxContainer" instance=ExtResource("3_0gwgd")]
+[node name="Exit to main menu" parent="MarginContainer/VBoxContainer" instance=ExtResource("3_0gwgd")]
 layout_mode = 2
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Continue" to="." method="Continue"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/New game" to="." method="CreateNewGame"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/Exit" to="." method="Exit"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Exit to main menu" to="." method="Exit"]

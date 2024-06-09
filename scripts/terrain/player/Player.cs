@@ -6,10 +6,10 @@ public partial class Player : CharacterBody3D
 {
     private float _cameraXRotation;
     private float _gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
-    [Export] private float _jumpVelocity = 10f;
+    [Export] private float _jumpVelocity = 5f;
 
     [Export] private float _mouseSensivity = .3f;
-    [Export] private float _movementSpeed = 16f;
+    [Export] private float _movementSpeed = 15f;
     [Export] public Node3D Head { get; set; }
     [Export] public Camera3D Camera { get; set; }
     [Export] public RayCast3D RayCast { get; set; }
@@ -24,9 +24,8 @@ public partial class Player : CharacterBody3D
 
     public override void _Input(InputEvent @event)
     {
-        if (@event is InputEventMouseMotion)
+        if (@event is InputEventMouseMotion mouseMotion)
         {
-            var mouseMotion = @event as InputEventMouseMotion;
             var deltaX = mouseMotion.Relative.Y * _mouseSensivity;
             var deltaY = -mouseMotion.Relative.X * _mouseSensivity;
 
@@ -54,10 +53,7 @@ public partial class Player : CharacterBody3D
                 ChunkManager.Instance.SetBlock((Vector3I)(intBlockPosition + RayCast.GetCollisionNormal()),
                     BlockManager.Instance.Dirt);
         }
-        else
-        {
-            BlockHighlight.Visible = false;
-        }
+        else BlockHighlight.Visible = false;
     }
 
     public override void _PhysicsProcess(double delta)
@@ -77,8 +73,5 @@ public partial class Player : CharacterBody3D
         MoveAndSlide();
     }
 
-    public Vector3 GetPlayerPosition()
-    {
-        return GlobalPosition;
-    }
+    public Vector3 GetPlayerPosition() => GlobalPosition;
 }
