@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://b7e1uy6a6oef6"]
+
+[ext_resource type="Script" path="res://scripts/ui/inventory/components/Slot.cs" id="1_603xs"]
+[ext_resource type="Texture2D" uid="uid://c2rkwl3f0d2tw" path="res://textures/ui/grey/grey_box.png" id="2_n7nc0"]
+
+[node name="Slot" type="Control" node_paths=PackedStringArray("Background", "Item")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1112.0
+offset_bottom = -608.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("1_603xs")
+Background = NodePath("Background")
+Item = NodePath("Item")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Item" type="TextureRect" parent="."]
+layout_mode = 0
+offset_top = -40.0
+offset_right = 40.0
+texture = ExtResource("2_n7nc0")

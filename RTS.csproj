@@ -1,4 +1,4 @@
-<Project Sdk="Godot.NET.Sdk/4.2.1">
+<Project Sdk="Godot.NET.Sdk/4.2.2">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'android' ">net7.0</TargetFramework>
@@ -6,9 +6,7 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="addons\" />
-  </ItemGroup>
-  <ItemGroup>
+    <Content Include="scripts\console\.gitkeep" />
     <Content Include="scripts\ui\inventory\.gitkeep" />
   </ItemGroup>
 </Project>

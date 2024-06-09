@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://xt3un03snoaw"]
 
-[ext_resource type="Script" path="res://scripts/ui/UIHandler.cs" id="1_hjlqh"]
 [ext_resource type="Texture2D" uid="uid://wfhguobgh4dd" path="res://textures/ui/menus/background.png" id="1_iaupx"]
+[ext_resource type="Script" path="res://scripts/ui/menus/MainMenu.cs" id="1_sl22q"]
 [ext_resource type="PackedScene" uid="uid://dpjrqmx3fvhqa" path="res://prefabs/Button.tscn" id="2_06m76"]
 [ext_resource type="Material" uid="uid://ldcc2j6xliys" path="res://textures/ui/materials/Blur.tres" id="2_24ubl"]
 [ext_resource type="FontFile" uid="uid://cvu2ivpu1wejp" path="res://fonts/kenvector_future.ttf" id="4_kopqs"]
@@ -21,7 +21,8 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-script = ExtResource("1_hjlqh")
+mouse_force_pass_scroll_events = false
+script = ExtResource("1_sl22q")
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 1
@@ -87,4 +88,5 @@ layout_mode = 2
 layout_mode = 2
 
 [connection signal="pressed" from="MainContainer/Main/Single player" to="." method="ShowWorldsPage"]
+[connection signal="pressed" from="MainContainer/Main/Statistics" to="." method="ShowStats"]
 [connection signal="pressed" from="MainContainer/Main/Exit" to="." method="Exit"]

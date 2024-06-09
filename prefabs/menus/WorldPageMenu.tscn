@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://l5dt1weck6mj"]
 
-[ext_resource type="Script" path="res://scripts/ui/UIHandler.cs" id="1_d1uvi"]
+[ext_resource type="Script" path="res://scripts/ui/menus/WorldsPageMenu.cs" id="1_d1uvi"]
 [ext_resource type="PackedScene" uid="uid://dpjrqmx3fvhqa" path="res://prefabs/Button.tscn" id="2_q0up1"]
 [ext_resource type="Texture2D" uid="uid://dukyp8peo6tjv" path="res://textures/ui/menus/WorldsPageBackGround.jpg" id="2_t6hhk"]
 [ext_resource type="Material" uid="uid://ldcc2j6xliys" path="res://textures/ui/materials/Blur.tres" id="3_d4fa7"]
@@ -57,22 +57,26 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="World 1" parent="MarginContainer/GroupContainer/VBoxContainer" instance=ExtResource("2_q0up1")]
+[node name="New game" parent="MarginContainer/GroupContainer/VBoxContainer" instance=ExtResource("2_q0up1")]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
 
 [node name="World 2" parent="MarginContainer/GroupContainer/VBoxContainer" instance=ExtResource("2_q0up1")]
 layout_mode = 2
+disabled = true
 
 [node name="World 3" parent="MarginContainer/GroupContainer/VBoxContainer" instance=ExtResource("2_q0up1")]
 layout_mode = 2
+disabled = true
 
 [node name="World 4" parent="MarginContainer/GroupContainer/VBoxContainer" instance=ExtResource("2_q0up1")]
 layout_mode = 2
+disabled = true
 
 [node name="World 5" parent="MarginContainer/GroupContainer/VBoxContainer" instance=ExtResource("2_q0up1")]
 layout_mode = 2
+disabled = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
@@ -87,4 +91,4 @@ layout_mode = 2
 visible = false
 layout_mode = 2
 
-[connection signal="pressed" from="MarginContainer/HBoxContainer/Back" to="." method="ShowMainMenu"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/Back" to="." method="BackToMainMenu"]

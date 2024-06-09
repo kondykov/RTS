@@ -52,6 +52,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Statistics" parent="MarginContainer/VBoxContainer" instance=ExtResource("3_0gwgd")]
+visible = false
 layout_mode = 2
 
 [node name="Exit" parent="MarginContainer/VBoxContainer" instance=ExtResource("3_0gwgd")]
