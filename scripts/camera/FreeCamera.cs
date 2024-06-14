@@ -29,7 +29,12 @@ namespace RTS.Camera
                 Position = new Vector3(0, 0, 0);
                 Rotation = new Vector3(0, -2.35f, 0);
             }
-            if (direction != Vector3.Zero) { Translate(direction.Rotated(new Vector3(1, 0, 0), -Rotation.X) * Speed * (float)delta); }
+
+            if (direction != Vector3.Zero)
+            {
+                Translate(direction.Rotated(new Vector3(1, 0, 0), -Rotation.X) * Speed * (float)delta);
+            }
+
             Size = Math.Clamp(Size, 10, 100);
         }
     }

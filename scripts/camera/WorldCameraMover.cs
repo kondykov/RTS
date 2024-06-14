@@ -7,8 +7,9 @@ namespace RTS.Camera
     {
         [Export] public int Speed = 20;
         private bool _camPhysicsMode = false;
+
         public override void _Process(double delta)
-	    {
+        {
             var direction = Vector3.Zero;
 
             if (Input.IsActionPressed("E")) RotateY(0.05f);
@@ -24,6 +25,7 @@ namespace RTS.Camera
                 Position = new Vector3(0, 0, 0);
                 Rotation = new Vector3(0, -2.35f, 0);
             }
+
             if (Input.IsActionPressed("Shift")) Speed = 100;
             else Speed = 20;
             if (direction != Vector3.Zero)
@@ -31,6 +33,7 @@ namespace RTS.Camera
                 direction = direction.Normalized();
                 Translate(direction.Rotated(new Vector3(1, 0, 0), -Rotation.X) * Speed * (float)delta);
             }
+
             if (Input.IsActionPressed("camera_speed_max")) Speed++;
             if (Input.IsActionPressed("camera_speed_min")) Speed--;
             Speed = Math.Clamp(Speed, 10, 100);

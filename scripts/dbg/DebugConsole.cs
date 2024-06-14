@@ -9,6 +9,7 @@ namespace RTS.Debug
         ERROR,
         DEFAULT
     }
+
     public class DebugConsole
     {
         public static void WriteMessage(Status error)
@@ -17,6 +18,7 @@ namespace RTS.Debug
             Console.WriteLine(StatusHandler.GetMessage(error));
             Console.ResetColor();
         }
+
         private static void ChangeColor(Status type)
         {
             string tmp = type.ToString();

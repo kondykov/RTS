@@ -25,6 +25,6 @@ public partial class UIButtonHandler : TextureButton
     {
         if (!_instance.Disabled) _soundByHover.Play();
     }
-    
+
     public void ActivateSoundByClick() => _soundByClick.Play();
 }

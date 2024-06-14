@@ -39,6 +39,7 @@ namespace RTS.Debug
                    $"Speed: {player.Get("Speed")}\n" +
                    $"Rotation: {player.Rotation}\n";
         }
+
         private string GetCamData()
         {
             var camBody = MainCommand.RootNode.GetNode<Node3D>("RTSCameraBody");

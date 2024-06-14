@@ -9,7 +9,7 @@ namespace RTS.Camera
         private float _jumpVelocity = 5f;
 
         public override void _Process(double delta)
-	    {
+        {
             Vector3 direction = Vector3.Zero;
             Vector3 velocity = Velocity;
 
@@ -32,7 +32,9 @@ namespace RTS.Camera
 
             Vector2 inputDir = Input.GetVector("A", "D", "W", "S");
             inputDir = inputDir.Lerp(inputDir, 2f);
-            direction = new Vector3(inputDir.X, 0, inputDir.Y).Rotated(Vector3.Up, MainCommand.RootNode.GetNode<Node3D>("RTSCameraBody").Rotation.Y).Normalized(); //rotates the input direction with camera rotation
+            direction = new Vector3(inputDir.X, 0, inputDir.Y)
+                .Rotated(Vector3.Up, MainCommand.RootNode.GetNode<Node3D>("RTSCameraBody").Rotation.Y)
+                .Normalized(); //rotates the input direction with camera rotation
 
 
             direction = direction.Rotated(new Vector3(1, 0, 0), -Rotation.X) * _speed * (float)delta;
@@ -46,6 +48,7 @@ namespace RTS.Camera
                 velocity.X = Mathf.MoveToward(Velocity.X, 0, _speed);
                 velocity.Z = Mathf.MoveToward(Velocity.Z, 0, _speed);
             }
+
             Velocity = velocity;
             MoveAndSlide();
         }

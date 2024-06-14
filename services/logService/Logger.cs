@@ -13,15 +13,16 @@ namespace LoggerService
         protected string _time = DateTime.Now.ToLongTimeString();
         private readonly FileService _fileService;
         private readonly string _namespace;
+
         public Logger(FileService fileService)
         {
             _fileService = fileService;
             _namespace = typeof(T).FullName;
         }
 
-        public string CollectMessage(string message, LogStatus logStatus, Exception ex = null) => ex == null ? 
-            $"{_time} | {message} | {_namespace} | {logStatus}" :
-            $"{_time} | {message} | {_namespace} | {logStatus} | {ex.Message}";
+        public string CollectMessage(string message, LogStatus logStatus, Exception ex = null) => ex == null
+            ? $"{_time} | {message} | {_namespace} | {logStatus}"
+            : $"{_time} | {message} | {_namespace} | {logStatus} | {ex.Message}";
 
         public void Log(LogStatus logStatus, string message, Exception ex = null)
         {

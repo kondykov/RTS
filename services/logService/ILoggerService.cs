@@ -13,6 +13,7 @@ namespace LoggerService
         ERROR,
         CRITICAL_ERROR,
     }
+
     public interface ILoggerService<T>
     {
         public string CollectMessage(string message, LogStatus logStatus, Exception ex = null);

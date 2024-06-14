@@ -11,6 +11,7 @@ namespace RTS.Debug
         ERR_FAILED_TO_GET_CAMERA_DATA,
         ERR_FAILED_TO_LOAD_DEBUG_MENU,
     }
+
     public static class StatusHandler
     {
         public static readonly Dictionary<Status, string> StatusNames = new Dictionary<Status, string>()
@@ -19,6 +20,7 @@ namespace RTS.Debug
             { Status.ERR_FAILED, "Unhandled exception." },
             { Status.WARNING_RAYCAST_RETURNS_NULL, "Raycast returns null." }
         };
+
         public static string GetMessage(Status status)
         {
             if (StatusNames.ContainsKey(status)) return StatusNames[status];

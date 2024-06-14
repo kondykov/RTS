@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Godot;
+using LoggerService;
 using RTS.Debug;
+using Terrain.Character;
 
 namespace Terrain;
 
@@ -33,6 +35,7 @@ public partial class Chunk : StaticBody3D
     [Export] public CollisionShape3D CollisionShape { get; set; }
     [Export] public MeshInstance3D MeshInstance { get; set; }
     [Export] public FastNoiseLite Noise { get; set; }
+    [Export] public Label3D DebugLabel3D { get; set; }
 
     public Vector2I ChunkPosition { get; private set; }
 
@@ -51,20 +54,32 @@ public partial class Chunk : StaticBody3D
             return;
         }
 
-        GenerateChunk();
+        CheckChunk();
         UpdateChunk();
     }
 
-    private void GenerateChunk()
+    public override void _Process(double delta)
     {
-        GenerateBlockInstances();
-        var chunk = ChunkLoader.GetChunkOrNull(ChunkPosition);
-        if(chunk == null) GenerateBlockInstances();
+        if (!Engine.IsEditorHint())
+        {
+            //DebugLabel3D.LookAt(GetTree().Root.);
+        }
+    }
+
+    private void CheckChunk()
+    {
+        var chunk = ChunkMemory.GetChunkOrNull(ChunkPosition);
+        if (chunk == null) GenerateBlockInstances();
         else SetBlockInstances(chunk);
     }
 
     private void GenerateBlockInstances()
     {
+        Console.WriteLine($"Generated {ChunkPosition}.");
+
+        Logger<string> logger = new(new FileService());
+        logger.Log(LogStatus.OK, $"Generated {ChunkPosition.ToString()}");
+
         for (var y = 0; y < dimensions.Y; y++)
         for (var x = 0; x < dimensions.X; x++)
         for (var z = 0; z < dimensions.Z; z++)
@@ -79,28 +94,31 @@ public partial class Chunk : StaticBody3D
             else block = BlockManager.Instance.Air;
             _blocks[x, y, z] = block;
         }
-        ChunkLoader.AddCreatedChunk(ChunkPosition, this);
+
+        DebugLabel3D.Text = _blocks.ToString();
+        ChunkMemory.AddCreatedChunk(ChunkPosition, this);
     }
+
     private void SetBlockInstances(Chunk chunk)
     {
+        Console.WriteLine($"Loaded {ChunkPosition}.");
         for (var y = 0; y < dimensions.Y; y++)
         for (var x = 0; x < dimensions.X; x++)
         for (var z = 0; z < dimensions.Z; z++)
             _blocks[x, y, z] = chunk._blocks[x, y, z];
-        TestGetHeightMap(chunk.ChunkPosition);
+        DebugLabel3D.Text = ConvertToString(_blocks);
+        Logger<string> logger = new(new FileService());
+        logger.Log(LogStatus.OK, $"Loaded {ChunkPosition.ToString()}");
     }
 
-    private void TestGetHeightMap(Vector2 chunkPosition = new())
+    private string ConvertToString(Block[,,] block)
     {
-        for (var x = 0; x < 16; x++)
-        {
-            for (var y = 0; y < 16; y++)
-                Console.Write(
-                    $"[{GetHeightMap(chunkPosition + new Vector2I(dimensions.X, dimensions.Z) * new Vector2(x, y))}]");
-            Console.WriteLine();
-        }
+        var result = "Empty";
+
+
+        return result;
     }
-    
+
     private void UpdateChunk()
     {
         _surfaceTool.Begin(Mesh.PrimitiveType.Triangles);
@@ -182,7 +200,7 @@ public partial class Chunk : StaticBody3D
         if (blockPosition.Y < 0 || blockPosition.Y >= dimensions.Y) return;
         _blocks[blockPosition.X, blockPosition.Y, blockPosition.Z] = block;
         UpdateChunk();
-        ChunkLoader.UpdateChunk(ChunkPosition, this);
+        ChunkMemory.UpdateChunk(ChunkPosition, this);
     }
 
     private int GetHeightMap(Vector2 blockPosition)

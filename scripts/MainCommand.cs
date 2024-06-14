@@ -2,7 +2,6 @@
 
 namespace RTS;
 
-
 public static class MainCommand
 {
     public static Node3D RootNode;
