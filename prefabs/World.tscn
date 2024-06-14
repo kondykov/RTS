@@ -11,10 +11,10 @@
 [node name="World" type="Node3D"]
 script = ExtResource("1_pyno1")
 
+[node name="Level" parent="." instance=ExtResource("6_wccm7")]
+
 [node name="Player" parent="." instance=ExtResource("5_ndg8h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 80, 5)
-
-[node name="Level" parent="." instance=ExtResource("6_wccm7")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_2pys1")

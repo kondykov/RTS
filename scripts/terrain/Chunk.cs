@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
 using Godot;
 using LoggerService;
 using RTS.Debug;
-using Terrain.Character;
 
 namespace Terrain;
 
@@ -30,7 +28,7 @@ public partial class Chunk : StaticBody3D
     private static readonly int[] _right = { 3, 1, 5, 7 };
     private static readonly int[] _back = { 7, 5, 4, 6 };
     private static readonly int[] _front = { 2, 0, 1, 3 };
-    private Block[,,] _blocks = new Block[dimensions.X, dimensions.Y, dimensions.Z];
+    private readonly Block[,,] _blocks = new Block[dimensions.X, dimensions.Y, dimensions.Z];
     private SurfaceTool _surfaceTool = new();
     [Export] public CollisionShape3D CollisionShape { get; set; }
     [Export] public MeshInstance3D MeshInstance { get; set; }
@@ -62,7 +60,7 @@ public partial class Chunk : StaticBody3D
     {
         if (!Engine.IsEditorHint())
         {
-            //DebugLabel3D.LookAt(GetTree().Root.);
+            //DebugLabel3D.LookAt(GetTree().Root.GetNode<Node3D>("World/Player").GlobalPosition);
         }
     }
 
@@ -95,7 +93,7 @@ public partial class Chunk : StaticBody3D
             _blocks[x, y, z] = block;
         }
 
-        DebugLabel3D.Text = _blocks.ToString();
+        DebugLabel3D.Text = ChunkPosition.ToString();
         ChunkMemory.AddCreatedChunk(ChunkPosition, this);
     }
 
@@ -106,17 +104,9 @@ public partial class Chunk : StaticBody3D
         for (var x = 0; x < dimensions.X; x++)
         for (var z = 0; z < dimensions.Z; z++)
             _blocks[x, y, z] = chunk._blocks[x, y, z];
-        DebugLabel3D.Text = ConvertToString(_blocks);
+        DebugLabel3D.Text = ChunkPosition.ToString();
         Logger<string> logger = new(new FileService());
         logger.Log(LogStatus.OK, $"Loaded {ChunkPosition.ToString()}");
-    }
-
-    private string ConvertToString(Block[,,] block)
-    {
-        var result = "Empty";
-
-
-        return result;
     }
 
     private void UpdateChunk()
