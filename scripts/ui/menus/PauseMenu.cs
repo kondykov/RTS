@@ -14,7 +14,7 @@ public partial class PauseMenu : Control
     public void CreateNewGame()
     {
         GetTree().Paused = false;
-        GetTree().ChangeSceneToFile("res://Main.tscn");
+        GetTree().ChangeSceneToFile(MainCommand.PathToWorld);
     }
 
     public void ShowStats() => Console.WriteLine("ShowStatistics");

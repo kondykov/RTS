@@ -36,5 +36,4 @@ Stone = SubResource("Resource_2uhkq")
 
 [node name="ChunkManager" type="Node" parent="."]
 script = ExtResource("1_dpqw8")
-_renderDistance = 10
 ChunkScene = ExtResource("1_mdba7")
