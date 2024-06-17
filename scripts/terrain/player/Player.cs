@@ -6,7 +6,7 @@ public partial class Player : CharacterBody3D
 {
     private float _cameraXRotation;
     private float _gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
-    [Export] private float _jumpVelocity = 5f;
+    [Export] private float _jumpVelocity = 15f;
 
     [Export] private float _mouseSensivity = .3f;
     [Export] private float _movementSpeed = 15f;

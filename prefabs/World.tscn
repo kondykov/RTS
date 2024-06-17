@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bvg2head5siwj"]
+[gd_scene load_steps=10 format=3 uid="uid://bvg2head5siwj"]
 
 [ext_resource type="Script" path="res://scripts/MainCommandHandler.cs" id="1_pyno1"]
 [ext_resource type="PackedScene" uid="uid://ke7emiirmjn1" path="res://scripts/terrain/player/Player.tscn" id="5_ndg8h"]
@@ -7,7 +7,28 @@
 [ext_resource type="PackedScene" uid="uid://ckgk1qgutb8vr" path="res://prefabs/scenes/Level.tscn" id="6_wccm7"]
 [ext_resource type="PackedScene" uid="uid://xt3un03snoaw" path="res://prefabs/menus/PauseMenu.tscn" id="7_cfyxc"]
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_bqgft"]
+sky_top_color = Color(0.223529, 0.666667, 0.784314, 1)
+sky_horizon_color = Color(0, 0.694118, 0.980392, 1)
+ground_bottom_color = Color(0.0392157, 0, 0.34902, 1)
+ground_horizon_color = Color(0, 0.694118, 0.980392, 1)
+ground_curve = 0.393966
+sun_angle_max = 34.55
+sun_curve = 0.235375
+
+[sub_resource type="Sky" id="Sky_gpycl"]
+sky_material = SubResource("ProceduralSkyMaterial_bqgft")
+
 [sub_resource type="Environment" id="Environment_2pys1"]
+background_mode = 2
+sky = SubResource("Sky_gpycl")
+ambient_light_source = 3
+ambient_light_color = Color(0.505344, 0.505344, 0.505344, 1)
+ambient_light_energy = 0.1
+fog_enabled = true
+fog_light_color = Color(0.0797351, 0.546552, 1, 1)
+fog_light_energy = 0.6
+fog_sky_affect = 0.0
 
 [node name="World" type="Node3D" node_paths=PackedStringArray("_sound")]
 script = ExtResource("1_pyno1")
@@ -21,8 +42,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 80, 5)
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_2pys1")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
-transform = Transform3D(0.854518, -0.190449, 0.483247, -0.126619, 0.825914, 0.549394, -0.503752, -0.530655, 0.681644, 48.336, 56.9396, 168.107)
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.244038, -0.113597, -0.963089, 0.969766, 0.0285863, 0.242358, 0, -0.993116, 0.117139, -282.932, 101.65, 0)
 shadow_enabled = true
 
 [node name="DebugMenu" parent="." instance=ExtResource("6_khav5")]

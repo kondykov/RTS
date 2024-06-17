@@ -65,11 +65,11 @@ public partial class ChunkManager : Node
 
     public override void _PhysicsProcess(double delta)
     {
-        if (!Engine.IsEditorHint())
-            lock (_playerPositionLock)
-            {
-                _playerPosition = Player.Instance.GlobalPosition;
-            }
+        if (Engine.IsEditorHint()) return;
+        lock (_playerPositionLock)
+        {
+            _playerPosition = Player.Instance.GlobalPosition;
+        }
     }
 
     private void ThreadProcess()
@@ -114,10 +114,8 @@ public partial class ChunkManager : Node
                         }
                     }
 
-                Thread.Sleep(50);
+                Thread.Sleep(10);
             }
         }
-
-        Thread.Sleep(10);
     }
 }

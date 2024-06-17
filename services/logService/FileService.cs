@@ -10,27 +10,20 @@ namespace LoggerService
 {
     public class FileService : IFIleService
     {
-        public const string DEFAULT_PATH = "C:\\Godot\\Log.txt";
+        private const string DefaultPath = "Log.txt";
 
-        async public Task WriteLog(string message)
+        public async Task WriteLog(string message)
         {
-            using (StreamWriter tw = new(DEFAULT_PATH, true, Encoding.Default))
-            {
-                await tw.WriteLineAsync(message);
-            }
+            await using StreamWriter tw = new(DefaultPath, true, Encoding.Default);
+            await tw.WriteLineAsync(message);
         }
 
-        async public Task ReadLog()
+        public async Task ReadLog()
         {
-            using (StreamReader sr = new StreamReader(FileService.DEFAULT_PATH))
-            {
-                Console.WriteLine(await sr.ReadLineAsync());
-            }
+            using StreamReader sr = new StreamReader(FileService.DefaultPath);
+            Console.WriteLine(await sr.ReadLineAsync());
         }
 
-        public Task ClearLog()
-        {
-            throw new NotImplementedException();
-        }
+        public Task ClearLog() => throw new NotImplementedException();
     }
 }
