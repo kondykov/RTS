@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using Godot;
 using RTS.Debug;
-using Terrain.Character;
+using RTS.Terrain.Character;
 
 namespace Terrain;
 
