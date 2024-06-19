@@ -1,16 +1,16 @@
 ﻿using Godot;
 using System;
 
-namespace RTS.Camera
-{
-    public partial class FreeCamera : Camera3D
-    {
-        [Export] public Camera3D Camera { get; set; }
-        [Export] public int Speed = 100;
-        [Export] public int ZoomSpeed = 100;
+namespace RTS.Camera;
 
-        public override void _Process(double delta)
-        {
+public partial class FreeCamera : Camera3D
+{
+    [Export] public Camera3D Camera { get; set; }
+    [Export] public int Speed = 100;
+    [Export] public int ZoomSpeed = 100;
+
+    public override void _Process(double delta)
+    {
             var direction = Vector3.Zero;
 
             if (Input.IsActionJustPressed("mouse_circle_up")) Fov -= ZoomSpeed * (float)delta;
@@ -37,5 +37,4 @@ namespace RTS.Camera
 
             Size = Math.Clamp(Size, 10, 100);
         }
-    }
 }

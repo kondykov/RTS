@@ -1,15 +1,15 @@
 using Godot;
 using System;
 
-namespace RTS.Camera
-{
-    public partial class WorldCameraMover : Godot.CharacterBody3D
-    {
-        [Export] public int Speed = 20;
-        private bool _camPhysicsMode = false;
+namespace RTS.Camera;
 
-        public override void _Process(double delta)
-        {
+public partial class WorldCameraMover : Godot.CharacterBody3D
+{
+    [Export] public int Speed = 20;
+    private bool _camPhysicsMode = false;
+
+    public override void _Process(double delta)
+    {
             var direction = Vector3.Zero;
 
             if (Input.IsActionPressed("E")) RotateY(0.05f);
@@ -39,5 +39,4 @@ namespace RTS.Camera
             Speed = Math.Clamp(Speed, 10, 100);
             MoveAndSlide();
         }
-    }
 }

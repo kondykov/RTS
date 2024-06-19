@@ -1,26 +1,26 @@
 ﻿using System;
 
-namespace RTS.Debug
-{
-    enum TypeofStatus
-    {
-        SUCCESS,
-        WARNING,
-        ERROR,
-        DEFAULT
-    }
+namespace RTS.Debug;
 
-    public class DebugConsole
+enum TypeofStatus
+{
+    SUCCESS,
+    WARNING,
+    ERROR,
+    DEFAULT
+}
+
+public class DebugConsole
+{
+    public static void WriteMessage(Status error)
     {
-        public static void WriteMessage(Status error)
-        {
             ChangeColor(error);
             Console.WriteLine(StatusHandler.GetMessage(error));
             Console.ResetColor();
         }
 
-        private static void ChangeColor(Status type)
-        {
+    private static void ChangeColor(Status type)
+    {
             string tmp = type.ToString();
             TypeofStatus selector = TypeofStatus.DEFAULT;
             if (tmp.Contains("ERR")) selector = TypeofStatus.ERROR;
@@ -44,5 +44,4 @@ namespace RTS.Debug
                     break;
             }
         }
-    }
 }

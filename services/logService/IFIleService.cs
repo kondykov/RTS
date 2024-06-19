@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
-namespace LoggerService
+namespace LoggerService;
+
+public interface IFIleService
 {
-    public interface IFIleService
-    {
-        public Task WriteLog(string message);
-        public Task ReadLog();
-        public Task ClearLog();
-    }
+    public Task WriteLog(string message);
+    public Task ReadLog();
+    public Task ClearLog();
 }

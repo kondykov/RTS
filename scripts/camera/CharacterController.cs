@@ -1,15 +1,15 @@
 using Godot;
 
-namespace RTS.Camera
-{
-    public partial class CharacterController : CharacterBody3D
-    {
-        private int _speed = 20;
-        private float _gravity = 14f;
-        private float _jumpVelocity = 5f;
+namespace RTS.Camera;
 
-        public override void _Process(double delta)
-        {
+public partial class CharacterController : CharacterBody3D
+{
+    private int _speed = 20;
+    private float _gravity = 14f;
+    private float _jumpVelocity = 5f;
+
+    public override void _Process(double delta)
+    {
             Vector3 direction = Vector3.Zero;
             Vector3 velocity = Velocity;
 
@@ -52,5 +52,4 @@ namespace RTS.Camera
             Velocity = velocity;
             MoveAndSlide();
         }
-    }
 }

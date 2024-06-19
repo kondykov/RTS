@@ -1,20 +1,20 @@
 using Godot;
 
-namespace RTS.Debug
-{
-    public partial class DebugMenu : MarginContainer
-    {
-        private bool dbgField = false;
-        static public Vector3 MousePosition = new Vector3(0, 0, 0);
+namespace RTS.Debug;
 
-        public override void _Ready()
-        {
+public partial class DebugMenu : MarginContainer
+{
+    private bool dbgField = false;
+    static public Vector3 MousePosition = new Vector3(0, 0, 0);
+
+    public override void _Ready()
+    {
             var label = GetNode<Label>("DebugLabel");
             label.Visible = false;
         }
 
-        public override void _Process(double delta)
-        {
+    public override void _Process(double delta)
+    {
             var label = GetNode<Label>("DebugLabel");
             if (Input.IsActionJustPressed("F3"))
                 if (label.Visible) label.Visible = false;
@@ -32,16 +32,16 @@ namespace RTS.Debug
             label.Text = debugInfo;
         }
 
-        private string GetPlayerData()
-        {
+    private string GetPlayerData()
+    {
             var player = MainCommand.RootNode.GetNode<CharacterBody3D>("Player");
             return $"Position:\nX: {player.Position.X}\nY: {player.Position.Y}\nZ: {player.Position.Z}\n" +
                    $"Speed: {player.Get("Speed")}\n" +
                    $"Rotation: {player.Rotation}\n";
         }
 
-        private string GetCamData()
-        {
+    private string GetCamData()
+    {
             var camBody = MainCommand.RootNode.GetNode<Node3D>("RTSCameraBody");
             var camera = MainCommand.RootNode.GetNode<Camera3D>("RTSCameraBody/RTSCamera");
             return $"Position:\nX: {camBody.Position.X}\nY: {camBody.Position.Y}\nZ: {camBody.Position.Z}\n" +
@@ -51,8 +51,8 @@ namespace RTS.Debug
                    $"Rotation: {camBody.Rotation}\n";
         }
 
-        private string GetPressedKeys()
-        {
+    private string GetPressedKeys()
+    {
             string keysPressed = "Pressed keys:\n";
             if (Input.IsActionPressed("W")) keysPressed += "W ";
             if (Input.IsActionPressed("A")) keysPressed += "A ";
@@ -68,5 +68,4 @@ namespace RTS.Debug
             keysPressed += '\n';
             return keysPressed;
         }
-    }
 }

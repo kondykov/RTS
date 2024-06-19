@@ -47,13 +47,13 @@ public partial class WorldCamera : Camera3D
             }
             catch
             {
-                DebugConsole.WriteMessage(Status.WARNING_RAYCAST_RETURNS_NULL);
+                DebugConsole.WriteMessage(Status.WarningRaycastReturnsNull);
                 return null;
             }
         }
         catch
         {
-            DebugConsole.WriteMessage(Status.ERR_FAILED_TO_GET_CAMERA_DATA);
+            DebugConsole.WriteMessage(Status.ErrFailedToGetCameraData);
             return null;
         }
     }

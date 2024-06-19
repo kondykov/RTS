@@ -10,4 +10,6 @@ public static class MainCommand
     public static string PathToWorldsPage = "res://prefabs/menus/WorldPageMenu.tscn";
     public static string PathToWorld = "res://prefabs/World.tscn";
     public static string PathToSettings = null;
+
+    public static string SceneToLoad { get; set; }
 }

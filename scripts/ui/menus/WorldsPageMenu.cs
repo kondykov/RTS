@@ -4,6 +4,17 @@ namespace RTS.UI.Menu;
 
 public partial class WorldsPageMenu : Control
 {
-    public void BackToMainMenu() => GetTree().ChangeSceneToFile(MainCommand.PathToMainMenu);
-    public void LoadFirstWorld() => GetTree().ChangeSceneToFile(MainCommand.PathToWorld);
+    private void BackToMainMenu()
+    {
+        MainCommand.SceneToLoad = MainCommand.PathToMainMenu;
+        GetTree().ChangeSceneToFile(LoadingScreen.Loader);
+        
+        //GetTree().ChangeSceneToFile(MainCommand.PathToMainMenu);
+    }
+
+    private void LoadFirstWorld()
+    {
+        MainCommand.SceneToLoad = MainCommand.PathToWorld;
+        GetTree().ChangeSceneToFile(LoadingScreen.Loader);
+    }
 }

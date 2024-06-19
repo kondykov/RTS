@@ -48,7 +48,7 @@ public partial class Chunk : StaticBody3D
         }
         catch (Exception e)
         {
-            Console.WriteLine(StatusHandler.GetMessage(Status.WARNING_CHUNKMANAGER_THREAD_INTERRUPTED));
+            Console.WriteLine(StatusHandler.GetMessage(Status.WarningChunkmanagerThreadInterrupted));
             return;
         }
 
@@ -66,6 +66,7 @@ public partial class Chunk : StaticBody3D
 
     private void CheckChunk()
     {
+        // GenerateBlockInstances();
         var chunk = ChunkMemory.GetChunkOrNull(ChunkPosition);
         if (chunk == null) GenerateBlockInstances();
         else SetBlockInstances(chunk);
@@ -74,9 +75,8 @@ public partial class Chunk : StaticBody3D
     private void GenerateBlockInstances()
     {
         Console.WriteLine($"Generated {ChunkPosition}.");
-
         Logger<string> logger = new(new FileService());
-        logger.Log(LogStatus.OK, $"Generated {ChunkPosition.ToString()}");
+        logger.Log(LogStatus.Ok, $"Generated chunk {ChunkPosition.ToString()}");
 
         for (var y = 0; y < dimensions.Y; y++)
         for (var x = 0; x < dimensions.X; x++)
@@ -94,19 +94,19 @@ public partial class Chunk : StaticBody3D
         }
 
         DebugLabel3D.Text = ChunkPosition.ToString();
-        ChunkMemory.AddCreatedChunk(ChunkPosition, this);
+        ChunkMemory.AddCreatedChunk(ChunkPosition, _blocks);
     }
 
-    private void SetBlockInstances(Chunk chunk)
+    private void SetBlockInstances(Block[,,] blocks)
     {
         Console.WriteLine($"Loaded {ChunkPosition}.");
         for (var y = 0; y < dimensions.Y; y++)
         for (var x = 0; x < dimensions.X; x++)
         for (var z = 0; z < dimensions.Z; z++)
-            _blocks[x, y, z] = chunk._blocks[x, y, z];
+            _blocks[x, y, z] = blocks[x, y, z];
         DebugLabel3D.Text = ChunkPosition.ToString();
         Logger<string> logger = new(new FileService());
-        logger.Log(LogStatus.OK, $"Loaded {ChunkPosition.ToString()}");
+        logger.Log(LogStatus.Ok, $"Loaded {ChunkPosition.ToString()}");
     }
 
     private void UpdateChunk()
@@ -190,7 +190,7 @@ public partial class Chunk : StaticBody3D
         if (blockPosition.Y < 0 || blockPosition.Y >= dimensions.Y) return;
         _blocks[blockPosition.X, blockPosition.Y, blockPosition.Z] = block;
         UpdateChunk();
-        ChunkMemory.UpdateChunk(ChunkPosition, this);
+        ChunkMemory.UpdateChunk(ChunkPosition, _blocks);
     }
 
     private int GetHeightMap(Vector2 blockPosition)

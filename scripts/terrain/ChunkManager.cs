@@ -16,7 +16,7 @@ public partial class ChunkManager : Node
     private readonly Dictionary<Vector2I, Chunk> _positionToChunk = new();
     private List<Chunk> _chunks;
     private Vector3 _playerPosition;
-    private int _renderDistance = 20;
+    public readonly int _renderDistance = 20;
     [Export] public bool MovementChunkRender = true;
     [Export] public PackedScene ChunkScene { get; set; }
     public static ChunkManager Instance { get; private set; }
@@ -109,7 +109,7 @@ public partial class ChunkManager : Node
                         catch (Exception e)
                         {
                             Console.WriteLine(
-                                $"{StatusHandler.GetMessage(Status.WARNING_CHUNKMANAGER_THREAD_INTERRUPTED)}");
+                                $"{StatusHandler.GetMessage(Status.WarningChunkmanagerThreadInterrupted)}");
                             return;
                         }
                     }

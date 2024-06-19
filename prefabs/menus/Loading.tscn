@@ -1,0 +1,74 @@
+[gd_scene load_steps=6 format=3 uid="uid://brd7odbxkfp2c"]
+
+[ext_resource type="Script" path="res://scripts/ui/LoadingScreen.cs" id="1_wrr2e"]
+[ext_resource type="Texture2D" uid="uid://dukyp8peo6tjv" path="res://textures/ui/menus/WorldsPageBackGround.jpg" id="2_80tm7"]
+[ext_resource type="Material" uid="uid://ldcc2j6xliys" path="res://textures/ui/materials/Blur.tres" id="3_hjqyi"]
+[ext_resource type="FontFile" uid="uid://cvu2ivpu1wejp" path="res://fonts/kenvector_future.ttf" id="4_fswju"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_h6sjt"]
+
+[node name="Menu" type="Control" node_paths=PackedStringArray("_bar", "_label")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wrr2e")
+_bar = NodePath("MarginContainer/GroupContainer/ProgressBar")
+_label = NodePath("MarginContainer/GroupContainer/Label")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -384.0
+offset_top = -216.0
+offset_right = 384.0
+offset_bottom = 216.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_80tm7")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = ExtResource("3_hjqyi")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 100
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 100
+
+[node name="GroupContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="MarginContainer/GroupContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_fswju")
+text = "label
+"
+label_settings = SubResource("LabelSettings_h6sjt")
+horizontal_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/GroupContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_fswju")
+step = 1.0
+value = 50.0
+
+[connection signal="tree_exited" from="." to="." method="Complete"]
