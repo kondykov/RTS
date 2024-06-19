@@ -1,12 +1,20 @@
 using Godot;
 
-namespace Terrain.Character;
+namespace RTS.Terrain.Character;
 
+public enum GamemodeEnum
+{
+    COLLISION,
+    NOCLIP
+}
+
+[Tool]
 public partial class Player : CharacterBody3D
 {
+    private static GamemodeEnum _gamemode = GamemodeEnum.NOCLIP;
     private float _cameraXRotation;
     private float _gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
-    [Export] private float _jumpVelocity = 5f;
+    [Export] private float _jumpVelocity = 15f;
 
     [Export] private float _mouseSensivity = .3f;
     [Export] private float _movementSpeed = 15f;
@@ -19,28 +27,25 @@ public partial class Player : CharacterBody3D
     public override void _Ready()
     {
         Instance = this;
-        Input.MouseMode = Input.MouseModeEnum.Captured;
+        if (!Engine.IsEditorHint()) Input.MouseMode = Input.MouseModeEnum.Captured;
     }
 
     public override void _Input(InputEvent @event)
     {
-        if (@event is InputEventMouseMotion mouseMotion)
-        {
-            var deltaX = mouseMotion.Relative.Y * _mouseSensivity;
-            var deltaY = -mouseMotion.Relative.X * _mouseSensivity;
+        if (@event is not InputEventMouseMotion mouseMotion || Engine.IsEditorHint()) return;
+        var deltaX = mouseMotion.Relative.Y * _mouseSensivity;
+        var deltaY = -mouseMotion.Relative.X * _mouseSensivity;
 
-            Head.RotateY(Mathf.DegToRad(deltaY));
-            if (_cameraXRotation + deltaX > -90 && _cameraXRotation + deltaX < 90)
-            {
-                Camera.RotateX(Mathf.DegToRad(-deltaX));
-                _cameraXRotation += deltaX;
-            }
-        }
+        Head.RotateY(Mathf.DegToRad(deltaY));
+        if (!(_cameraXRotation + deltaX > -90) || !(_cameraXRotation + deltaX < 90)) return;
+        Camera.RotateX(Mathf.DegToRad(-deltaX));
+        _cameraXRotation += deltaX;
     }
 
     public override void _Process(double delta)
     {
-        if (RayCast.IsColliding() && RayCast.GetCollider() is Chunk chunk)
+        if (Input.IsActionJustPressed("F2")) ChangeGamemode();
+        if (RayCast.IsColliding() && RayCast.GetCollider() is Chunk chunk && !Engine.IsEditorHint())
         {
             BlockHighlight.Visible = true;
             var blockPosition = RayCast.GetCollisionPoint() - .5f * RayCast.GetCollisionNormal();
@@ -53,18 +58,38 @@ public partial class Player : CharacterBody3D
                 ChunkManager.Instance.SetBlock((Vector3I)(intBlockPosition + RayCast.GetCollisionNormal()),
                     BlockManager.Instance.Dirt);
         }
-        else BlockHighlight.Visible = false;
+        else
+        {
+            BlockHighlight.Visible = false;
+        }
     }
 
     public override void _PhysicsProcess(double delta)
     {
         var velocity = Velocity;
-        if (!IsOnFloor()) velocity.Y -= _gravity * (float)delta;
-        if (Input.IsActionJustPressed("space") && IsOnFloor()) velocity.Y = _jumpVelocity;
-        var inputDirection = Input.GetVector("A", "D", "W", "S").Normalized();
+
+        if (!Engine.IsEditorHint() && !IsOnFloor() && _gamemode == GamemodeEnum.COLLISION)
+            velocity.Y -= _gravity * (float)delta;
         var direction = Vector3.Zero;
-        direction += inputDirection.X * Head.GlobalBasis.X;
-        direction += inputDirection.Y * Head.GlobalBasis.Z;
+        if (!Engine.IsEditorHint())
+        {
+            if (_gamemode == GamemodeEnum.NOCLIP)
+            {
+                if (Input.IsActionPressed("Space")) direction += Vector3.Up;
+                if (Input.IsActionPressed("Shift")) direction += Vector3.Down;
+            }
+            else
+            {
+                if (Input.IsActionJustPressed("Space") && IsOnFloor())
+                    velocity.Y = _jumpVelocity;
+            }
+
+            var inputDirection = Input.GetVector("A", "D", "W", "S").Normalized();
+            direction += inputDirection.X * Head.GlobalBasis.X;
+            direction += inputDirection.Y * Head.GlobalBasis.Z;
+        }
+
+        if (_gamemode == GamemodeEnum.NOCLIP) velocity.Y = direction.Y * _movementSpeed;
 
         velocity.X = direction.X * _movementSpeed;
         velocity.Z = direction.Z * _movementSpeed;
@@ -73,5 +98,8 @@ public partial class Player : CharacterBody3D
         MoveAndSlide();
     }
 
-    public Vector3 GetPlayerPosition() => GlobalPosition;
+    private static void ChangeGamemode()
+    {
+        _gamemode = _gamemode == GamemodeEnum.COLLISION ? GamemodeEnum.NOCLIP : GamemodeEnum.COLLISION;
+    }
 }

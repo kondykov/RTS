@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://ke7emiirmjn1"]
+[gd_scene load_steps=6 format=3 uid="uid://ke7emiirmjn1"]
 
 [ext_resource type="Script" path="res://scripts/terrain/player/Player.cs" id="1_oy450"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8bu7r"]
 radius = 0.4
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_1gtgc"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cndsb"]
 transparency = 1
@@ -22,6 +24,9 @@ BlockHighlight = NodePath("MeshInstance3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_8bu7r")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CollisionShape3D"]
+mesh = SubResource("CapsuleMesh_1gtgc")
 
 [node name="Head" type="Node3D" parent="."]
 
