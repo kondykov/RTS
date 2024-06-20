@@ -39,22 +39,3 @@ target_position = Vector3(0, 0, -5)
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_b3dk7")
 skeleton = NodePath("../CollisionShape3D")
-
-[node name="MarginContainer" type="MarginContainer" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -2.5
-offset_top = -2.0
-offset_right = 2.5
-offset_bottom = 2.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-
-[node name="Panel" type="Label" parent="MarginContainer"]
-layout_mode = 2
-text = "+"

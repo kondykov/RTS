@@ -14,9 +14,10 @@ public partial class ChunkManager : Node
     private readonly Dictionary<Chunk, Vector2I> _chunkToPosition = new();
     private readonly object _playerPositionLock = new();
     private readonly Dictionary<Vector2I, Chunk> _positionToChunk = new();
-    private readonly int _renderDistance = 20;
+    private readonly int _renderDistance = 5;
     private List<Chunk> _chunks;
     private Vector3 _playerPosition;
+    private bool _toUpdate = true;
     [Export] public bool MovementChunkRender = true;
     [Export] public PackedScene ChunkScene { get; set; }
     public static ChunkManager Instance { get; private set; }
@@ -41,6 +42,16 @@ public partial class ChunkManager : Node
         }
 
         if (!Engine.IsEditorHint() && MovementChunkRender) new Thread(ThreadProcess).Start();
+    }
+
+    public override void _Process(double delta)
+    {
+        if (Input.IsActionJustPressed("F5")) _toUpdate = !_toUpdate;
+        if (Input.IsActionJustPressed("F6"))
+        {
+            var chunk = _positionToChunk?[new Vector2I((int)(_playerPosition.X / 16), (int)(_playerPosition.Y / 16))];
+            chunk?.SetNewBlocks();
+        }
     }
 
     public void UpdateChunkPosition(Chunk chunk, Vector2I currentPosition, Vector2I previousPosition)
@@ -76,6 +87,7 @@ public partial class ChunkManager : Node
     {
         while (IsInstanceValid(this))
         {
+            if (!_toUpdate) continue;
             int playerChunkX, playerChunkZ;
             lock (_playerPositionLock)
             {

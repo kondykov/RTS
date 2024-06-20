@@ -106,6 +106,8 @@
         <Content Include="textures\ui\blue\blue_sliderUp.png.import" />
         <Content Include="textures\ui\blue\blue_tick.png" />
         <Content Include="textures\ui\blue\blue_tick.png.import" />
+        <Content Include="textures\ui\coins\coin1_16x16.png" />
+        <Content Include="textures\ui\Crosshair.png" />
         <Content Include="textures\ui\dropdownBottom.png" />
         <Content Include="textures\ui\dropdownBottom.png.import" />
         <Content Include="textures\ui\dropdownMid.png" />

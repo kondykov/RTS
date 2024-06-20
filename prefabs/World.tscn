@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://bvg2head5siwj"]
+[gd_scene load_steps=11 format=3 uid="uid://bvg2head5siwj"]
 
 [ext_resource type="Script" path="res://scripts/MainCommandHandler.cs" id="1_pyno1"]
 [ext_resource type="PackedScene" uid="uid://ke7emiirmjn1" path="res://scripts/terrain/player/Player.tscn" id="5_ndg8h"]
+[ext_resource type="PackedScene" uid="uid://ccinvouqanntm" path="res://prefabs/resources/GUI.tscn" id="6_c84x8"]
 [ext_resource type="PackedScene" uid="uid://du8hoef1uyiq6" path="res://prefabs/menus/DebugMenu.tscn" id="6_khav5"]
 [ext_resource type="AudioStream" uid="uid://cwomlr7tuy85u" path="res://sounds/music/MainMenuSound.mp3" id="6_mfau5"]
 [ext_resource type="PackedScene" uid="uid://ckgk1qgutb8vr" path="res://prefabs/scenes/Level.tscn" id="6_wccm7"]
@@ -43,13 +44,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 80, 5)
 environment = SubResource("Environment_2pys1")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.244038, -0.113597, -0.963089, 0.969766, 0.0285863, 0.242358, 0, -0.993116, 0.117139, -282.932, 101.65, 0)
+transform = Transform3D(0.244038, -0.113597, -0.963089, 0.969766, 0.0285863, 0.242358, 0, -0.993116, 0.117139, -0.932007, 33.65, 0)
 shadow_enabled = true
+
+[node name="GUI" parent="." instance=ExtResource("6_c84x8")]
 
 [node name="DebugMenu" parent="." instance=ExtResource("6_khav5")]
 
 [node name="MainMenu" parent="." instance=ExtResource("7_cfyxc")]
-visible = false
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_mfau5")
