@@ -1,5 +1,5 @@
 using Godot;
-using Terrain;
+using RTS.Terrain;
 
 namespace RTS.Terrain.Character;
 

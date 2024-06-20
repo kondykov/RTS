@@ -3,7 +3,7 @@ using System.Linq;
 using Godot;
 using Godot.Collections;
 
-namespace Terrain;
+namespace RTS.Terrain;
 
 [Tool]
 public partial class BlockManager : Node

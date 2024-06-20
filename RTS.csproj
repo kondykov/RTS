@@ -8,6 +8,21 @@
     <ItemGroup>
         <Content Include=".gitattributes" />
         <Content Include=".gitignore" />
+        <Content Include="prefabs\Button.tscn" />
+        <Content Include="prefabs\menus\DebugMenu.tscn" />
+        <Content Include="prefabs\menus\inventory\components\Slot.tscn" />
+        <Content Include="prefabs\menus\Loading.tscn" />
+        <Content Include="prefabs\menus\MainMenu.tscn" />
+        <Content Include="prefabs\menus\PauseMenu.tscn" />
+        <Content Include="prefabs\menus\Statistics.tscn" />
+        <Content Include="prefabs\menus\WorldPageMenu.tscn" />
+        <Content Include="prefabs\resources\Textures.tres" />
+        <Content Include="prefabs\scenes\Level.tscn" />
+        <Content Include="prefabs\scenes\RtsCameraWithBody.tscn" />
+        <Content Include="prefabs\sprites\selector.png" />
+        <Content Include="prefabs\sprites\selector.png.import" />
+        <Content Include="prefabs\sprites\selector.tscn" />
+        <Content Include="prefabs\World.tscn" />
         <Content Include="project.godot" />
         <Content Include="scripts\console\.gitkeep"/>
         <Content Include="scripts\ui\inventory\.gitkeep"/>

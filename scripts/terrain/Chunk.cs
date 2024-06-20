@@ -3,14 +3,14 @@ using Godot;
 using LoggerService;
 using RTS.Debug;
 
-namespace Terrain;
+namespace RTS.Terrain;
 
 [Tool]
 public partial class Chunk : StaticBody3D
 {
-    public static Vector3I dimensions = new(16, 64, 16);
+    public static Vector3I Dimensions = new(16, 64, 16);
 
-    private static readonly Vector3I[] _verties =
+    private static readonly Vector3I[] Verties =
     {
         new(0, 0, 0),
         new(1, 0, 0),
@@ -22,20 +22,20 @@ public partial class Chunk : StaticBody3D
         new(1, 1, 1)
     };
 
-    private static readonly int[] _top = { 2, 3, 7, 6 };
-    private static readonly int[] _bottom = { 0, 4, 5, 1 };
-    private static readonly int[] _left = { 6, 4, 0, 2 };
-    private static readonly int[] _right = { 3, 1, 5, 7 };
-    private static readonly int[] _back = { 7, 5, 4, 6 };
-    private static readonly int[] _front = { 2, 0, 1, 3 };
-    private readonly Block[,,] _blocks = new Block[dimensions.X, dimensions.Y, dimensions.Z];
+    private static readonly int[] Top = { 2, 3, 7, 6 };
+    private static readonly int[] Bottom = { 0, 4, 5, 1 };
+    private static readonly int[] Left = { 6, 4, 0, 2 };
+    private static readonly int[] Right = { 3, 1, 5, 7 };
+    private static readonly int[] Back = { 7, 5, 4, 6 };
+    private static readonly int[] Front = { 2, 0, 1, 3 };
+    private readonly Block[,,] _blocks = new Block[Dimensions.X, Dimensions.Y, Dimensions.Z];
     private SurfaceTool _surfaceTool = new();
     [Export] public CollisionShape3D CollisionShape { get; set; }
     [Export] public MeshInstance3D MeshInstance { get; set; }
     [Export] public FastNoiseLite Noise { get; set; }
     [Export] public Label3D DebugLabel3D { get; set; }
 
-    public Vector2I ChunkPosition { get; private set; }
+    private Vector2I ChunkPosition { get; set; }
 
     public void SetChunkPosition(Vector2I position)
     {
@@ -44,7 +44,7 @@ public partial class Chunk : StaticBody3D
         try
         {
             CallDeferred(Node3D.MethodName.SetGlobalPosition,
-                new Vector3(ChunkPosition.X * dimensions.X, 0, ChunkPosition.Y * dimensions.Z));
+                new Vector3(ChunkPosition.X * Dimensions.X, 0, ChunkPosition.Y * Dimensions.Z));
         }
         catch (Exception e)
         {
@@ -56,17 +56,8 @@ public partial class Chunk : StaticBody3D
         UpdateChunk();
     }
 
-    public override void _Process(double delta)
-    {
-        if (!Engine.IsEditorHint())
-        {
-            //DebugLabel3D.LookAt(GetTree().Root.GetNode<Node3D>("World/Player").GlobalPosition);
-        }
-    }
-
     private void CheckChunk()
     {
-        // GenerateBlockInstances();
         var chunk = ChunkMemory.GetChunkOrNull(ChunkPosition);
         if (chunk == null) GenerateBlockInstances();
         else SetBlockInstances(chunk);
@@ -78,12 +69,12 @@ public partial class Chunk : StaticBody3D
         Logger<string> logger = new(new FileService());
         logger.Log(LogStatus.Ok, $"Generated chunk {ChunkPosition.ToString()}");
 
-        for (var y = 0; y < dimensions.Y; y++)
-        for (var x = 0; x < dimensions.X; x++)
-        for (var z = 0; z < dimensions.Z; z++)
+        for (var y = 0; y < Dimensions.Y; y++)
+        for (var x = 0; x < Dimensions.X; x++)
+        for (var z = 0; z < Dimensions.Z; z++)
         {
             Block block;
-            var globalBlockPosition = ChunkPosition * new Vector2I(dimensions.X, dimensions.Z) + new Vector2(x, z);
+            var globalBlockPosition = ChunkPosition * new Vector2I(Dimensions.X, Dimensions.Z) + new Vector2(x, z);
             var groundHeight = GetHeightMap(globalBlockPosition);
 
             if (y < groundHeight / 2) block = BlockManager.Instance.Stone;
@@ -94,15 +85,16 @@ public partial class Chunk : StaticBody3D
         }
 
         DebugLabel3D.Text = ChunkPosition.ToString();
-        ChunkMemory.AddCreatedChunk(ChunkPosition, _blocks);
+        Block[,,] blocks = _blocks;
+        ChunkMemory.AddCreatedChunk(ChunkPosition, blocks);
     }
 
     private void SetBlockInstances(Block[,,] blocks)
     {
         Console.WriteLine($"Loaded {ChunkPosition}.");
-        for (var y = 0; y < dimensions.Y; y++)
-        for (var x = 0; x < dimensions.X; x++)
-        for (var z = 0; z < dimensions.Z; z++)
+        for (var y = 0; y < Dimensions.Y; y++)
+        for (var x = 0; x < Dimensions.X; x++)
+        for (var z = 0; z < Dimensions.Z; z++)
             _blocks[x, y, z] = blocks[x, y, z];
         DebugLabel3D.Text = ChunkPosition.ToString();
         Logger<string> logger = new(new FileService());
@@ -112,9 +104,9 @@ public partial class Chunk : StaticBody3D
     private void UpdateChunk()
     {
         _surfaceTool.Begin(Mesh.PrimitiveType.Triangles);
-        for (var x = 0; x < dimensions.X; x++)
-        for (var y = 0; y < dimensions.Y; y++)
-        for (var z = 0; z < dimensions.Z; z++)
+        for (var x = 0; x < Dimensions.X; x++)
+        for (var y = 0; y < Dimensions.Y; y++)
+        for (var z = 0; z < Dimensions.Z; z++)
             CreateBlockMesh(new Vector3I(x, y, z));
 
         _surfaceTool.SetMaterial(BlockManager.Instance.ChunkMaterial);
@@ -128,12 +120,12 @@ public partial class Chunk : StaticBody3D
     {
         var block = _blocks[blockPosition.X, blockPosition.Y, blockPosition.Z];
         if (block == BlockManager.Instance.Air) return;
-        if (CheckTransparent(blockPosition + Vector3I.Up)) CreateFaceMesh(_top, blockPosition, block.Texture);
-        if (CheckTransparent(blockPosition + Vector3I.Down)) CreateFaceMesh(_bottom, blockPosition, block.Texture);
-        if (CheckTransparent(blockPosition + Vector3I.Left)) CreateFaceMesh(_left, blockPosition, block.Texture);
-        if (CheckTransparent(blockPosition + Vector3I.Right)) CreateFaceMesh(_right, blockPosition, block.Texture);
-        if (CheckTransparent(blockPosition + Vector3I.Back)) CreateFaceMesh(_back, blockPosition, block.Texture);
-        if (CheckTransparent(blockPosition + Vector3I.Forward)) CreateFaceMesh(_front, blockPosition, block.Texture);
+        if (CheckTransparent(blockPosition + Vector3I.Up)) CreateFaceMesh(Top, blockPosition, block.Texture);
+        if (CheckTransparent(blockPosition + Vector3I.Down)) CreateFaceMesh(Bottom, blockPosition, block.Texture);
+        if (CheckTransparent(blockPosition + Vector3I.Left)) CreateFaceMesh(Left, blockPosition, block.Texture);
+        if (CheckTransparent(blockPosition + Vector3I.Right)) CreateFaceMesh(Right, blockPosition, block.Texture);
+        if (CheckTransparent(blockPosition + Vector3I.Back)) CreateFaceMesh(Back, blockPosition, block.Texture);
+        if (CheckTransparent(blockPosition + Vector3I.Forward)) CreateFaceMesh(Front, blockPosition, block.Texture);
     }
 
     private void CreateFaceMesh(int[] face, Vector3I blockPosition, Texture2D texture)
@@ -149,10 +141,10 @@ public partial class Chunk : StaticBody3D
         var uvC = uvOffset + new Vector2(uvWidth, uvHeight);
         var uvD = uvOffset + new Vector2(uvWidth, 0);
 
-        var a = _verties[face[0]] + blockPosition;
-        var b = _verties[face[1]] + blockPosition;
-        var c = _verties[face[2]] + blockPosition;
-        var d = _verties[face[3]] + blockPosition;
+        var a = Verties[face[0]] + blockPosition;
+        var b = Verties[face[1]] + blockPosition;
+        var c = Verties[face[2]] + blockPosition;
+        var d = Verties[face[3]] + blockPosition;
 
         var uvTriagle1 = new[] { uvA, uvB, uvC };
         var uvTriagle2 = new[] { uvA, uvC, uvD };
@@ -169,25 +161,25 @@ public partial class Chunk : StaticBody3D
 
     private bool CheckTransparent(Vector3I blockPosition)
     {
-        if (blockPosition.X < 0 || blockPosition.X >= dimensions.X) return true;
-        if (blockPosition.Y < 0 || blockPosition.Y >= dimensions.Y) return true;
-        if (blockPosition.Z < 0 || blockPosition.Z >= dimensions.Z) return true;
+        if (blockPosition.X < 0 || blockPosition.X >= Dimensions.X) return true;
+        if (blockPosition.Y < 0 || blockPosition.Y >= Dimensions.Y) return true;
+        if (blockPosition.Z < 0 || blockPosition.Z >= Dimensions.Z) return true;
         return _blocks[blockPosition.X, blockPosition.Y, blockPosition.Z] == BlockManager.Instance.Air;
     }
 
     //ToDo: Доделать проверку на прозрачность блоков на стыках чанков
     private bool CheckTransparentBlockChunks(Vector3I blockPosition)
     {
-        if (blockPosition.X < 0 || blockPosition.X >= dimensions.X) return true;
-        if (blockPosition.Y < 0 || blockPosition.Y >= dimensions.Y) return true;
-        if (blockPosition.Z < 0 || blockPosition.Z >= dimensions.Z) return true;
+        if (blockPosition.X < 0 || blockPosition.X >= Dimensions.X) return true;
+        if (blockPosition.Y < 0 || blockPosition.Y >= Dimensions.Y) return true;
+        if (blockPosition.Z < 0 || blockPosition.Z >= Dimensions.Z) return true;
         return _blocks[blockPosition.X, blockPosition.Y, blockPosition.Z] == BlockManager.Instance.Air;
     }
 
 
     public void SetBlock(Vector3I blockPosition, Block block)
     {
-        if (blockPosition.Y < 0 || blockPosition.Y >= dimensions.Y) return;
+        if (blockPosition.Y < 0 || blockPosition.Y >= Dimensions.Y) return;
         _blocks[blockPosition.X, blockPosition.Y, blockPosition.Z] = block;
         UpdateChunk();
         ChunkMemory.UpdateChunk(ChunkPosition, _blocks);
@@ -195,6 +187,6 @@ public partial class Chunk : StaticBody3D
 
     private int GetHeightMap(Vector2 blockPosition)
     {
-        return (int)(dimensions.Y * ((Noise.GetNoise2D(blockPosition.X, blockPosition.Y) + 1f) / 2f));
+        return (int)(Dimensions.Y * ((Noise.GetNoise2D(blockPosition.X, blockPosition.Y) + 1f) / 2f));
     }
 }

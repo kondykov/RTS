@@ -1,6 +1,6 @@
 using Godot;
 
-namespace Terrain;
+namespace RTS.Terrain;
 
 [Tool]
 [GlobalClass]

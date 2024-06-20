@@ -6,7 +6,7 @@ using Godot;
 using RTS.Debug;
 using RTS.Terrain.Character;
 
-namespace Terrain;
+namespace RTS.Terrain;
 
 [Tool]
 public partial class ChunkManager : Node
@@ -14,9 +14,9 @@ public partial class ChunkManager : Node
     private readonly Dictionary<Chunk, Vector2I> _chunkToPosition = new();
     private readonly object _playerPositionLock = new();
     private readonly Dictionary<Vector2I, Chunk> _positionToChunk = new();
+    private readonly int _renderDistance = 20;
     private List<Chunk> _chunks;
     private Vector3 _playerPosition;
-    public readonly int _renderDistance = 20;
     [Export] public bool MovementChunkRender = true;
     [Export] public PackedScene ChunkScene { get; set; }
     public static ChunkManager Instance { get; private set; }
@@ -54,8 +54,8 @@ public partial class ChunkManager : Node
 
     public void SetBlock(Vector3I globalPosition, Block block)
     {
-        var chunkTilePosition = new Vector2I(Mathf.FloorToInt(globalPosition.X / (float)Chunk.dimensions.X),
-            Mathf.FloorToInt(globalPosition.Z / (float)Chunk.dimensions.Z));
+        var chunkTilePosition = new Vector2I(Mathf.FloorToInt(globalPosition.X / (float)Chunk.Dimensions.X),
+            Mathf.FloorToInt(globalPosition.Z / (float)Chunk.Dimensions.Z));
         lock (_chunkToPosition)
         {
             if (_positionToChunk.TryGetValue(chunkTilePosition, out var chunk))
@@ -79,8 +79,8 @@ public partial class ChunkManager : Node
             int playerChunkX, playerChunkZ;
             lock (_playerPositionLock)
             {
-                playerChunkX = Mathf.FloorToInt(_playerPosition.X / Chunk.dimensions.X);
-                playerChunkZ = Mathf.FloorToInt(_playerPosition.Z / Chunk.dimensions.Z);
+                playerChunkX = Mathf.FloorToInt(_playerPosition.X / Chunk.Dimensions.X);
+                playerChunkZ = Mathf.FloorToInt(_playerPosition.Z / Chunk.Dimensions.Z);
             }
 
             foreach (var chunk in _chunks)
