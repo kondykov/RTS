@@ -50,7 +50,6 @@ public partial class ChunkManager : Node
         if (Input.IsActionJustPressed("F6"))
         {
             var chunk = _positionToChunk?[new Vector2I((int)(_playerPosition.X / 16), (int)(_playerPosition.Y / 16))];
-            chunk?.SetNewBlocks();
         }
     }
 
