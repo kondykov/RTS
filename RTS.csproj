@@ -26,6 +26,10 @@
         <Content Include="project.godot" />
         <Content Include="scripts\console\.gitkeep"/>
         <Content Include="scripts\ui\inventory\.gitkeep"/>
+        <Content Include="sounds\block\breakStone.ogg" />
+        <Content Include="sounds\block\breakDirt.ogg" />
+        <Content Include="sounds\block\breakGrass.ogg" />
+        <Content Include="sounds\block\climb5.ogg" />
         <Content Include="sounds\music\MainMenuSound.mp3" />
         <Content Include="sounds\music\MainMenuSound.mp3.import" />
         <Content Include="sounds\ui\click1.ogg" />

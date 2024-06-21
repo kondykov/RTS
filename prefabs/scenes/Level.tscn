@@ -27,12 +27,18 @@ Texture = ExtResource("5_tv0oo")
 
 [node name="Level" type="Node3D"]
 
-[node name="BlockManager" type="Node" parent="."]
+[node name="BlockManager" type="Node" parent="." node_paths=PackedStringArray("PlaceSound", "DestroySound")]
 script = ExtResource("1_c6isc")
+PlaceSound = NodePath("PlaceSound")
+DestroySound = NodePath("DestroySound")
 Air = SubResource("Resource_mrkd3")
 Grass = SubResource("Resource_yhnet")
 Dirt = SubResource("Resource_wl8x4")
 Stone = SubResource("Resource_2uhkq")
+
+[node name="DestroySound" type="AudioStreamPlayer3D" parent="BlockManager"]
+
+[node name="PlaceSound" type="AudioStreamPlayer3D" parent="BlockManager"]
 
 [node name="ChunkManager" type="Node" parent="."]
 script = ExtResource("1_dpqw8")

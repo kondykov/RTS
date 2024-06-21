@@ -11,19 +11,41 @@ public partial class BlockManager : Node
     private readonly Dictionary<Texture2D, Vector2I> _atlasLookup = new();
     private int _gridHeight;
     private int _gridWidth = 4;
+    [Export] private AudioStreamPlayer3D PlaceSound { get; set; }
+    [Export] private AudioStreamPlayer3D DestroySound { get; set; }
     [Export] public Block Air { get; set; }
     [Export] public Block Grass { get; set; }
     [Export] public Block Dirt { get; set; }
     [Export] public Block Stone { get; set; }
 
-    public Vector2I BlockTextureSize { get; } = new(16, 16);
+    private Vector2I BlockTextureSize { get; } = new(16, 16);
     public Vector2 TextureAtlasSize { get; private set; }
     public static BlockManager Instance { get; private set; }
     public StandardMaterial3D ChunkMaterial { get; private set; }
+    public Dictionary<Block, AudioStream> BlockSounds { get; private set; }
 
     public override void _Ready()
     {
         Instance = this;
+        InitializeTextureAtlas();
+        BlockSounds = new Dictionary<Block, AudioStream>
+        {
+            { Grass, GD.Load<AudioStream>("res://sounds/block/breakGrass.ogg") },
+            { Dirt, GD.Load<AudioStream>("res://sounds/block/breakDirt.ogg") },
+            { Stone, GD.Load<AudioStream>("res://sounds/block/breakStone.ogg") }
+        };
+    }
+
+    public void SoundPlay(Vector3 blockPosition, Block block)
+    {
+        PlaceSound.GlobalPosition = blockPosition;
+        BlockSounds.TryGetValue(block, out var sound);
+        PlaceSound.Stream = sound;
+        PlaceSound?.Play();
+    }
+
+    private void InitializeTextureAtlas()
+    {
         var blockTextures = new[] { Air, Grass, Dirt, Stone }.Select(block => block.Texture)
             .Where(texture => texture != null).Distinct().ToArray();
         for (var i = 0; i < blockTextures.Length; i++)
@@ -59,8 +81,7 @@ public partial class BlockManager : Node
 
     public Vector2I GetTextureAtlasPosition(Texture2D texture)
     {
-        if (texture == null) return Vector2I.Zero;
-        return _atlasLookup[texture];
+        return texture == null ? Vector2I.Zero : _atlasLookup[texture];
     }
 
     public static void GetMissingTexture(Block missingBlockTexture)
