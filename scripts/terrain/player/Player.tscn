@@ -15,12 +15,13 @@ albedo_color = Color(1, 1, 1, 0.101961)
 material = SubResource("StandardMaterial3D_cndsb")
 size = Vector3(1.1, 1.1, 1.1)
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Head", "Camera", "RayCast", "BlockHighlight")]
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("Head", "Camera", "RayCast", "BlockHighlight", "Collision")]
 script = ExtResource("1_oy450")
 Head = NodePath("Head")
 Camera = NodePath("Head/Camera3D")
 RayCast = NodePath("Head/Camera3D/RayCast3D")
 BlockHighlight = NodePath("MeshInstance3D")
+Collision = NodePath("CollisionShape3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_8bu7r")

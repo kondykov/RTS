@@ -15,22 +15,23 @@ public partial class ChunkManager : Node
     private readonly object _playerPositionLock = new();
     private readonly Dictionary<Vector2I, Chunk> _positionToChunk = new();
     private readonly int _renderDistance = 5;
-    private List<Chunk> _chunks;
+    private List<Chunk> _visibleChunks;
+    public Dictionary<Vector2I, Chunk> Chunks { get; set; } = new();
     private Vector3 _playerPosition;
     private bool _toUpdate = true;
     [Export] public bool MovementChunkRender = true;
-    [Export] public PackedScene ChunkScene { get; set; }
+    [Export] public PackedScene ChunkScene { get; private set; }
     public static ChunkManager Instance { get; private set; }
 
     public override void _Ready()
     {
         Instance = this;
-        _chunks = GetParent().GetChildren().OfType<Chunk>().ToList();
-        for (var i = _chunks.Count; i < _renderDistance * _renderDistance; i++)
+        _visibleChunks = GetParent().GetChildren().OfType<Chunk>().ToList();
+        for (var i = _visibleChunks.Count; i < _renderDistance * _renderDistance; i++)
         {
             var chunk = ChunkScene.Instantiate<Chunk>();
             GetParent().CallDeferred(Node.MethodName.AddChild, chunk);
-            _chunks.Add(chunk);
+            _visibleChunks.Add(chunk);
         }
 
         for (var x = 0; x < _renderDistance; x++)
@@ -38,7 +39,7 @@ public partial class ChunkManager : Node
         {
             var index = y * _renderDistance + x;
             var halfwidth = Mathf.FloorToInt(_renderDistance / 2);
-            _chunks[index].SetChunkPosition(new Vector2I(x - halfwidth, y - halfwidth));
+            _visibleChunks[index].SetChunkPosition(new Vector2I(x - halfwidth, y - halfwidth));
         }
 
         if (!Engine.IsEditorHint() && MovementChunkRender) new Thread(ThreadProcess).Start();
@@ -46,6 +47,7 @@ public partial class ChunkManager : Node
 
     public override void _Process(double delta)
     {
+        if (Engine.IsEditorHint()) return;
         if (Input.IsActionJustPressed("F5")) _toUpdate = !_toUpdate;
         if (Input.IsActionJustPressed("F6"))
         {
@@ -67,19 +69,24 @@ public partial class ChunkManager : Node
         var chunkTilePosition = new Vector2I(Mathf.FloorToInt(globalPosition.X / (float)Chunk.Dimensions.X),
             Mathf.FloorToInt(globalPosition.Z / (float)Chunk.Dimensions.Z));
         lock (_chunkToPosition)
-        {
             if (_positionToChunk.TryGetValue(chunkTilePosition, out var chunk))
                 chunk.SetBlock((Vector3I)(globalPosition - chunk.GlobalPosition), block);
-        }
+    }
+
+    public Block GetBlock(Vector3I globalBlockPosition)
+    {
+        var chunkTilePosition = new Vector2I(Mathf.FloorToInt(globalBlockPosition.X / (float)Chunk.Dimensions.X),
+            Mathf.FloorToInt(globalBlockPosition.Z / (float)Chunk.Dimensions.Z));
+        lock (_chunkToPosition)
+            if (_positionToChunk.TryGetValue(chunkTilePosition, out var chunk))
+                return chunk.GetBlock((Vector3I)(globalBlockPosition - chunk.GlobalPosition));
+        return null;
     }
 
     public override void _PhysicsProcess(double delta)
     {
         if (Engine.IsEditorHint()) return;
-        lock (_playerPositionLock)
-        {
-            _playerPosition = Player.Instance.GlobalPosition;
-        }
+        lock (_playerPositionLock) _playerPosition = Player.Instance.GlobalPosition;
     }
 
     private void ThreadProcess()
@@ -94,7 +101,7 @@ public partial class ChunkManager : Node
                 playerChunkZ = Mathf.FloorToInt(_playerPosition.Z / Chunk.Dimensions.Z);
             }
 
-            foreach (var chunk in _chunks)
+            foreach (var chunk in _visibleChunks)
             {
                 var chunkPosition = _chunkToPosition[chunk];
 
@@ -115,7 +122,7 @@ public partial class ChunkManager : Node
                         _positionToChunk[newPosition] = chunk;
                         try
                         {
-                            chunk.CallDeferred(nameof(Chunk.SetChunkPosition), newPosition);
+                            chunk.CallDeferred(nameof(Chunk.SetChunkPosition), [newPosition]);
                         }
                         catch (Exception e)
                         {
@@ -128,5 +135,10 @@ public partial class ChunkManager : Node
                 Thread.Sleep(10);
             }
         }
+    }
+
+    public bool CheckExistsSolidBlock(Vector2I chunkPosition, Vector3I blockPosition)
+    {
+        return true;
     }
 }

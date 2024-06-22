@@ -25,7 +25,8 @@
         <Content Include="prefabs\World.tscn" />
         <Content Include="project.godot" />
         <Content Include="scripts\console\.gitkeep"/>
-        <Content Include="scripts\ui\inventory\.gitkeep"/>
+        <Content Include="scripts\multiplayer\.gitkeep" />
+        <Content Include="scripts\ui\inventory\.gitkeep" />
         <Content Include="sounds\block\breakStone.ogg" />
         <Content Include="sounds\block\breakDirt.ogg" />
         <Content Include="sounds\block\breakGrass.ogg" />

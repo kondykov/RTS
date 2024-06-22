@@ -11,35 +11,39 @@
 
 [sub_resource type="Resource" id="Resource_mrkd3"]
 script = ExtResource("2_i3bqc")
+BlockType = 0
 
 [sub_resource type="Resource" id="Resource_yhnet"]
 script = ExtResource("2_i3bqc")
 Texture = ExtResource("3_qufeo")
 SidesTexture = ExtResource("5_pvm57")
+BlockType = 0
 
 [sub_resource type="Resource" id="Resource_wl8x4"]
 script = ExtResource("2_i3bqc")
 Texture = ExtResource("4_vdixf")
+BlockType = 0
 
 [sub_resource type="Resource" id="Resource_2uhkq"]
 script = ExtResource("2_i3bqc")
 Texture = ExtResource("5_tv0oo")
+BlockType = 0
 
 [node name="Level" type="Node3D"]
 
 [node name="BlockManager" type="Node" parent="." node_paths=PackedStringArray("PlaceSound", "DestroySound")]
 script = ExtResource("1_c6isc")
-PlaceSound = NodePath("PlaceSound")
-DestroySound = NodePath("DestroySound")
+PlaceSound = NodePath("../PlaceSound")
+DestroySound = NodePath("../DestroySound")
 Air = SubResource("Resource_mrkd3")
 Grass = SubResource("Resource_yhnet")
 Dirt = SubResource("Resource_wl8x4")
 Stone = SubResource("Resource_2uhkq")
 
-[node name="DestroySound" type="AudioStreamPlayer3D" parent="BlockManager"]
-
-[node name="PlaceSound" type="AudioStreamPlayer3D" parent="BlockManager"]
-
 [node name="ChunkManager" type="Node" parent="."]
 script = ExtResource("1_dpqw8")
 ChunkScene = ExtResource("1_mdba7")
+
+[node name="DestroySound" type="AudioStreamPlayer3D" parent="."]
+
+[node name="PlaceSound" type="AudioStreamPlayer3D" parent="."]
