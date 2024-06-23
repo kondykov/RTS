@@ -36,6 +36,11 @@ public partial class Chunk : StaticBody3D
     [Export] public Label3D DebugLabel3D { get; set; }
     private Vector2I ChunkPosition { get; set; }
 
+    public override void _Process(double delta)
+    {
+        DebugLabel3D.Visible = DebugMenu.VisibleDebugMenu;
+    }
+
     private void CloneBlocks(Block[,,] blocks)
     {
         for (var y = 0; y < Dimensions.Y; y++)
@@ -181,13 +186,23 @@ public partial class Chunk : StaticBody3D
         return _blocks[blockPosition.X, blockPosition.Y, blockPosition.Z] == BlockManager.Instance.Air;
     }
 
-
-    public void SetBlock(Vector3I blockPosition, Block block)
+    public void SetBlock(Vector3I blockPosition, Block block, BlockActionType actionType)
     {
         if (blockPosition.Y < 0 || blockPosition.Y >= Dimensions.Y) return;
+        var replacedBlock = _blocks[blockPosition.X, blockPosition.Y, blockPosition.Z];
         _blocks[blockPosition.X, blockPosition.Y, blockPosition.Z] = block;
         ChunkManager.Instance.Chunks.TryGetValue(ChunkPosition, out var chunk);
         if (chunk != null) chunk._blocks[blockPosition.X, blockPosition.Y, blockPosition.Z] = block;
+        switch (actionType)
+        {
+            case BlockActionType.PlayerPlace:
+                BlockManager.Instance.SoundPlay(GlobalPosition + blockPosition, block);
+                break;
+            case BlockActionType.PlayerDestroy:
+                BlockManager.Instance.SoundPlay(GlobalPosition + blockPosition, replacedBlock);
+                break;
+        }
+
         UpdateChunk();
     }
 

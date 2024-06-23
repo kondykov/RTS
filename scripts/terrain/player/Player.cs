@@ -59,8 +59,7 @@ public partial class Player : CharacterBody3D
             if (Input.IsActionJustPressed("mouse_left_click"))
             {
                 var block = ChunkManager.Instance.GetBlock((Vector3I)(intBlockPosition - chunk.GlobalPosition));
-                chunk.SetBlock((Vector3I)(intBlockPosition - chunk.GlobalPosition), BlockManager.Instance.Air);
-                BlockManager.Instance.SoundPlay(BlockHighlight.Position, block);
+                chunk.SetBlock((Vector3I)(intBlockPosition - chunk.GlobalPosition), BlockManager.Instance.Air, BlockActionType.PlayerDestroy);
                 if (block == BlockManager.Instance.Grass) GUI.Instance.AddCoin();
             }
             if (Input.IsActionJustPressed("mouse_right_click"))

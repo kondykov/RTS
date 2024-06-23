@@ -5,6 +5,7 @@ namespace RTS.Debug;
 public partial class DebugMenu : MarginContainer
 {
     private bool dbgField = false;
+    public static bool VisibleDebugMenu = false;
     static public Vector3 MousePosition = new Vector3(0, 0, 0);
 
     public override void _Ready()
@@ -16,6 +17,7 @@ public partial class DebugMenu : MarginContainer
     public override void _Process(double delta)
     {
             var label = GetNode<Label>("DebugLabel");
+            VisibleDebugMenu = label.Visible;
             if (Input.IsActionJustPressed("F3"))
                 if (label.Visible) label.Visible = false;
                 else label.Visible = true;

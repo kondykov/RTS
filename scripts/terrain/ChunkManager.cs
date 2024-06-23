@@ -70,7 +70,7 @@ public partial class ChunkManager : Node
             Mathf.FloorToInt(globalPosition.Z / (float)Chunk.Dimensions.Z));
         lock (_chunkToPosition)
             if (_positionToChunk.TryGetValue(chunkTilePosition, out var chunk))
-                chunk.SetBlock((Vector3I)(globalPosition - chunk.GlobalPosition), block);
+                chunk.SetBlock((Vector3I)(globalPosition - chunk.GlobalPosition), block, BlockActionType.PlayerPlace);
     }
 
     public Block GetBlock(Vector3I globalBlockPosition)
