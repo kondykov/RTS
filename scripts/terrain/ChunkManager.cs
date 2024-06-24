@@ -124,7 +124,7 @@ public partial class ChunkManager : Node
                         {
                             chunk.CallDeferred(nameof(Chunk.SetChunkPosition), [newPosition]);
                         }
-                        catch (Exception e)
+                        catch (Exception)
                         {
                             Console.WriteLine(
                                 $"{StatusHandler.GetMessage(Status.WarningChunkmanagerThreadInterrupted)}");

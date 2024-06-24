@@ -58,7 +58,7 @@ public partial class Chunk : StaticBody3D
             CallDeferred(Node3D.MethodName.SetGlobalPosition,
                 new Vector3(ChunkPosition.X * Dimensions.X, 0, ChunkPosition.Y * Dimensions.Z));
         }
-        catch (Exception e)
+        catch (Exception)
         {
             Console.WriteLine(StatusHandler.GetMessage(Status.WarningChunkmanagerThreadInterrupted));
             return;
