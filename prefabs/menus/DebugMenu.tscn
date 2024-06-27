@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://du8hoef1uyiq6"]
+[gd_scene load_steps=5 format=3 uid="uid://du8hoef1uyiq6"]
 
 [ext_resource type="LabelSettings" uid="uid://b3e24axr84y8u" path="res://prefabs/resources/fonts/LabelSettings.tres" id="1_88k5k"]
 [ext_resource type="FontFile" uid="uid://d2y10kx2pkfea" path="res://prefabs/resources/fonts/kenvector_future_thin.ttf" id="1_vyotu"]
 [ext_resource type="Script" path="res://scripts/ui/DebugMenu.cs" id="2_4av2f"]
+[ext_resource type="Script" path="res://scripts/ui/uiComponents/ProgramInfoLabelHandler.cs" id="3_0lu2y"]
 
 [node name="DebugMenu" type="Control"]
 layout_mode = 3
@@ -27,8 +28,10 @@ theme_override_fonts/font = ExtResource("1_vyotu")
 text = "Golden fever. Work in progress.
 "
 label_settings = ExtResource("1_88k5k")
+script = ExtResource("3_0lu2y")
 
 [node name="DebugContainer" type="MarginContainer" parent="."]
+layout_mode = 0
 offset_top = 24.0
 offset_right = 353.0
 offset_bottom = 50.0

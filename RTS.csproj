@@ -21,7 +21,10 @@
         <Content Include="project.godot" />
         <Content Include="scripts\console\.gitkeep"/>
         <Content Include="scripts\multiplayer\.gitkeep" />
+        <Content Include="scripts\multiplayer\client\.gitkeep" />
+        <Content Include="scripts\multiplayer\server\.gitkeep" />
         <Content Include="scripts\terrain\Chunk.tscn" />
+        <Content Include="scripts\terrain\structures\.gitkeep" />
         <Content Include="scripts\ui\GUI.tscn" />
         <Content Include="scripts\ui\inventory\.gitkeep" />
         <Content Include="sounds\block\breakStone.ogg" />
@@ -356,5 +359,9 @@
         <Content Include="textures\ui\yellow\yellow_sliderUp.png.import" />
         <Content Include="textures\ui\yellow\yellow_tick.png" />
         <Content Include="textures\ui\yellow\yellow_tick.png.import" />
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Remove="scripts\multiplayer\server\HostHandler.cs" />
+      <Compile Remove="scripts\multiplayer\client\Client.cs" />
     </ItemGroup>
 </Project>
