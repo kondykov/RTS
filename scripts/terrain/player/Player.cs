@@ -1,5 +1,4 @@
 using Godot;
-using RTS.Terrain;
 using RTS.UI;
 
 namespace RTS.Terrain.Character;
@@ -13,7 +12,7 @@ public enum GamemodeEnum
 [Tool]
 public partial class Player : CharacterBody3D
 {
-    private static GamemodeEnum _gamemode = GamemodeEnum.NOCLIP;
+    private static GamemodeEnum _gamemode = GamemodeEnum.COLLISION;
     private float _cameraXRotation;
     private float _gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
     [Export] private float _jumpVelocity = 15f;
@@ -24,12 +23,13 @@ public partial class Player : CharacterBody3D
     [Export] public Camera3D Camera { get; set; }
     [Export] public RayCast3D RayCast { get; set; }
     [Export] public MeshInstance3D BlockHighlight { get; set; }
-    [Export] private CollisionShape3D Collision { get; set;  }
+    [Export] private CollisionShape3D Collision { get; set; }
     public static Player Instance { get; private set; }
 
     public override void _Ready()
     {
         Instance = this;
+        SpawnPlayer();
         if (!Engine.IsEditorHint()) Input.MouseMode = Input.MouseModeEnum.Captured;
     }
 
@@ -59,9 +59,11 @@ public partial class Player : CharacterBody3D
             if (Input.IsActionJustPressed("mouse_left_click"))
             {
                 var block = ChunkManager.Instance.GetBlock((Vector3I)(intBlockPosition - chunk.GlobalPosition));
-                chunk.SetBlock((Vector3I)(intBlockPosition - chunk.GlobalPosition), BlockManager.Instance.Air, BlockActionType.PlayerDestroy);
+                chunk.SetBlock((Vector3I)(intBlockPosition - chunk.GlobalPosition), BlockManager.Instance.Air,
+                    BlockActionType.PlayerDestroy);
                 if (block == BlockManager.Instance.Grass) GUI.Instance.AddCoin();
             }
+
             if (Input.IsActionJustPressed("mouse_right_click"))
             {
                 ChunkManager.Instance.SetBlock((Vector3I)(intBlockPosition + RayCast.GetCollisionNormal()),
@@ -109,7 +111,7 @@ public partial class Player : CharacterBody3D
         {
             Collision.Disabled = false;
         }
-        
+
         velocity.X = direction.X * _movementSpeed;
         velocity.Z = direction.Z * _movementSpeed;
 
@@ -120,5 +122,21 @@ public partial class Player : CharacterBody3D
     private static void ChangeGamemode()
     {
         _gamemode = _gamemode == GamemodeEnum.COLLISION ? GamemodeEnum.NOCLIP : GamemodeEnum.COLLISION;
+    }
+
+    private void SpawnPlayer()
+    {
+        var chunkPosition = new Vector2I((int)GlobalPosition.X * Chunk.Dimensions.X,
+            (int)GlobalPosition.Y * Chunk.Dimensions.Z);
+        ChunkManager.Instance.Chunks.TryGetValue(chunkPosition, out var chunk);
+        if (chunk == null) return;
+        for (var y = Chunk.Dimensions.Y - 1; y >= 0; y--)
+        {
+            var block = chunk?.GetBlock(new Vector3I((int)GlobalPosition.X, y, (int)GlobalPosition.Z));
+            if (block != BlockManager.Instance.Air)
+            {
+                GlobalPosition = new Vector3(GlobalPosition.X, y, GlobalPosition.Z);
+            }
+        }
     }
 }
