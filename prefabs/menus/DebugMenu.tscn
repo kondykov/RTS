@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://du8hoef1uyiq6"]
 
-[ext_resource type="LabelSettings" uid="uid://b3e24axr84y8u" path="res://fonts/LabelSettings.tres" id="1_88k5k"]
-[ext_resource type="FontFile" uid="uid://d2y10kx2pkfea" path="res://fonts/kenvector_future_thin.ttf" id="1_vyotu"]
+[ext_resource type="LabelSettings" uid="uid://b3e24axr84y8u" path="res://prefabs/resources/fonts/LabelSettings.tres" id="1_88k5k"]
+[ext_resource type="FontFile" uid="uid://d2y10kx2pkfea" path="res://prefabs/resources/fonts/kenvector_future_thin.ttf" id="1_vyotu"]
 [ext_resource type="Script" path="res://scripts/ui/DebugMenu.cs" id="2_4av2f"]
 
 [node name="DebugMenu" type="Control"]

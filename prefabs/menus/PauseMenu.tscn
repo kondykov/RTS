@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/ui/menus/PauseMenu.cs" id="1_4r2nd"]
 [ext_resource type="Material" uid="uid://ldcc2j6xliys" path="res://textures/ui/materials/Blur.tres" id="2_24ubl"]
-[ext_resource type="PackedScene" uid="uid://dpjrqmx3fvhqa" path="res://prefabs/Button.tscn" id="3_0gwgd"]
+[ext_resource type="PackedScene" uid="uid://dpjrqmx3fvhqa" path="res://scripts/ui/uiComponents/Button.tscn" id="3_0gwgd"]
 
 [node name="MainMenu" type="Control"]
 process_mode = 3

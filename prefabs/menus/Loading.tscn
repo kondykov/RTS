@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/ui/LoadingScreen.cs" id="1_wrr2e"]
 [ext_resource type="Texture2D" uid="uid://dukyp8peo6tjv" path="res://textures/ui/menus/WorldsPageBackGround.jpg" id="2_80tm7"]
 [ext_resource type="Material" uid="uid://ldcc2j6xliys" path="res://textures/ui/materials/Blur.tres" id="3_hjqyi"]
-[ext_resource type="FontFile" uid="uid://cvu2ivpu1wejp" path="res://fonts/kenvector_future.ttf" id="4_fswju"]
+[ext_resource type="FontFile" uid="uid://cvu2ivpu1wejp" path="res://prefabs/resources/fonts/kenvector_future.ttf" id="4_fswju"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_h6sjt"]
 

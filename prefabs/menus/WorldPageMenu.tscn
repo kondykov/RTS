@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://l5dt1weck6mj"]
 
 [ext_resource type="Script" path="res://scripts/ui/menus/WorldsPageMenu.cs" id="1_d1uvi"]
-[ext_resource type="PackedScene" uid="uid://dpjrqmx3fvhqa" path="res://prefabs/Button.tscn" id="2_q0up1"]
+[ext_resource type="PackedScene" uid="uid://dpjrqmx3fvhqa" path="res://scripts/ui/uiComponents/Button.tscn" id="2_q0up1"]
 [ext_resource type="Texture2D" uid="uid://dukyp8peo6tjv" path="res://textures/ui/menus/WorldsPageBackGround.jpg" id="2_t6hhk"]
 [ext_resource type="Material" uid="uid://ldcc2j6xliys" path="res://textures/ui/materials/Blur.tres" id="3_d4fa7"]
 

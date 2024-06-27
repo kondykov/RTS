@@ -2,9 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://wfhguobgh4dd" path="res://textures/ui/menus/background.png" id="1_iaupx"]
 [ext_resource type="Script" path="res://scripts/ui/menus/MainMenu.cs" id="1_sl22q"]
-[ext_resource type="PackedScene" path="res://prefabs/Button.tscn" id="2_06m76"]
+[ext_resource type="PackedScene" uid="uid://dpjrqmx3fvhqa" path="res://scripts/ui/uiComponents/Button.tscn" id="2_06m76"]
 [ext_resource type="Material" uid="uid://ldcc2j6xliys" path="res://textures/ui/materials/Blur.tres" id="2_24ubl"]
-[ext_resource type="FontFile" path="res://fonts/kenvector_future.ttf" id="4_kopqs"]
+[ext_resource type="FontFile" uid="uid://cvu2ivpu1wejp" path="res://prefabs/resources/fonts/kenvector_future.ttf" id="4_kopqs"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_v2oho"]
 line_spacing = 0.0

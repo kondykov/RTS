@@ -1,69 +1,70 @@
-[gd_scene load_steps=22 format=3 uid="uid://htdnorsq1css"]
+[gd_scene load_steps=23 format=3 uid="uid://ccinvouqanntm"]
 
-[ext_resource type="Texture2D" uid="uid://b3w7d8sh8fbbg" path="res://textures/ui/coins/coin1_16x16.png" id="1_830og"]
-[ext_resource type="Texture2D" uid="uid://cf7l6cwd3y8vn" path="res://textures/ui/Crosshair.png" id="1_usive"]
-[ext_resource type="FontFile" uid="uid://cvu2ivpu1wejp" path="res://prefabs/resources/fonts/kenvector_future.ttf" id="2_tg8xw"]
-[ext_resource type="Script" path="res://scripts/ui/uiComponents/UIAnimatedSprites.cs" id="2_tvri5"]
-[ext_resource type="LabelSettings" uid="uid://b3e24axr84y8u" path="res://prefabs/resources/fonts/LabelSettings.tres" id="3_dmbps"]
+[ext_resource type="Script" path="res://scripts/ui/GUI.cs" id="1_adj7w"]
+[ext_resource type="Texture2D" uid="uid://cf7l6cwd3y8vn" path="res://textures/ui/Crosshair.png" id="2_lnmi1"]
+[ext_resource type="Texture2D" uid="uid://b3w7d8sh8fbbg" path="res://textures/ui/coins/coin1_16x16.png" id="3_ko34b"]
+[ext_resource type="Script" path="res://scripts/ui/uiComponents/UIAnimatedSprites.cs" id="4_nam6l"]
+[ext_resource type="FontFile" uid="uid://cvu2ivpu1wejp" path="res://prefabs/resources/fonts/kenvector_future.ttf" id="5_m0a8a"]
+[ext_resource type="LabelSettings" uid="uid://b3e24axr84y8u" path="res://prefabs/resources/fonts/LabelSettings.tres" id="6_gljko"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v76l2"]
-atlas = ExtResource("1_830og")
+atlas = ExtResource("3_ko34b")
 region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_o5wsb"]
-atlas = ExtResource("1_830og")
+atlas = ExtResource("3_ko34b")
 region = Rect2(16, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qh5m2"]
-atlas = ExtResource("1_830og")
+atlas = ExtResource("3_ko34b")
 region = Rect2(32, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g3lc1"]
-atlas = ExtResource("1_830og")
+atlas = ExtResource("3_ko34b")
 region = Rect2(48, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_02a1o"]
-atlas = ExtResource("1_830og")
+atlas = ExtResource("3_ko34b")
 region = Rect2(64, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j0j4r"]
-atlas = ExtResource("1_830og")
+atlas = ExtResource("3_ko34b")
 region = Rect2(80, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6qjp2"]
-atlas = ExtResource("1_830og")
+atlas = ExtResource("3_ko34b")
 region = Rect2(96, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fpv8x"]
-atlas = ExtResource("1_830og")
+atlas = ExtResource("3_ko34b")
 region = Rect2(112, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fnp4m"]
-atlas = ExtResource("1_830og")
+atlas = ExtResource("3_ko34b")
 region = Rect2(128, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xsurx"]
-atlas = ExtResource("1_830og")
+atlas = ExtResource("3_ko34b")
 region = Rect2(144, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qgf3i"]
-atlas = ExtResource("1_830og")
+atlas = ExtResource("3_ko34b")
 region = Rect2(160, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dui3x"]
-atlas = ExtResource("1_830og")
+atlas = ExtResource("3_ko34b")
 region = Rect2(176, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j0tyt"]
-atlas = ExtResource("1_830og")
+atlas = ExtResource("3_ko34b")
 region = Rect2(192, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jcqea"]
-atlas = ExtResource("1_830og")
+atlas = ExtResource("3_ko34b")
 region = Rect2(208, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mne0x"]
-atlas = ExtResource("1_830og")
+atlas = ExtResource("3_ko34b")
 region = Rect2(224, 0, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_vts4x"]
@@ -120,13 +121,15 @@ animations = [{
 "speed": 12.0
 }]
 
-[node name="GUI" type="Control"]
+[node name="GUI" type="Control" node_paths=PackedStringArray("_coinLabel")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_adj7w")
+_coinLabel = NodePath("MarginContainer/HBoxContainer/Container/HBoxContainer/Count")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -146,7 +149,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 
 [node name="Crosshair" type="Sprite2D" parent="MarginContainer/MarginContainer"]
-texture = ExtResource("1_usive")
+texture = ExtResource("2_lnmi1")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
@@ -163,10 +166,19 @@ size_flags_vertical = 8
 position = Vector2(-26, 10)
 scale = Vector2(2.4375, 2.4375)
 sprite_frames = SubResource("SpriteFrames_vts4x")
-script = ExtResource("2_tvri5")
+script = ExtResource("4_nam6l")
 
-[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/Container"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/Container"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_tg8xw")
-text = "coins"
-label_settings = ExtResource("3_dmbps")
+
+[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/Container/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_m0a8a")
+text = "coins: "
+label_settings = ExtResource("6_gljko")
+
+[node name="Count" type="Label" parent="MarginContainer/HBoxContainer/Container/HBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_m0a8a")
+text = "2"
+label_settings = ExtResource("6_gljko")

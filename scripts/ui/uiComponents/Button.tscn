@@ -1,0 +1,56 @@
+[gd_scene load_steps=10 format=3 uid="uid://dpjrqmx3fvhqa"]
+
+[ext_resource type="Texture2D" uid="uid://c2uqiqbloq7l0" path="res://textures/ui/yellow/yellow_button00.png" id="1_ucdlb"]
+[ext_resource type="Texture2D" uid="uid://be2nt2f3aq5k1" path="res://textures/ui/yellow/yellow_button01.png" id="2_6nqji"]
+[ext_resource type="Texture2D" uid="uid://ctl80mix8sav3" path="res://textures/ui/yellow/yellow_button02.png" id="3_cgi78"]
+[ext_resource type="Texture2D" uid="uid://d2lnrgps8n62q" path="res://textures/ui/yellow/yellow_button13.png" id="4_jfe5s"]
+[ext_resource type="Script" path="res://scripts/ui/uiComponents/UIButtonHandler.cs" id="5_kbnt5"]
+[ext_resource type="FontFile" uid="uid://cvu2ivpu1wejp" path="res://prefabs/resources/fonts/kenvector_future.ttf" id="6_j7k58"]
+[ext_resource type="LabelSettings" uid="uid://b3e24axr84y8u" path="res://prefabs/resources/fonts/LabelSettings.tres" id="7_8inth"]
+[ext_resource type="AudioStream" uid="uid://dvh8jmojvv7xu" path="res://sounds/ui/click1.ogg" id="8_5sof4"]
+[ext_resource type="AudioStream" uid="uid://phr353dbo50e" path="res://sounds/ui/rollover2.ogg" id="8_sxhlx"]
+
+[node name="Button" type="TextureButton" node_paths=PackedStringArray("_label", "_soundByClick", "_soundByHover")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture_normal = ExtResource("1_ucdlb")
+texture_pressed = ExtResource("2_6nqji")
+texture_hover = ExtResource("3_cgi78")
+texture_disabled = ExtResource("4_jfe5s")
+stretch_mode = 3
+script = ExtResource("5_kbnt5")
+_label = NodePath("Label")
+_soundByClick = NodePath("SoundByClick")
+_soundByHover = NodePath("SoundByHover")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -38.0
+offset_top = -11.5
+offset_right = 38.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("6_j7k58")
+text = "Button"
+label_settings = ExtResource("7_8inth")
+horizontal_alignment = 1
+
+[node name="SoundByHover" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_sxhlx")
+
+[node name="SoundByClick" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_5sof4")
+
+[connection signal="mouse_entered" from="." to="." method="ActivateSoundByHover"]
+[connection signal="pressed" from="." to="." method="ActivateSoundByClick"]
